@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_default_event"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/standard_16"
+    android:paddingBottom="@dimen/standard_16"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <com.alphawallet.app.widget.TokenIcon
+        android:id="@+id/token_icon"
+        android:layout_width="@dimen/token_icon_large"
+        android:layout_height="@dimen/token_icon_large" />
+
+    <LinearLayout
+        android:id="@+id/detail_layer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp8"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/Aw.Typography.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Sent" />
+
+        <TextView
+            android:id="@+id/text_title_symbol"
+            style="@style/Aw.Typography.Title.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/mini_4"
+            tools:text="awDAI" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_16"
+        tools:text="Sent 4.23 awDAI to 0x123456789abcdef1234567890123456789abcdef" />
+
+    <TextView
+        android:id="@+id/supplimental"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/standard_16"
+        android:layout_marginEnd="@dimen/standard_16"
+        android:visibility="gone"
+        tools:text="+1.0 ETH"
+        tools:visibility="visible" />
+
+    <com.alphawallet.app.widget.AssetDetailView
+        android:id="@+id/asset_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/standard_16"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>

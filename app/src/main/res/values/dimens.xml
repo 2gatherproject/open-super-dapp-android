@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="layout_touch_size">48dp</dimen>
+
+    <dimen name="layout_horizontal_margin">16dp</dimen>
+    <dimen name="layout_vertical_margin">16dp</dimen>
+    <dimen name="layout_vertical_margin_big">32dp</dimen>
+
+    <dimen name="profile_avatar_size">50dp</dimen>
+    <dimen name="floating_action_button_margin">16dp</dimen>
+    <dimen name="navigation_view_height">196dp</dimen>
+    <dimen name="navigation_avatar_top_margin">44dp</dimen>
+    <dimen name="item_decoration_left_margin">72dp</dimen>
+    <dimen name="item_event_message_state_size">16dp</dimen>
+
+    <dimen name="chat_avatar_size">40dp</dimen>
+    <dimen name="member_list_avatar_size">60dp</dimen>
+
+    <dimen name="quote_width">4dp</dimen>
+    <dimen name="quote_gap">8dp</dimen>
+    <dimen name="drawable_padding_small">8dp</dimen>
+
+    <item name="dialog_width_ratio" format="float" type="dimen">0.75</item>
+
+    <dimen name="pill_avatar_size">16dp</dimen>
+    <dimen name="pill_min_height">20dp</dimen>
+    <dimen name="pill_text_padding">4dp</dimen>
+
+
+    <dimen name="item_form_min_height">76dp</dimen>
+
+    <!-- Max width for some buttons -->
+    <dimen name="button_max_width">280dp</dimen>
+
+    <!-- Navigation Drawer -->
+    <dimen name="navigation_drawer_max_width">320dp</dimen>
+
+    <!-- Alpha wallet -->
+    <dimen name="normal_padding">8dp</dimen>
+	<dimen name="big_padding">16dp</dimen>
+
+    <!-- Text Dimens -->
+    <dimen name="sp12">10sp</dimen>
+    <dimen name="sp13">11sp</dimen>
+    <dimen name="sp14">12sp</dimen>
+    <dimen name="sp15">13sp</dimen>
+    <dimen name="sp16">14sp</dimen>
+    <dimen name="sp17">15sp</dimen>
+    <dimen name="sp18">16sp</dimen>
+    <dimen name="sp20">17sp</dimen>
+    <dimen name="sp24">20sp</dimen>
+    <dimen name="sp28">24sp</dimen>
+    <dimen name="sp32">28sp</dimen>
+    <dimen name="sp36">32sp</dimen>
+
+    <!-- Padding/Margin Dimens -->
+    <dimen name="dp5">3dp</dimen>
+    <dimen name="dp6">4dp</dimen>
+    <dimen name="dp7">5dp</dimen>
+    <dimen name="dp8">6dp</dimen>
+    <dimen name="dp9">7dp</dimen>
+    <dimen name="dp10">8dp</dimen>
+    <dimen name="dp11">9dp</dimen>
+    <dimen name="dp12">10dp</dimen>
+    <dimen name="dp13">11dp</dimen>
+    <dimen name="dp14">12dp</dimen>
+    <dimen name="dp15">13dp</dimen>
+    <dimen name="dp16">14dp</dimen>
+    <dimen name="dp17">15dp</dimen>
+    <dimen name="dp18">16dp</dimen>
+    <dimen name="dp19">17dp</dimen>
+    <dimen name="dp20">18dp</dimen>
+    <dimen name="dp21">19dp</dimen>
+    <dimen name="dp22">20dp</dimen>
+    <dimen name="dp23">21dp</dimen>
+    <dimen name="dp24">22dp</dimen>
+    <dimen name="dp25">23dp</dimen>
+    <dimen name="dp30">28dp</dimen>
+
+    <!-- Notification Badge -->
+    <dimen name="notification_badge_small">18dp</dimen>
+
+    <!-- Standard Token Icon size -->
+    <dimen name="token_icon">40dp</dimen>
+    <dimen name="token_icon_small">24dp</dimen>
+    <dimen name="token_icon_large">86dp</dimen>
+
+    <!-- Item Offset Decoration -->
+    <dimen name="grid_divider_offset">16dp</dimen>
+    <dimen name="list_divider_offset">0dp</dimen>
+
+    <!-- Standard Header -->
+    <dimen name="standard_header_height">50dp</dimen>
+
+    <!-- Standard Spacing -->
+    <dimen name="micro_2">2dp</dimen>
+    <dimen name="mini_4">4dp</dimen>
+    <dimen name="tiny_8">8dp</dimen>
+    <dimen name="small_12">12dp</dimen>
+    <dimen name="standard_16">16dp</dimen>
+    <dimen name="cozy_20">20dp</dimen>
+    <dimen name="base_24">24dp</dimen>
+    <dimen name="comfy_28">28dp</dimen>
+    <dimen name="optimal_30">30dp</dimen>
+    <dimen name="large_32">32dp</dimen>
+    <dimen name="huge_36">36dp</dimen>
+    <dimen name="giant_40">40dp</dimen>
+    <dimen name="massive_44">44dp</dimen>
+    <dimen name="double_base_48">48dp</dimen>
+    <dimen name="double_comfy_56">56dp</dimen>
+    <dimen name="double_large_64">64dp</dimen>
+    <dimen name="double_huge_72">72dp</dimen>
+    <dimen name="double_giant_80">80dp</dimen>
+    <dimen name="double_massive_88">88dp</dimen>
+    <dimen name="hundred_100">100dp</dimen>
+    <dimen name="horizontal_toolbar_progress_height">3dp</dimen>
+
+    <!-- Component Dimens -->
+    <dimen name="dialog_corner_radius">4dp</dimen>
+    <dimen name="action_sheet_header">60dp</dimen>
+
+</resources>

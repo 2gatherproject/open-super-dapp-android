@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_quantity_select"
+        style="@style/Aw.Typography.Title.SemiBold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="@string/select_quantity_tickets" />
+
+    <TextView
+        style="@style/Aw.Typography.Sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/mini_4"
+        android:text="@string/quantity_of_tickets" />
+
+    <LinearLayout
+        android:id="@+id/layout_ticket_quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/cozy_20"
+        android:background="@drawable/background_quantity"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/layout_quantity_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/tiny_8"
+            android:padding="@dimen/tiny_8">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/ic_add_plus" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/text_quantity"
+            style="@style/Aw.Typography.Title.SemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="1" />
+
+        <RelativeLayout
+            android:id="@+id/layout_quantity_minus"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/tiny_8"
+            android:layout_weight="2"
+            android:padding="@dimen/tiny_8">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/empty"
+                android:src="@drawable/ic_minus" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_simple_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/layoutButtons"
+            android:layout_alignParentTop="true"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@id/token_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Aw.Typography.Caption"
+                    android:id="@+id/event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/mini_4"
+                    android:layout_marginBottom="@dimen/standard_16"
+                    tools:text="10:57 PM | July 22, 2020" />
+
+                <com.alphawallet.app.widget.TokenIcon
+                    android:id="@+id/token_icon"
+                    android:layout_width="@dimen/token_icon_large"
+                    android:layout_height="@dimen/token_icon_large"
+                    android:layout_gravity="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/tiny_8"
+                    android:layout_marginBottom="@dimen/tiny_8"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/event_action"
+                        style="@style/Aw.Typography.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        tools:text="Sent" />
+
+                    <TextView
+                        android:id="@+id/event_action_symbol"
+                        style="@style/Aw.Typography.Title.SemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/mini_4"
+                        android:visibility="gone"
+                        tools:text="ETH" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/event_amount"
+                    style="@style/Aw.Typography.Title.Large.Bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/standard_16"
+                    android:gravity="center_horizontal"
+                    tools:text="+ 1.234 ETH" />
+
+                <com.alphawallet.app.widget.ChainName
+                    android:id="@+id/chain_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/tiny_8"
+                    android:visibility="gone"
+                    custom:font_size="10"
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/pending_time_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/tiny_8"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/empty" />
+
+                    <TextView
+                        android:id="@+id/pending_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        tools:text="@string/transaction_pending_for" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp5"
+                    android:orientation="horizontal" />
+
+                <include layout="@layout/item_ticket" />
+
+                <com.alphawallet.app.widget.EventDetailWidget
+                    android:id="@+id/event_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.alphawallet.app.widget.AmountDisplayWidget
+                    android:id="@+id/amount_display"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <com.alphawallet.app.widget.FunctionButtonBar
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>

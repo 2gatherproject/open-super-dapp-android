@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="300dp"
+    android:orientation="vertical">
+
+    <View style="@style/Aw.Component.Separator" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/standard_16"
+        android:layout_marginVertical="@dimen/standard_16">
+
+        <TextView
+            android:id="@+id/text_recipient_title"
+            style="@style/Aw.Typography.Label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:text="@string/recipient" />
+
+        <TextView
+            android:id="@+id/text_recipient"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/small_12"
+            android:layout_weight="3.5"
+            android:gravity="start"
+            tools:text="pablo.eth | 0x123456...0421" />
+
+        <ImageView
+            android:id="@+id/image_more"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="0.6"
+            android:background="@color/transparent"
+            android:padding="@dimen/mini_4"
+            android:src="@drawable/ic_expand_more"
+            app:tint="?colorControlNormal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            style="@style/Aw.Typography.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_16"
+            android:gravity="start"
+            android:text="@string/wallet_address" />
+
+        <TextView
+            android:id="@+id/text_recipient_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_16"
+            android:layout_marginTop="@dimen/tiny_8"
+            android:layout_marginEnd="@dimen/standard_16"
+            android:gravity="start"
+            tools:text="0x6EBaF477F83E055589C1188bCC6DDCCD8C9B131a" />
+
+        <TextView
+            android:id="@+id/label_ens"
+            style="@style/Aw.Typography.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_16"
+            android:layout_marginTop="@dimen/standard_16"
+            android:layout_marginBottom="@dimen/tiny_8"
+            android:gravity="start"
+            android:text="@string/ens_name" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_16"
+            android:layout_marginEnd="@dimen/standard_16"
+            android:layout_marginBottom="@dimen/standard_16"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.alphawallet.app.widget.UserAvatar
+                android:id="@+id/blockie"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/big_green_tick" />
+
+            <TextView
+                android:id="@+id/text_ens_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/tiny_8"
+                tools:text="pablo.eth" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

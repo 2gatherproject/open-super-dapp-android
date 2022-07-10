@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image_lock"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/ic_locked"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <ProgressBar
+        android:id="@+id/cert_progress_spinner"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:indeterminateDrawable="@drawable/progress_bar_spinner"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/toolbar_title"
+        style="@style/Aw.Typography.Toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:text="Wrapped Ether (WETH)" />
+
+</com.google.android.material.appbar.MaterialToolbar>

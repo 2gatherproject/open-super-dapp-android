@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_simple_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.alphawallet.app.widget.ProgressView
+            android:id="@+id/progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            tools:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="?actionBarSize">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listTickets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_next"
+            style="@style/Aw.Component.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/standard_16"
+            android:text="@string/action_next" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_redeem"
+            style="@style/Aw.Component.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/standard_16"
+            android:text="@string/action_redeem"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <com.alphawallet.app.widget.SystemView
+        android:id="@+id/system_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        tools:visibility="gone" />
+
+</LinearLayout>

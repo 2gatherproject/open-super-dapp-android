@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:id="@+id/toolbar_block"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|snap"
+        app:titleEnabled="false">
+
+        <com.alphawallet.app.widget.CertifiedToolbarView
+            android:id="@+id/certified_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/layoutButtons"
+        android:layout_below="@id/toolbar_block">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/standard_16"
+                android:layout_marginTop="@dimen/standard_16"
+                android:layout_marginEnd="@dimen/standard_16"
+                android:minHeight="350dp">
+
+                <com.alphawallet.app.widget.NFTImageView
+                    android:id="@+id/asset_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    custom:webview_height="350" />
+
+            </RelativeLayout>
+
+            <com.alphawallet.app.widget.TokenInfoCategoryView
+                android:id="@+id/label_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:title="@string/label_details"
+                tools:visibility="visible" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/token_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/label_token_id" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/network"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/subtitle_network" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/contract_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/contract_address" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/balance" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/hint_contract_name" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/external_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/label_external_link" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/creator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/asset_creator" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/token_standard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/asset_schema" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/total_supply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/asset_total_supply" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/num_owners"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/asset_number_of_owners" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/asset_owner" />
+
+            <com.alphawallet.app.widget.TokenInfoView
+                android:id="@+id/last_sale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:tokenInfoLabel="@string/asset_last_sale" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/small_12" />
+
+            <com.alphawallet.app.widget.TokenInfoCategoryView
+                android:id="@+id/label_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                custom:title="@string/label_description"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/token_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/standard_16"
+                tools:text="Test description" />
+
+            <com.alphawallet.app.ui.widget.entity.NFTAttributeLayout
+                android:id="@+id/attributes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.alphawallet.app.widget.FunctionButtonBar
+        android:id="@+id/layoutButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

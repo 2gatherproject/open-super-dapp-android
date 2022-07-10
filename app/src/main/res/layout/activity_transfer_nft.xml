@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_simple_toolbar" />
+
+    <View style="@style/Aw.Component.Separator" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.alphawallet.app.widget.ProgressView
+            android:id="@+id/progress_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            tools:visibility="gone" />
+
+        <com.alphawallet.app.widget.FunctionButtonBar
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/layoutButtons"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/standard_16">
+
+            <com.alphawallet.app.widget.InputAddress
+                android:id="@+id/input_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/standard_16"
+                android:visibility="visible"
+                custom:ens="true"
+                custom:hint="@string/recipient"
+                custom:label="@string/recipient"
+                custom:show_header="true" />
+
+            <View style="@style/Aw.Component.Separator" />
+
+            <com.alphawallet.app.widget.StandardHeader
+                android:id="@+id/layout_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:headerText="@string/selected_tokens" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/listTickets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_bottom_border" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <com.alphawallet.app.widget.SystemView
+        android:id="@+id/system_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        tools:visibility="gone" />
+
+</LinearLayout>

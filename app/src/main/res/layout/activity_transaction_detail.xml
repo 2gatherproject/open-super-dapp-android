@@ -1,0 +1,451 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_simple_toolbar" />
+
+    <com.alphawallet.app.widget.FunctionButtonBar
+        android:id="@+id/layoutButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/layoutButtons"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="?actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/standard_16">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/value_header"
+                    style="@style/Aw.Typography.Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/value" />
+
+                <com.alphawallet.app.widget.ChainName
+                    android:id="@+id/chain_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/value_header"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text_operation_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/tiny_8"
+                        tools:text="Sent" />
+
+                    <TextView
+                        android:id="@+id/amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="4238793" />
+
+                    <TextView
+                        android:id="@+id/failed"
+                        style="@style/Aw.Typography.Error"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/small_12"
+                        android:text="@string/failed"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/failedFace"
+                        style="@style/Aw.Typography.Error"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/mini_4"
+                        android:text="☹"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <TextView
+                style="@style/Aw.Typography.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_16"
+                android:text="@string/subtitle_transaction_hash_num" />
+
+            <com.alphawallet.app.widget.CopyTextView
+                android:id="@+id/txn_hash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/Aw.Typography.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subtitle_network" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/network_icon"
+                    android:layout_width="@dimen/token_icon_small"
+                    android:layout_height="@dimen/token_icon_small"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/tiny_8"
+                    android:src="@drawable/ic_coin_eth_small" />
+
+                <TextView
+                    android:id="@+id/network"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/ethereum" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/token_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_16"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    style="@style/Aw.Typography.Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/token_text" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.alphawallet.app.widget.TokenIcon
+                        android:id="@+id/token_icon"
+                        android:layout_width="@dimen/token_icon_small"
+                        android:layout_height="@dimen/token_icon_small"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/tiny_8"
+                        android:src="@drawable/ic_coin_eth_small" />
+
+                    <TextView
+                        android:id="@+id/token_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/ethereum" />
+                </LinearLayout>
+
+                <com.alphawallet.app.widget.CopyTextView
+                    android:id="@+id/token_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/Aw.Typography.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_16"
+                android:text="@string/subtitle_from" />
+
+            <com.alphawallet.app.widget.CopyTextView
+                android:id="@+id/from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                style="@style/Aw.Typography.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/subtitle_to" />
+
+            <com.alphawallet.app.widget.CopyTextView
+                android:id="@+id/to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Aw.Typography.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/subtitle_block" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/pending_spinner"
+                            android:layout_width="@dimen/token_icon_small"
+                            android:layout_height="@dimen/token_icon_small"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="@dimen/tiny_8"
+                            android:contentDescription="@string/empty"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/block_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="4238793" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_gas_fee"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Aw.Typography.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/subtitle_gas_used" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/gas_used"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="21,000" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/mini_4"
+                            android:text="Gwei" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_16"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/layout_network_fee"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Aw.Typography.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/subtitle_network_fee" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/network_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="0.002" />
+
+                        <TextView
+                            android:id="@+id/text_fee_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/mini_4"
+                            android:text="@string/eth" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_gas_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+
+                    <TextView
+                        android:id="@+id/title_gas_price"
+                        style="@style/Aw.Typography.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/subtitle_gas_price" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/gas_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="1.2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/mini_4"
+                            android:text="Gwei" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_1559"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:layout_marginTop="6dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Aw.Typography.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gas_max" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_gas_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="35" />
+
+                        <TextView
+                            android:id="@+id/text_gas_max_unit"
+                            android:layout_marginStart="@dimen/dp5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gwei" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Aw.Typography.Label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/priority_fee" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/text_priority_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="1.2" />
+
+                        <TextView
+                            android:layout_marginStart="@dimen/dp5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Gwei" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/Aw.Typography.Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_16"
+                android:text="@string/subtitle_transaction_time" />
+
+            <TextView
+                android:id="@+id/txn_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="September 4, 2017 at 2:32:12 PM" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

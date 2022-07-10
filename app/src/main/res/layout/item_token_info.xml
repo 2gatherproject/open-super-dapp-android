@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/base_24"
+        android:paddingVertical="@dimen/standard_16">
+
+        <TextView
+            android:id="@+id/label"
+            style="@style/Aw.Typography.Label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_weight="0.4"
+            android:ellipsize="end"
+            android:singleLine="true"
+            tools:text="Balance" />
+
+        <TextView
+            android:id="@+id/value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:ellipsize="end"
+            android:gravity="end|center_vertical"
+            android:singleLine="true"
+            tools:text="0.00" />
+
+        <TextView
+            android:id="@+id/value_long"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:ellipsize="end"
+            android:gravity="end|center_vertical"
+            android:maxLines="2"
+            android:visibility="gone"
+            tools:text="The smallest of the seven inhabited Aeolian Islands"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/Aw.Component.Separator"
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginEnd="@dimen/dp16" />
+</LinearLayout>

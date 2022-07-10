@@ -1,0 +1,16 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    compileSdk versions.compileSdk
+
+    defaultConfig {
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+    }
+    compileOptions {
+        sourceCompatibility versions.sourceCompat
+        targetCompatibility versions.targetCompat
+    }
+}

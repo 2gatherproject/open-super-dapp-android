@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View style="@style/Aw.Component.Separator" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/standard_16">
+
+        <TextView
+            android:id="@+id/text_message_title"
+            style="@style/Aw.Typography.Label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/small_12"
+            android:layout_weight="0.8"
+            android:gravity="start"
+            android:text="@string/message_to_sign" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:layout_weight="3.1"
+            android:fillViewport="true"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:id="@+id/text_sign_data_max"
+                style="@style/Aw.Typography.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                tools:text="Message:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337" />
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/text_sign_data"
+            style="@style/Aw.Typography.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3.1"
+            android:gravity="start"
+            android:maxLines="4"
+            android:visibility="visible"
+            tools:text="Message:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337\nMessage:\n  Hi Alice!\nA number:\n 1337" />
+
+        <ImageView
+            android:id="@+id/image_more"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="0.6"
+            android:background="@color/transparent"
+            android:padding="@dimen/mini_4"
+            android:src="@drawable/ic_expand_more"
+            app:tint="?colorControlNormal" />
+
+    </LinearLayout>
+
+</LinearLayout>

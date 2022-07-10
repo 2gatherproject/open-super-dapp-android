@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_simple_toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/layout_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/holding_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_define_request"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <com.alphawallet.app.widget.InputAmount
+                    android:id="@+id/input_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:visibility="visible"
+                    custom:label="@string/generate_payment_request"
+                    custom:show_allFunds="false"
+                    custom:show_header="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/qr_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/holding_view"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_action_qrx" />
+
+        <com.alphawallet.app.widget.CopyTextView
+            android:id="@+id/copy_wallet_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/qr_image"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <com.alphawallet.app.widget.FunctionButtonBar
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+</LinearLayout>

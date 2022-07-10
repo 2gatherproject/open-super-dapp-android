@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_simple_toolbar" />
+
+    <View style="@style/Aw.Component.Separator" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.alphawallet.app.widget.NotificationView
+                android:id="@+id/notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include layout="@layout/item_warning" />
+
+            <include layout="@layout/item_update" />
+
+            <View
+                android:id="@+id/warning_separator"
+                style="@style/Aw.Component.Separator"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.alphawallet.app.widget.StandardHeader
+                android:id="@+id/layout_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:headerText="@string/wallet_label" />
+
+            <LinearLayout
+                android:id="@+id/layout_settings_wallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <com.alphawallet.app.widget.StandardHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:headerText="@string/system" />
+
+            <LinearLayout
+                android:id="@+id/layout_settings_system"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <com.alphawallet.app.widget.StandardHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                custom:headerText="@string/support" />
+
+            <LinearLayout
+                android:id="@+id/layout_settings_support"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <RelativeLayout
+                android:id="@+id/layout_version"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?colorSurfaceSecondary"
+                android:paddingLeft="@dimen/standard_16"
+                android:paddingRight="@dimen/standard_16">
+
+                <TextView
+                    style="@style/Aw.Typography.Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/version" />
+
+                <TextView
+                    android:id="@+id/text_version"
+                    style="@style/Aw.Typography.Sub"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true" />
+
+            </RelativeLayout>
+
+            <View style="@style/Aw.Component.Separator" />
+
+            <RelativeLayout
+                android:id="@+id/layout_tokenscript_compatibility"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="?colorSurfaceSecondary"
+                android:paddingLeft="@dimen/standard_16"
+                android:paddingRight="@dimen/standard_16">
+
+                <TextView
+                    style="@style/Aw.Typography.Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/tokenscript_compatibility" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true">
+
+                    <TextView
+                        style="@style/Aw.Typography.Sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/version" />
+
+                    <TextView
+                        android:id="@+id/text_tokenscript_compatibility"
+                        style="@style/Aw.Typography.Sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/tiny_8" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

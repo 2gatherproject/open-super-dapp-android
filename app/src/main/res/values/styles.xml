@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="VectorEmptyImageView">
+        <item name="android:visibility">visible</item>
+    </style>
+
+    <!-- Alpha wallet -->
+    <!-- Base application theme. -->
+
+    <style name="Aw.Component.AppBarLayout" parent="Widget.Design.AppBarLayout">
+        <item name="elevation">0dp</item>
+        <item name="android:background">?colorSurface</item>
+    </style>
+
+    <style name="Aw.Component.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
+        <item name="contentInsetLeft">0dp</item>
+        <item name="contentInsetRight">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="navigationIconTint">?colorControlNormal</item>
+    </style>
+
+    <style name="Aw.Component.ActionItem" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">@dimen/cozy_20</item>
+        <item name="android:paddingEnd">@dimen/cozy_20</item>
+        <item name="android:paddingTop">@dimen/cozy_20</item>
+        <item name="android:paddingBottom">@dimen/cozy_20</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textSize">@dimen/sp17</item>
+    </style>
+
+    <style name="Aw.Component.BottomSheet" parent="">
+        <item name="android:background">?colorSurface</item>
+    </style>
+
+    <style name="Aw.Component.CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="Aw.Component.RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="Aw.Component.TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">?colorAccent</item>
+        <item name="tabIndicatorHeight">3dp</item>
+        <item name="tabPaddingStart">25dp</item>
+        <item name="tabPaddingEnd">25dp</item>
+        <item name="tabTextAppearance">@style/Aw.Typography.Tab</item>
+        <item name="tabSelectedTextColor">?colorAccent</item>
+        <item name="tabTextColor">?android:textColorSecondary</item>
+        <item name="tabIndicatorFullWidth">true</item>
+    </style>
+
+    <style name="Aw.Component.TabLayout.Fixed">
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabGravity">fill</item>
+    </style>
+
+    <style name="Aw.Component.TabLayout.Scrollable">
+        <item name="tabMode">scrollable</item>
+        <item name="tabGravity">center</item>
+    </style>
+
+    <style name="Aw.Component.ChartTabLayout" parent="Widget.Design.TabLayout">
+        <item name="android:layout_margin">@dimen/standard_16</item>
+        <item name="tabGravity">center</item>
+        <item name="tabIndicatorFullWidth">true</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabPaddingStart">@dimen/cozy_20</item>
+        <item name="tabPaddingEnd">@dimen/cozy_20</item>
+        <item name="tabTextAppearance">@style/Aw.Typography.Tab.Chart</item>
+        <item name="tabBackground">@drawable/selector_chart_tab_background</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabTextColor">@color/selector_chart_tab_text</item>
+    </style>
+
+    <style name="Aw.Component.RecyclerView" parent="">
+        <item name="android:background">@color/surface</item>
+    </style>
+
+    <style name="Aw.Component.Separator" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">?colorSurfaceQuaternary</item>
+    </style>
+
+    <style name="Aw.Component.Separator.Large">
+        <item name="android:layout_height">50dp</item>
+    </style>
+
+    <style name="Aw.Component.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+    </style>
+
+    <style name="Aw.Component.Button" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:elevation">0dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:fontFamily">@font/font_semibold</item>
+        <item name="android:paddingLeft">@dimen/tiny_8</item>
+        <item name="android:paddingRight">@dimen/tiny_8</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/sp20</item>
+        <item name="cornerRadius">99dp</item>
+        <item name="rippleColor">@color/transparent</item>
+    </style>
+
+    <style name="Aw.Component.Button.Primary">
+        <item name="android:lines">1</item>
+        <item name="android:backgroundTint">@color/selector_button_primary</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="android:textColor">?colorSurface</item>
+    </style>
+
+    <style name="Aw.Component.Button.Secondary">
+        <item name="android:lines">1</item>
+        <item name="android:backgroundTint">@color/transparent</item>
+        <item name="android:textColor">?colorOnSurface</item>
+        <item name="strokeColor">?colorOnSurface</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="Aw.Component.Button.Icon" parent="Aw.Component.Button.Secondary">
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="iconTint">?android:textColorPrimary</item>
+    </style>
+
+    <style name="Aw.Component.Button.TextIcon">
+        <item name="android:backgroundTint">?colorSurfaceTertiary</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:padding">@dimen/standard_16</item>
+        <item name="android:textSize">@dimen/sp17</item>
+        <item name="iconPadding">@dimen/cozy_20</item>
+        <item name="iconGravity">textEnd</item>
+        <item name="iconTint">?colorAccent</item>
+        <item name="android:layout_margin">@dimen/cozy_20</item>
+        <item name="cornerRadius">5dp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="Aw.Component.Button.Suggestion" parent="Aw.Typography">
+        <item name="android:lines">1</item>
+        <item name="android:backgroundTint">?colorSurfaceQuaternary</item>
+        <item name="android:padding">@dimen/small_12</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="Aw.Component.QrScannerControl" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:drawablePadding">@dimen/standard_16</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:paddingTop">@dimen/standard_16</item>
+        <item name="android:paddingBottom">@dimen/standard_16</item>
+    </style>
+
+    <style name="Aw.Component.SeedWord" parent="Widget.MaterialComponents.TextView">
+        <item name="android:maxLines">1</item>
+        <item name="android:fontFamily">@font/font_regular</item>
+        <item name="android:background">@drawable/selector_seed_word_background</item>
+        <item name="android:textColor">@color/selector_seed_word_text</item>
+        <item name="android:paddingStart">@dimen/cozy_20</item>
+        <item name="android:paddingEnd">@dimen/cozy_20</item>
+        <item name="android:paddingTop">@dimen/small_12</item>
+        <item name="android:paddingBottom">@dimen/small_12</item>
+        <item name="android:textSize">@dimen/sp16</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Aw.Component.WhatsNewEntry" parent="Aw.Component.TextView">
+        <item name="android:paddingStart">@dimen/standard_16</item>
+        <item name="android:paddingEnd">@dimen/standard_16</item>
+        <item name="android:paddingBottom">@dimen/tiny_8</item>
+        <item name="android:drawableStart">@drawable/ic_icons_system_border_circle</item>
+        <item name="android:drawablePadding">@dimen/tiny_8</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="Aw.Component.TextView" parent="Widget.MaterialComponents.TextView">
+        <item name="android:textAppearance">@style/Aw.Typography</item>
+    </style>
+
+</resources>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_simple_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.alphawallet.app.widget.FunctionButtonBar
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+        <ScrollView
+            android:id="@+id/scroll_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/layoutButtons"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:id="@+id/layout_asset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <com.alphawallet.app.widget.NFTImageView
+                    android:id="@+id/layout_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    custom:webview_height="350" />
+
+                <LinearLayout
+                    android:id="@+id/layout_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_image"
+                    android:layout_marginTop="@dimen/standard_16"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/tiny_8"
+                    android:paddingRight="@dimen/tiny_8">
+
+                    <TextView
+                        android:id="@+id/id"
+                        style="@style/Aw.Typography.Sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/small_12"
+                        android:drawableLeft="@drawable/ic_token_id"
+                        android:drawablePadding="5dp"
+                        android:gravity="center_vertical"
+                        custom:text="1234" />
+
+                    <TextView
+                        android:id="@+id/generation"
+                        style="@style/Aw.Typography.Sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/small_12"
+                        android:drawableLeft="@drawable/ic_generation"
+                        android:drawablePadding="@dimen/mini_4"
+                        android:gravity="center_vertical"
+                        custom:text="1" />
+
+                    <TextView
+                        android:id="@+id/cooldown"
+                        style="@style/Aw.Typography.Sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_cooldown"
+                        android:drawablePadding="@dimen/mini_4"
+                        android:gravity="center_vertical"
+                        custom:text="10" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_name_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_details"
+                    android:layout_marginTop="@dimen/cozy_20"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/standard_16">
+
+                    <TextView
+                        android:id="@+id/name"
+                        style="@style/Aw.Typography.Title.SemiBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/small_12"
+                        custom:text="Name" />
+
+                    <TextView
+                        android:id="@+id/description"
+                        style="@style/Aw.Typography.Sub"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        custom:text="Description" />
+
+                </LinearLayout>
+
+                <com.alphawallet.app.ui.widget.entity.NFTAttributeLayout
+                    android:id="@+id/attributes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layout_name_desc" />
+
+                <TextView
+                    android:id="@+id/open_external"
+                    style="@style/Aw.Typography.SemiBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/attributes"
+                    android:layout_marginTop="@dimen/cozy_20"
+                    android:drawablePadding="@dimen/mini_4"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/standard_16"
+                    android:paddingRight="@dimen/standard_16"
+                    app:drawableRightCompat="@drawable/ic_forward"
+                    custom:text="Open Link" />
+
+            </RelativeLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
