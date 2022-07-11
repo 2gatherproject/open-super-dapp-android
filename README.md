@@ -8,17 +8,9 @@ A fully open source, open standard, decentralized ["super app"](https://en.wikip
 
 **_This software is pre-alpha, actively seeking contributors, donors and maintainers/leaders. Get in on the ground floor and help build something amazing!_**
 
-<form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="business" value="YZ58Q35VZXTZU" />
-<input type="hidden" name="no_recurring" value="0" />
-<input type="hidden" name="item_name" value="Donate to support the development of the Open Super Dapp and 2Gather! Github: https://github.com/2gatherproject" />
-<input type="hidden" name="currency_code" value="USD" />
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-</form>
+**_To donate, please use the [Paypal donate button on our website](https://2gather.one/)!_**
 
 _The OSD team plans to set up on [Open Collective](https://opencollective.com/) or similar platform for open budgeting and collaboration as soon as practical._
-
 
 ### Mission
 Open Super dApp aims to foster, and provide access to, a decentralized and secure digital [commons](https://en.wikipedia.org/wiki/Commons) for all.
