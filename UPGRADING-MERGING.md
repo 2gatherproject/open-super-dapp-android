@@ -48,7 +48,7 @@ A few steps are necessary to facilitate the connection between the upstream repo
 2. Run the script `./open-super-dapp/scripts/setup-local-repo.sh element-version alpha-wallet-version` (e.g. `./open-super-dapp/scripts/setup-local-repo.sh v1.4.24 v3.57.0`) in the root of the repo. This will add git remotes for the two upstream repos and add set the branches `element-main` and `alpha-wallet-main` to the specified version releases. This script can be run many times and will only perform necessary steps.
 3. Create a working branch off of the `main` branch (lets call it `WIP` for now).
 4. Merge the `element-main` branch into `WIP`, resolve any conflicts and commit changes.
-5. Merge the `alpha-wallet-main` branch into `WIP`, resolve any conflicts and commit changes.
+5. Merge the `alpha-wallet-main` branch into `WIP`, resolve any conflicts and commit changes. This may require use of git's `--allow-unrelated-histories` option.
 6. Check for new Alpha Wallet Java files and convert Dagger dependency injection to Hilt. (See existing files from previous releases of OSD for examples of how to do this.)
 7. Look for new colors used by Alpha Wallet and follow the process below to integrate them into the theming of Element.
 8. Lint the code base.

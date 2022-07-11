@@ -16,12 +16,12 @@ _The OSD team plans to set up on [Open Collective](https://opencollective.com/) 
 Open Super dApp aims to foster, and provide access to, a decentralized and secure digital [commons](https://en.wikipedia.org/wiki/Commons) for all.
 
 ### Goals and Principles
-* To be 100% [copyleft](https://en.wikipedia.org/wiki/Copyleft) open source
-* To be safe and secure
+* To be a [copyleft](https://en.wikipedia.org/wiki/Copyleft) open source project.
+* To be safe and secure.
 * To provide all of the capabilities inherent in private "super apps" of today.
-* To be democratically controlled, with its users as it primary stakeholders, rather than private shareholders
+* To be democratically controlled, with its users as it primary stakeholders, rather than private shareholders.
 * To demonstrate that we do not need private, corporate ["walled gardens"](https://en.wikipedia.org/wiki/Closed_platform)
-* To introduce people to the power of the emerging digital commons
+* To introduce people to the power of the emerging digital commons.
 
 ### License
 Open Super dApp is licensed with the [Cryptographic Autonomy License 1.0](LICENSE), which essentially has [two consequences](https://medium.com/holochain/understanding-the-cryptographic-autonomy-license-172ac920966d): 
