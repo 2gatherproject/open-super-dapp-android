@@ -5,13 +5,7 @@ import android.content.Intent;
 
 import com.alphawallet.app.ui.WalletsActivity;
 
-import javax.inject.Inject;
-
 public class ManageWalletsRouter {
-
-    @Inject
-    public ManageWalletsRouter() {
-    }
 
     public void open(Context context, boolean isClearStack) {
         Intent intent = new Intent(context, WalletsActivity.class);

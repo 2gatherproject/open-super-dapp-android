@@ -2,12 +2,11 @@ package com.alphawallet.app.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import androidx.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
-import androidx.annotation.Nullable;
 
 import com.alphawallet.token.entity.SigReturnType;
 import com.alphawallet.token.entity.XMLDsigDescriptor;
@@ -20,7 +19,7 @@ public class CertifiedToolbarView extends MaterialToolbar
     private Activity activity;
     private AWalletAlertDialog dialog;
     private final ProgressBar downloadSpinner;
-    private int lockResource;
+    private int lockResource = 0;
 
     public CertifiedToolbarView(Context ctx, @Nullable AttributeSet attrs)
     {
@@ -69,6 +68,13 @@ public class CertifiedToolbarView extends MaterialToolbar
         }
 
         if (lockResource != 0) lockStatus.setImageResource(lockResource);
+    }
+
+    public void hideCertificateResource()
+    {
+        ImageView lockStatus = findViewById(R.id.image_lock);
+        lockStatus.setVisibility(View.GONE);
+        stopDownload();
     }
 
     private void showCertificateDetails(final XMLDsigDescriptor sigData)

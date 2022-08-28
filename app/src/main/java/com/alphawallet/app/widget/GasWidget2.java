@@ -220,7 +220,7 @@ public class GasWidget2 extends LinearLayout implements Runnable, GasWidgetInter
         try(Realm realm = tokensService.getTickerRealmInstance())
         {
             RealmGasSpread rgs = realm.where(RealmGasSpread.class)
-                .equalTo("chainId", token.tokenInfo.chainId).findFirst();
+                    .equalTo("chainId", token.tokenInfo.chainId).findFirst();
 
             if (rgs != null)
             {
@@ -293,7 +293,7 @@ public class GasWidget2 extends LinearLayout implements Runnable, GasWidgetInter
 
         Token baseCurrency = tokensService.getTokenOrBase(token.tokenInfo.chainId, token.getWallet());
         BigInteger networkFee = gs.gasPrice.maxFeePerGas.multiply(getUseGasLimit());
-        String gasAmountInBase = BalanceUtils.getScaledValueScientific(new BigDecimal(networkFee), baseCurrency.tokenInfo.decimals);
+        String gasAmountInBase = BalanceUtils.getSlidingBaseValue(new BigDecimal(networkFee), baseCurrency.tokenInfo.decimals, GasSettingsActivity.GAS_PRECISION);
         if (gasAmountInBase.equals("0")) gasAmountInBase = "0.0001";
         String displayStr = context.getString(R.string.gas_amount, gasAmountInBase, baseCurrency.getSymbol());
 

@@ -17,6 +17,7 @@
 package org.matrix.android.sdk.api.session
 
 import androidx.annotation.MainThread
+import io.realm.RealmConfiguration
 import okhttp3.OkHttpClient
 import org.matrix.android.sdk.api.MatrixCoroutineDispatchers
 import org.matrix.android.sdk.api.auth.data.SessionParams
@@ -32,7 +33,6 @@ import org.matrix.android.sdk.api.session.crypto.CryptoService
 import org.matrix.android.sdk.api.session.events.EventService
 import org.matrix.android.sdk.api.session.file.ContentDownloadStateTracker
 import org.matrix.android.sdk.api.session.file.FileService
-import org.matrix.android.sdk.api.session.group.GroupService
 import org.matrix.android.sdk.api.session.homeserver.HomeServerCapabilitiesService
 import org.matrix.android.sdk.api.session.identity.IdentityService
 import org.matrix.android.sdk.api.session.integrationmanager.IntegrationManagerService
@@ -46,7 +46,6 @@ import org.matrix.android.sdk.api.session.pushrules.PushRuleService
 import org.matrix.android.sdk.api.session.room.RoomDirectoryService
 import org.matrix.android.sdk.api.session.room.RoomService
 import org.matrix.android.sdk.api.session.search.SearchService
-import org.matrix.android.sdk.api.session.securestorage.SecureStorageService
 import org.matrix.android.sdk.api.session.securestorage.SharedSecretStorageService
 import org.matrix.android.sdk.api.session.signout.SignOutService
 import org.matrix.android.sdk.api.session.space.SpaceService
@@ -155,11 +154,6 @@ interface Session {
     fun roomDirectoryService(): RoomDirectoryService
 
     /**
-     * Returns the GroupService associated with the session.
-     */
-    fun groupService(): GroupService
-
-    /**
      * Returns the UserService associated with the session.
      */
     fun userService(): UserService
@@ -198,11 +192,6 @@ interface Session {
      * Returns the SyncService associated with the session.
      */
     fun syncService(): SyncService
-
-    /**
-     * Returns the SecureStorageService associated with the session.
-     */
-    fun secureStorageService(): SecureStorageService
 
     /**
      * Returns the ProfileService associated with the session.
@@ -334,7 +323,12 @@ interface Session {
     fun getUiaSsoFallbackUrl(authenticationSessionId: String): String
 
     /**
-     * Maintenance API, allows to print outs info on DB size to logcat.
+     * Debug API, will print out info on DB size to logcat.
      */
     fun logDbUsageInfo()
+
+    /**
+     * Debug API, return the list of all RealmConfiguration used by this session.
+     */
+    fun getRealmConfigurations(): List<RealmConfiguration>
 }

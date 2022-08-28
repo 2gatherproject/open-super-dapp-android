@@ -1,8 +1,5 @@
 package com.alphawallet.app.util;
 
-import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
-import static org.web3j.protocol.core.methods.request.Transaction.createEthCallTransaction;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
@@ -37,6 +34,9 @@ import java.math.BigInteger;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
+import static org.web3j.protocol.core.methods.request.Transaction.createEthCallTransaction;
 
 import timber.log.Timber;
 

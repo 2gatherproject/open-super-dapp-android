@@ -46,8 +46,8 @@ import java.util.List;
 import java.util.Map;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import im.vector.app.BuildConfig;
 import im.vector.app.R;
-import im.vector.app.config.BuildConfig;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import timber.log.Timber;

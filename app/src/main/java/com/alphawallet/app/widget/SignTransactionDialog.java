@@ -18,13 +18,14 @@ import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import im.vector.app.R;
 import com.alphawallet.app.entity.AuthenticationCallback;
 import com.alphawallet.app.entity.AuthenticationFailType;
 import com.alphawallet.app.entity.Operation;
 
 import java.security.ProviderException;
 import java.util.concurrent.Executor;
+
+import im.vector.app.R;
 
 /**
  * Created by James on 7/06/2019.
@@ -174,8 +175,13 @@ public class SignTransactionDialog
         else if (km != null)
         {
             Intent intent = km.createConfirmDeviceCredentialIntent(activity.getString(R.string.unlock_private_key), "");
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            activity.startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS + callBackId.ordinal());
+            if (intent == null)
+            {
+                authCallback.authenticateFail("Can not unlock", AuthenticationFailType.BIOMETRIC_AUTHENTICATION_NOT_AVAILABLE, callBackId);
+            } else {
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                activity.startActivityForResult(intent, REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS + callBackId.ordinal());
+            }
         }
         else
         {

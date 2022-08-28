@@ -18,8 +18,6 @@ import com.alphawallet.app.viewmodel.TokenActivityViewModel;
 import com.alphawallet.app.widget.ActivityHistoryList;
 import com.alphawallet.ethereum.EthereumNetworkBase;
 
-import java.math.BigInteger;
-
 import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
 

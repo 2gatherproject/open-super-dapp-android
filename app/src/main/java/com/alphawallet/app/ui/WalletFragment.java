@@ -5,6 +5,7 @@ import static com.alphawallet.app.C.ADDED_TOKEN;
 import static com.alphawallet.app.C.ErrorCode.EMPTY_COLLECTION;
 import static com.alphawallet.app.C.Key.WALLET;
 import static com.alphawallet.app.repository.TokensRealmSource.ADDRESS_FORMAT;
+import static com.alphawallet.app.ui.HomeActivity.RESET_TOKEN_SERVICE;
 
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -81,6 +82,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import timber.log.Timber;
 
 /**
  * Created by justindeguzman on 2/28/18.
@@ -114,6 +116,13 @@ public class WalletFragment extends BaseFragment implements
     private RealmResults<RealmToken> realmUpdates;
     private LargeTitleView largeTitleView;
     private long realmUpdateTime;
+
+    private ActivityResultLauncher<Intent> networkSettingsHandler = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result ->
+            {
+                //send instruction to restart tokenService
+                getParentFragmentManager().setFragmentResult(RESET_TOKEN_SERVICE, new Bundle());
+            });
 
     @Nullable
     @Override
@@ -568,7 +577,7 @@ public class WalletFragment extends BaseFragment implements
                 wData = new WarningData(this);
                 wData.title = getString(R.string.time_to_backup_wallet);
                 wData.detail = getString(R.string.recommend_monthly_backup);
-                wData.buttonText = getString(R.string.back_up_wallet_action, viewModel.getWalletAddr().substring(0, 5));
+                wData.buttonText = getString(R.string.back_up_now);
                 wData.colour = R.color.text_secondary;
                 wData.wallet = viewModel.getWallet();
                 adapter.addWarning(wData);
@@ -577,7 +586,7 @@ public class WalletFragment extends BaseFragment implements
                 wData = new WarningData(this);
                 wData.title = getString(R.string.wallet_not_backed_up);
                 wData.detail = getString(R.string.not_backed_up_detail);
-                wData.buttonText = getString(R.string.back_up_wallet_action, viewModel.getWalletAddr().substring(0, 5));
+                wData.buttonText = getString(R.string.back_up_now);
                 wData.colour = R.color.error;
                 wData.wallet = viewModel.getWallet();
                 adapter.addWarning(wData);
@@ -613,7 +622,14 @@ public class WalletFragment extends BaseFragment implements
         handler.removeCallbacksAndMessages(null);
         if (realmUpdates != null)
         {
-            realmUpdates.removeAllChangeListeners();
+            try
+            {
+                realmUpdates.removeAllChangeListeners();
+            }
+            catch (Exception e)
+            {
+                Timber.e(e);
+            }
         }
         if (realm != null && !realm.isClosed()) realm.close();
         if (adapter != null && recyclerView != null) adapter.onDestroy(recyclerView);
@@ -665,7 +681,7 @@ public class WalletFragment extends BaseFragment implements
             });
 
     @Override
-    public void BackupClick(Wallet wallet)
+    public void backUpClick(Wallet wallet)
     {
         Intent intent = new Intent(getContext(), BackupKeyActivity.class);
         intent.putExtra(WALLET, wallet);
@@ -880,5 +896,13 @@ public class WalletFragment extends BaseFragment implements
     {
         Intent intent = new Intent(getActivity(), SearchActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onSwitchClicked()
+    {
+        Intent intent = new Intent(getActivity(), SelectNetworkFilterActivity.class);
+        intent.putExtra(C.EXTRA_SINGLE_ITEM, false);
+        networkSettingsHandler.launch(intent);
     }
 }

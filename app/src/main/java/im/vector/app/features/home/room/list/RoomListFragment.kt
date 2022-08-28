@@ -146,6 +146,10 @@ class RoomListFragment @Inject constructor(
                         (it.contentEpoxyController as? RoomSummaryPagedController)?.roomChangeMembershipStates = ms
                     }
         }
+        roomListViewModel.onEach(RoomListViewState::localRoomIds) {
+            // Local rooms should not exist anymore when the room list is shown
+            roomListViewModel.deleteLocalRooms(it)
+        }
     }
 
     private fun refreshCollapseStates() {
@@ -498,12 +502,15 @@ class RoomListFragment @Inject constructor(
                             isBigImage = true,
                             message = getString(R.string.room_list_rooms_empty_body)
                     )
+                RoomListDisplayMode.WALLET ->
+                    StateView.State.Empty(
+                            title = getString(R.string.wallet_label),
+                            image = ContextCompat.getDrawable(requireContext(), R.drawable.ic_alpha_launcher_foreground),
+                            isBigImage = true,
+                            message = getString(R.string.room_list_rooms_empty_body)
+                    )
                 RoomListDisplayMode.FILTERED ->
                     // Always display the content in this mode, because if the footer
-                    StateView.State.Content
-
-                RoomListDisplayMode.WALLET        ->
-                    // Should do nothing for now
                     StateView.State.Content
             }
             views.stateView.state = emptyState

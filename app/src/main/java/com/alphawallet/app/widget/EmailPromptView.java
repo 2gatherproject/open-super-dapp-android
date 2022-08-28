@@ -25,7 +25,6 @@ import java.util.Collections;
 import im.vector.app.R;
 
 
-
 public class EmailPromptView extends LinearLayout implements StandardFunctionInterface {
 
     static {

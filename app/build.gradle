@@ -167,10 +167,6 @@ android {
         buildConfigField "String", "GIT_BRANCH_NAME", "\"${gitBranchName()}\""
         buildConfigField "String", "BUILD_NUMBER", "\"${buildNumber}\""
 
-        buildConfigField "im.vector.app.features.VectorFeatures.OnboardingVariant", "ONBOARDING_VARIANT", "im.vector.app.features.VectorFeatures.OnboardingVariant.FTUE_AUTH"
-
-        buildConfigField "im.vector.app.features.crypto.keysrequest.OutboundSessionKeySharingStrategy", "outboundSessionKeySharingStrategy", "im.vector.app.features.crypto.keysrequest.OutboundSessionKeySharingStrategy.WhenTyping"
-
         buildConfigField "Long", "VOICE_MESSAGE_DURATION_LIMIT_MS", "120_000L"
 
         //  If set, MSC3086 asserted identity messages sent on VoIP calls will cause the call to appear in the room corresponding to the asserted identity.
@@ -275,6 +271,7 @@ android {
         debug {
             applicationIdSuffix ".debug"
             resValue "string", "app_name", "Element dbg"
+            resValue "color", "launcher_background", "#0DBD8B"
 
             buildConfigField "boolean", "LOW_PRIVACY_LOG_ENABLE", "false"
             // Set to true if you want to enable strict mode in debug
@@ -285,6 +282,7 @@ android {
 
         release {
             resValue "string", "app_name", "Element"
+            resValue "color", "launcher_background", "#0DBD8B"
 
             buildConfigField "boolean", "LOW_PRIVACY_LOG_ENABLE", "false"
             buildConfigField "boolean", "ENABLE_STRICT_MODE_LOGS", "false"
@@ -318,6 +316,7 @@ android {
             buildConfigField "boolean", "ALLOW_FCM_USE", "true"
             buildConfigField "String", "SHORT_FLAVOR_DESCRIPTION", "\"G\""
             buildConfigField "String", "FLAVOR_DESCRIPTION", "\"GooglePlay\""
+            buildConfigField "boolean", "ALLOW_EXTERNAL_UNIFIEDPUSH_DISTRIB", "true"
         }
 
         fdroid {
@@ -329,6 +328,7 @@ android {
             buildConfigField "boolean", "ALLOW_FCM_USE", "false"
             buildConfigField "String", "SHORT_FLAVOR_DESCRIPTION", "\"F\""
             buildConfigField "String", "FLAVOR_DESCRIPTION", "\"FDroid\""
+            buildConfigField "boolean", "ALLOW_EXTERNAL_UNIFIEDPUSH_DISTRIB", "true"
         }
 //
 //        analytics {
@@ -438,6 +438,7 @@ dependencies {
     implementation project(":library:multipicker")
     implementation 'androidx.multidex:multidex:2.0.1'
 
+    implementation libs.jetbrains.kotlinReflect
     implementation libs.jetbrains.coroutinesCore
     implementation libs.jetbrains.coroutinesAndroid
 
@@ -454,6 +455,7 @@ dependencies {
     implementation "com.gabrielittner.threetenbp:lazythreetenbp:0.10.0"
 
     implementation libs.squareup.moshi
+    implementation libs.squareup.moshiKt
     kapt libs.squareup.moshiKotlin
 
     // Lifecycle
@@ -463,6 +465,8 @@ dependencies {
 
     implementation libs.androidx.datastorepreferences
 
+    // Opus Encoder
+    implementation libs.element.opusencoder
 
     // Log
     implementation libs.jakewharton.timber
@@ -482,6 +486,12 @@ dependencies {
     kapt libs.airbnb.epoxyProcessor
     implementation libs.airbnb.epoxyPaging
     implementation libs.airbnb.mavericks
+
+    // Nightly
+    // API-only library
+    gplayImplementation libs.google.appdistributionApi
+    // Full SDK implementation
+    gplayImplementation libs.google.appdistribution
 
     // Work
     implementation libs.androidx.work
@@ -558,8 +568,10 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.22"
     kapt "com.google.dagger:dagger-android-processor:2.22"
 
-    // gplay flavor only
-    gplayImplementation('com.google.firebase:firebase-messaging:23.0.0') {
+    // UnifiedPush
+    implementation 'com.github.UnifiedPush:android-connector:2.0.0-beta2'
+    // UnifiedPush gplay flavor only
+    gplayImplementation('com.github.UnifiedPush:android-embedded_fcm_distributor:a0056aa939') {
         exclude group: 'com.google.firebase', module: 'firebase-core'
         exclude group: 'com.google.firebase', module: 'firebase-analytics'
         exclude group: 'com.google.firebase', module: 'firebase-measurement-connector'
@@ -624,8 +636,18 @@ dependencies {
         exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
     }
 
+    // Flipper, debug builds only
+    debugImplementation(libs.flipper.flipper) {
+        exclude group: 'com.facebook.fbjni', module: 'fbjni'
+    }
+    debugImplementation(libs.flipper.flipperNetworkPlugin) {
+        exclude group: 'com.facebook.fbjni', module: 'fbjni'
+    }
+    debugImplementation 'com.facebook.soloader:soloader:0.10.4'
+    debugImplementation "com.kgurgul.flipper:flipper-realm-android:2.2.0"
+
     // Activate when you want to check for leaks, from time to time.
-    //debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
     androidTestImplementation libs.androidx.testRunner
     androidTestImplementation libs.androidx.testRules
@@ -645,6 +667,7 @@ dependencies {
         exclude group: 'org.jetbrains.kotlin'
     }
     androidTestUtil libs.androidx.orchestrator
+    debugImplementation libs.androidx.fragmentTesting
 
     //Alpha Wallet
     // Ethereum client
@@ -676,7 +699,8 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.2'
 
     // Sugar
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+//    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+//    implementation libs.androidx.constraintLayout
     implementation 'com.github.apl-devs:appintro:v4.2.2'
     implementation 'com.romandanylyk:pageindicatorview:1.0.0'
 
@@ -715,12 +739,25 @@ dependencies {
     testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.9'
     testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.9'
 
+    // Component tests
+    testImplementation 'org.robolectric:robolectric:4.8'
+    testImplementation 'androidx.test:core:1.4.0'
+    testImplementation 'androidx.test.ext:junit:1.1.3'
+
+    // E2e tests
+    androidTestImplementation 'androidx.test:runner:1.4.0'
+    androidTestImplementation 'androidx.test:core:1.4.0'
+    androidTestUtil 'androidx.test:orchestrator:1.4.1'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: "com.android.support", module: "support-annotations"
     })
     androidTestImplementation('tools.fastlane:screengrab:1.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0'
 
     implementation 'com.google.firebase:firebase-crashlytics:18.0.1'
 

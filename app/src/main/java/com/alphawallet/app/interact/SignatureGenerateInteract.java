@@ -1,11 +1,9 @@
 package com.alphawallet.app.interact;
 
-import android.util.Log;
-
 import com.alphawallet.app.entity.ContractType;
+import com.alphawallet.app.repository.WalletRepositoryType;
 import com.alphawallet.app.entity.MessagePair;
 import com.alphawallet.app.entity.SignaturePair;
-import com.alphawallet.app.repository.WalletRepositoryType;
 
 import java.math.BigInteger;
 import java.util.List;

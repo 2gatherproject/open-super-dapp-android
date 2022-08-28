@@ -26,7 +26,6 @@ import android.text.format.DateUtils;
 
 import androidx.annotation.Nullable;
 
-import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.CoinGeckoTicker;
 import com.alphawallet.app.entity.DexGuruTicker;
 import com.alphawallet.app.entity.tokendata.TokenTicker;
@@ -131,8 +130,8 @@ public class TickerService
         sharedPrefs.commit();
 
         tickerUpdateTimer = Observable.interval(0, UPDATE_TICKER_CYCLE, TimeUnit.MINUTES)
-                    .doOnNext(l -> tickerUpdate())
-                    .subscribe();
+                .doOnNext(l -> tickerUpdate())
+                .subscribe();
     }
 
     private void tickerUpdate()
@@ -211,7 +210,7 @@ public class TickerService
                     }
                 }
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 Timber.e(e);
             }
@@ -272,7 +271,7 @@ public class TickerService
         for (TokenCardMeta tcm : erc20Tokens)
         {
             if (!dexGuruQuery.containsKey(tcm.tokenId) // don't include any token in the dexguru queue
-                && (!currentTickerMap.containsKey(tcm.getAddress())
+                    && (!currentTickerMap.containsKey(tcm.getAddress())
                     || currentTickerMap.get(tcm.getAddress()) < staleTime)) //include tokens who's tickers have gone stale
             {
                 lookupMap.put(tcm.getAddress().toLowerCase(), tcm);
@@ -549,7 +548,7 @@ public class TickerService
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                Timber.e(e);
                 rate = 0.0;
             }
 
@@ -614,12 +613,12 @@ public class TickerService
         if (ticker != null && address != null)
         {
             Single.fromCallable(() -> {
-                localSource.updateERC20Tickers(chainId, new HashMap<String, TokenTicker>()
-                {{ put(address, ticker); }});
-                return true;
-            }).subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe().isDisposed();
+                        localSource.updateERC20Tickers(chainId, new HashMap<String, TokenTicker>()
+                        {{ put(address, ticker); }});
+                        return true;
+                    }).subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe().isDisposed();
         }
     }
 

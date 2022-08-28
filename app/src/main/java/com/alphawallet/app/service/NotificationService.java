@@ -14,10 +14,12 @@ import android.net.Uri;
 import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alphawallet.app.C;
-import im.vector.app.R;
 import com.alphawallet.app.ui.HomeActivity;
+
+import im.vector.app.R;
 
 /**
  * Created by James on 25/04/2019.
@@ -70,7 +72,7 @@ public class NotificationService
         //openAppIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         openAppIntent.setData(Uri.parse(AWSTARTUP + content));
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
-                                                                openAppIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+                openAppIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alpha_notification)
@@ -126,7 +128,7 @@ public class NotificationService
                         != PackageManager.PERMISSION_DENIED))
         {
             Intent intent = new Intent(C.REQUEST_NOTIFICATION_ACCESS);
-            context.sendBroadcast(intent);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         }
     }
 }

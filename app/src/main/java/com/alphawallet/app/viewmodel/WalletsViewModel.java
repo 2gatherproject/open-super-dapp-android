@@ -36,6 +36,8 @@ import com.alphawallet.app.service.TokensService;
 import com.alphawallet.app.util.AWEnsResolver;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -251,16 +253,16 @@ public class WalletsViewModel extends BaseViewModel implements ServiceSyncCallba
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value ->
-                        {
-                            if (complete)
-                            {
-                                syncCallback.syncCompleted(wallet.address.toLowerCase(), value);
-                            }
-                            else
-                            {
-                                syncCallback.syncStarted(wallet.address.toLowerCase(), value);
-                            }
-                        }).isDisposed();
+                {
+                    if (complete)
+                    {
+                        syncCallback.syncCompleted(wallet.address.toLowerCase(), value);
+                    }
+                    else
+                    {
+                        syncCallback.syncStarted(wallet.address.toLowerCase(), value);
+                    }
+                }).isDisposed();
     }
 
     private void sendUnsyncedValue(Wallet wallet)
@@ -311,7 +313,7 @@ public class WalletsViewModel extends BaseViewModel implements ServiceSyncCallba
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
                     if (syncCount == 1) { syncCallback.syncCompleted(service.getCurrentAddress().toLowerCase(), value); }
-                        else { syncCallback.syncUpdate(service.getCurrentAddress().toLowerCase(), value); }
+                    else { syncCallback.syncUpdate(service.getCurrentAddress().toLowerCase(), value); }
                 }).isDisposed();
     }
 
@@ -333,7 +335,7 @@ public class WalletsViewModel extends BaseViewModel implements ServiceSyncCallba
         ensWrappingCheck = fetchWalletsInteract.fetch().toObservable()
                 .flatMap(Observable::fromArray)
                 .forEach(wallet -> ensCheck = ensResolver.reverseResolveEns(wallet.address)
-                                                    .onErrorReturnItem(wallet.ENSname != null ? wallet.ENSname : "")
+                        .onErrorReturnItem(wallet.ENSname != null ? wallet.ENSname : "")
                         .map(ensName -> { wallet.ENSname = ensName; return wallet;})
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -417,7 +419,7 @@ public class WalletsViewModel extends BaseViewModel implements ServiceSyncCallba
         return currentNetwork;
     }
 
-    public void StoreHDWallet(String address, KeyService.AuthenticationLevel authLevel)
+    public void storeHDWallet(String address, KeyService.AuthenticationLevel authLevel)
     {
         if (!address.equals(ZERO_ADDRESS))
         {

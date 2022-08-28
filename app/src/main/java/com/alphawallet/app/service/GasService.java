@@ -45,7 +45,6 @@ import java.math.BigInteger;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import im.vector.app.BuildConfig;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -148,7 +147,7 @@ public class GasService implements ContractGasProvider
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(updated -> {
                     Timber.d("Updated gas prices: %s", updated);
-                    }, Throwable::printStackTrace)
+                }, Throwable::printStackTrace)
                 .isDisposed();
 
         //also update EIP1559
@@ -401,7 +400,7 @@ public class GasService implements ContractGasProvider
     {
         if (!estimate.hasError() || chainId != 1) return Single.fromCallable(() -> estimate);
         else return networkRepository.getLastTransactionNonce(web3j, WHALE_ACCOUNT)
-            .flatMap(nonce -> ethEstimateGas(chainId, WHALE_ACCOUNT, nonce, toAddress, amount, finalTxData));
+                .flatMap(nonce -> ethEstimateGas(chainId, WHALE_ACCOUNT, nonce, toAddress, amount, finalTxData));
     }
 
     private BigInteger getLowGasPrice()
@@ -490,11 +489,11 @@ public class GasService implements ContractGasProvider
             }
             catch (org.json.JSONException j)
             {
-                Timber.d("Note: " + info.getShortName() + " does not appear to have EIP1559 support");
+                Timber.e("Note: " + info.getShortName() + " does not appear to have EIP1559 support");
             }
             catch (Exception e)
             {
-                Timber.w(e);
+                Timber.e(e);
             }
 
             return new FeeHistory();

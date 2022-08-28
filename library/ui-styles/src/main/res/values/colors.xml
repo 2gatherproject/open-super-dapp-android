@@ -149,22 +149,24 @@
     <color name="vctr_badge_color_border_light">@color/palette_white</color>
     <color name="vctr_badge_color_border_dark">@color/palette_black_950</color>
 
-    <!-- Alpha Wallet -->
-    <attr name="colorSurfaceQuinary" format="color" />
-    <color name="surface_quinary_dark">@color/mine</color>
-    <color name="surface_quinary_light">@color/mercury</color>
-
-    <attr name="colorSurfaceQuaternary" format="color"></attr>
-    <color name="colorSurfaceQuaternary_dark">@color/venus</color>
+    <attr name="colorSurfaceQuaternary" format="color" />
     <color name="colorSurfaceQuaternary_light">@color/mercury</color>
+    <color name="colorSurfaceQuaternary_dark">@color/venus</color>
 
-    <attr name="colorSurfaceTertiary" format="color"></attr>
-    <color name="colorSurfaceTertiary_dark">@color/mine</color>
+    <attr name="colorSurfaceAlpha" format="color" />
+    <color name="colorSurface_light">@color/white</color>
+    <color name="colorSurface_dark">@color/cod</color>
+
+    <attr name="colorSurfaceTertiary" format="color" />
     <color name="colorSurfaceTertiary_light">@color/concrete</color>
+    <color name="colorSurfaceTertiary_dark">@color/mine</color>
 
-    <attr name="colorSurfaceSecondary" format="color"/>
-    <color name="colorSurfaceSecondary_dark">@color/venus</color>
+    <attr name="colorSurfaceSecondary" format="color" />
     <color name="colorSurfaceSecondary_light">@color/alabaster</color>
+    <color name="colorSurfaceSecondary_dark">@color/venus</color>
 
+    <attr name="colorSurfaceQuinary" format="color" />
+    <color name="colorSurfaceQuinary_light">@color/mercury</color>
+    <color name="colorSurfaceQuinary_dark">@color/mine</color>
 
 </resources>

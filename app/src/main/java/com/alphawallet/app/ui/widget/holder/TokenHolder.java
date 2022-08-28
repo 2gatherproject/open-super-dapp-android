@@ -61,7 +61,7 @@ public class TokenHolder extends BinderViewHolder<TokenCardMeta> implements View
     private final RelativeLayout tokenLayout;
     private final MaterialCheckBox selectToken;
     private final ProgressBar tickerProgress;
-    
+
     public Token token;
     private TokensAdapterCallback tokensAdapterCallback;
 
@@ -282,7 +282,7 @@ public class TokenHolder extends BinderViewHolder<TokenCardMeta> implements View
         BigDecimal currencyChange = new BigDecimal(fiatBalance.doubleValue()).multiply((
                 new BigDecimal(ticker.percentChange24h)).divide(new BigDecimal(100)));
         String formattedValue =  TickerService.getCurrencyString(currencyChange.doubleValue());
-        
+
         this.textAppreciation.setTextColor(color);
         this.textAppreciation.setText(formattedValue);
     }

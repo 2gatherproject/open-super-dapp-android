@@ -45,8 +45,8 @@ public class CreateTransactionInteract
     public Single<String> create(Wallet from, String to, BigInteger subunitAmount, BigInteger gasPrice, BigInteger gasLimit, byte[] data, long chainId)
     {
         return transactionRepository.createTransactionWithSig(from, to, subunitAmount,
-                gasPrice, gasLimit, -1,
-                data, chainId)
+                        gasPrice, gasLimit, -1,
+                        data, chainId)
                 .map(txData -> txData.txHash)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -57,8 +57,8 @@ public class CreateTransactionInteract
         if (web3Tx.isLegacyTransaction())
         {
             return transactionRepository.createTransactionWithSig(from, web3Tx.recipient.toString(), web3Tx.value,
-                    web3Tx.gasPrice, web3Tx.gasLimit, web3Tx.nonce,
-                    !TextUtils.isEmpty(web3Tx.payload) ? Numeric.hexStringToByteArray(web3Tx.payload) : new byte[0], chainId)
+                            web3Tx.gasPrice, web3Tx.gasLimit, web3Tx.nonce,
+                            !TextUtils.isEmpty(web3Tx.payload) ? Numeric.hexStringToByteArray(web3Tx.payload) : new byte[0], chainId)
                     .subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread());
         }
@@ -68,11 +68,32 @@ public class CreateTransactionInteract
         }
     }
 
+    /**
+     * Used for LiFi Swap.
+     * This uses the `contract` from Web3Transaction instead of `recipient`.
+     * TODO: Consolidate with createWithSig()
+     */
+    public Single<TransactionData> createWithSig2(Wallet from, Web3Transaction web3Tx, long chainId)
+    {
+        return transactionRepository.createTransactionWithSig(
+                        from,
+                        web3Tx.contract.toString(),
+                        web3Tx.value,
+                        web3Tx.gasPrice,
+                        web3Tx.gasLimit,
+                        web3Tx.nonce,
+                        !TextUtils.isEmpty(web3Tx.payload) ? Numeric.hexStringToByteArray(web3Tx.payload) : new byte[0],
+                        chainId
+                )
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public Single<TransactionData> create1559WithSig(Wallet from, Web3Transaction web3Tx, long chainId)
     {
         return transactionRepository.create1559TransactionWithSig(from, web3Tx.recipient.toString(), web3Tx.value, web3Tx.gasLimit,
-                web3Tx.maxFeePerGas, web3Tx.maxPriorityFeePerGas, web3Tx.nonce,
-                !TextUtils.isEmpty(web3Tx.payload) ? Numeric.hexStringToByteArray(web3Tx.payload) : new byte[0], chainId)
+                        web3Tx.maxFeePerGas, web3Tx.maxPriorityFeePerGas, web3Tx.nonce,
+                        !TextUtils.isEmpty(web3Tx.payload) ? Numeric.hexStringToByteArray(web3Tx.payload) : new byte[0], chainId)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -80,8 +101,8 @@ public class CreateTransactionInteract
     public Single<TransactionData> createWithSig(Wallet from, BigInteger gasPrice, BigInteger gasLimit, String data, long chainId)
     {
         return transactionRepository.createTransactionWithSig(from, "", BigInteger.ZERO,
-                gasPrice, gasLimit, -1,
-                !TextUtils.isEmpty(data) ? Numeric.hexStringToByteArray(data) : new byte[0], chainId)
+                        gasPrice, gasLimit, -1,
+                        !TextUtils.isEmpty(data) ? Numeric.hexStringToByteArray(data) : new byte[0], chainId)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread());
     }

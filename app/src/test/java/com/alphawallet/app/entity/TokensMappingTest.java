@@ -2,7 +2,6 @@ package com.alphawallet.app.entity;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-
 import com.alphawallet.app.entity.tokendata.TokenGroup;
 import com.alphawallet.token.entity.ContractAddress;
 import com.google.gson.Gson;
@@ -52,5 +51,4 @@ public class TokensMappingTest {
         assertThat(contract.chainId, equalTo(456789L));
         assertThat(tokensMapping.getGroup(), equalTo(groupEnum));
     }
-
 }

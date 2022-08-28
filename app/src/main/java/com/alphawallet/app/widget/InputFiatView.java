@@ -17,7 +17,6 @@ import com.alphawallet.app.ui.widget.entity.NumericInput;
 
 import im.vector.app.R;
 
-
 public class InputFiatView extends LinearLayout {
     private final Context context;
     private final NumericInput amountInput;

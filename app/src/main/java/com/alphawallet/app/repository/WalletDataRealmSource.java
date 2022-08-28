@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.WalletType;
-import com.alphawallet.app.entity.tokenscript.TokenscriptFunction;
 import com.alphawallet.app.repository.entity.RealmKeyType;
 import com.alphawallet.app.repository.entity.RealmWalletData;
 import com.alphawallet.app.service.KeyService;
@@ -167,11 +166,11 @@ public class WalletDataRealmSource {
 
     public Single<Wallet> storeWallet(Wallet wallet) {
         return deleteWallet(wallet) //refresh data
-        .flatMap(deletedWallet -> Single.fromCallable(() -> {
-            storeKeyData(wallet);
-            storeWalletData(wallet);
-            return wallet;
-        }));
+                .flatMap(deletedWallet -> Single.fromCallable(() -> {
+                    storeKeyData(wallet);
+                    storeWalletData(wallet);
+                    return wallet;
+                }));
     }
 
     public void updateWalletData(Wallet wallet, Realm.Transaction.OnSuccess onSuccess)
@@ -482,31 +481,6 @@ public class WalletDataRealmSource {
         item.setBalance(wallet.balance);
         item.setENSAvatar(wallet.ENSAvatar);
         r.insertOrUpdate(item);
-    }
-
-    //Check for lost keystore wallets and recover
-    private void recoverLostWallets(Realm realm, Wallet[] keystoreWallets, Map<String, Wallet> walletList, KeyService keyService)
-    {
-        realm.executeTransaction(r -> {
-            for (Wallet w : keystoreWallets)
-            {
-                //check for orphaned keystore wallets
-                Wallet testWallet = walletList.get(w.address.toLowerCase());
-                if (testWallet == null)
-                {
-                    //do we have this in keystore as a valid address?
-                    if (keyService.hasKeystore(w.address.toLowerCase()))
-                    {
-                        //create keystore wallet
-                        w.type = WalletType.KEYSTORE;
-                        w.authLevel = KeyService.AuthenticationLevel.TEE_AUTHENTICATION;
-                        w.lastBackupTime = System.currentTimeMillis();
-                        storeKeyData(w, r);
-                        walletList.put(w.address.toLowerCase(), w);
-                    }
-                }
-            }
-        });
     }
 
     //One-time removal of the WalletTypeRealmInstance usage - this extra database was a

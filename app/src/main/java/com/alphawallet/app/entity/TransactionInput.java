@@ -25,7 +25,6 @@ import java.util.List;
 
 import static com.alphawallet.app.C.BURN_ADDRESS;
 import static com.alphawallet.app.C.ETHER_DECIMALS;
-import static com.alphawallet.app.entity.tokenscript.TokenscriptFunction.ZERO_ADDRESS;
 import static com.alphawallet.app.ui.widget.holder.TransactionHolder.TRANSACTION_BALANCE_PRECISION;
 
 /**

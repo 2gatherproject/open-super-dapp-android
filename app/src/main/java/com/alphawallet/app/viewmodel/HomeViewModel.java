@@ -1,21 +1,23 @@
 package com.alphawallet.app.viewmodel;
 
+import static com.alphawallet.app.viewmodel.WalletConnectViewModel.WC_SESSION_DB;
 import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
 
 import android.app.Activity;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.CryptoFunctions;
 import com.alphawallet.app.entity.FragmentMessenger;
@@ -41,12 +44,13 @@ import com.alphawallet.app.repository.EthereumNetworkRepositoryType;
 import com.alphawallet.app.repository.LocaleRepositoryType;
 import com.alphawallet.app.repository.PreferenceRepositoryType;
 import com.alphawallet.app.repository.TokenRepository;
+import com.alphawallet.app.repository.entity.RealmWCSession;
 import com.alphawallet.app.router.ExternalBrowserRouter;
 import com.alphawallet.app.router.ImportTokenRouter;
 import com.alphawallet.app.router.MyAddressRouter;
 import com.alphawallet.app.service.AnalyticsServiceType;
 import com.alphawallet.app.service.AssetDefinitionService;
-import com.alphawallet.app.service.TickerService;
+import com.alphawallet.app.service.RealmManager;
 import com.alphawallet.app.service.TokensService;
 import com.alphawallet.app.service.TransactionsService;
 import com.alphawallet.app.service.WalletConnectService;
@@ -58,6 +62,8 @@ import com.alphawallet.app.util.AWEnsResolver;
 import com.alphawallet.app.util.QRParser;
 import com.alphawallet.app.util.RateApp;
 import com.alphawallet.app.util.Utils;
+import com.alphawallet.app.walletconnect.WCClient;
+import com.alphawallet.app.walletconnect.entity.WCUtils;
 import com.alphawallet.app.widget.EmailPromptView;
 import com.alphawallet.app.widget.QRCodeActionsView;
 import com.alphawallet.app.widget.WhatsNewView;
@@ -72,6 +78,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -79,10 +86,12 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import im.vector.app.R;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import timber.log.Timber;
@@ -91,7 +100,6 @@ import timber.log.Timber;
 public class HomeViewModel extends BaseViewModel {
     private final String TAG = "HVM";
     public static final String ALPHAWALLET_DIR = "AlphaWallet";
-    public static final String ALPHAWALLET_FILE_URL = "https://1x.alphawallet.com/dl/latest.apk";
 
     private final MutableLiveData<NetworkInfo> defaultNetwork = new MutableLiveData<>();
     private final MutableLiveData<Transaction[]> transactions = new MutableLiveData<>();
@@ -106,11 +114,11 @@ public class HomeViewModel extends BaseViewModel {
     private final CurrencyRepositoryType currencyRepository;
     private final EthereumNetworkRepositoryType ethereumNetworkRepository;
     private final TransactionsService transactionsService;
-    private final TickerService tickerService;
     private final MyAddressRouter myAddressRouter;
     private final AnalyticsServiceType analyticsService;
     private final ExternalBrowserRouter externalBrowserRouter;
     private final OkHttpClient httpClient;
+    private final RealmManager realmManager;
 
     private CryptoFunctions cryptoFunctions;
     private ParseMagicLink parser;
@@ -133,10 +141,10 @@ public class HomeViewModel extends BaseViewModel {
             EthereumNetworkRepositoryType ethereumNetworkRepository,
             MyAddressRouter myAddressRouter,
             TransactionsService transactionsService,
-            TickerService tickerService,
             AnalyticsServiceType analyticsService,
             ExternalBrowserRouter externalBrowserRouter,
-            OkHttpClient httpClient) {
+            OkHttpClient httpClient,
+            RealmManager realmManager) {
         this.preferenceRepository = preferenceRepository;
         this.importTokenRouter = importTokenRouter;
         this.localeRepository = localeRepository;
@@ -147,10 +155,11 @@ public class HomeViewModel extends BaseViewModel {
         this.ethereumNetworkRepository = ethereumNetworkRepository;
         this.myAddressRouter = myAddressRouter;
         this.transactionsService = transactionsService;
-        this.tickerService = tickerService;
         this.analyticsService = analyticsService;
         this.externalBrowserRouter = externalBrowserRouter;
         this.httpClient = httpClient;
+        this.realmManager = realmManager;
+
 
         this.preferenceRepository.incrementLaunchCount();
     }
@@ -176,11 +185,14 @@ public class HomeViewModel extends BaseViewModel {
         return splashActivity;
     }
 
-    public void prepare() {
+    public void prepare(Activity activity) {
         progress.postValue(false);
         disposable = genericWalletInteract
                 .find()
-                .subscribe(this::onDefaultWallet, this::onError);
+                .subscribe(w -> {
+                    onDefaultWallet(w);
+                    initWalletConnectSessions(activity, w);
+                }, this::onError);
     }
 
     public void onClean()
@@ -199,7 +211,7 @@ public class HomeViewModel extends BaseViewModel {
                 .filter(wallet -> checkWalletNotEqual(wallet, importData))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(wallet -> importLink(wallet, activity, importData), this::onError);
+                .subscribe(wallet -> importLink(activity, importData), this::onError);
     }
 
     private boolean checkWalletNotEqual(Wallet wallet, String importData) {
@@ -226,7 +238,7 @@ public class HomeViewModel extends BaseViewModel {
         return filterPass;
     }
 
-    private void importLink(Wallet wallet, Activity activity, String importData) {
+    private void importLink(Activity activity, String importData) {
         importTokenRouter.open(activity, importData);
     }
 
@@ -236,50 +248,6 @@ public class HomeViewModel extends BaseViewModel {
         Intent intent = new Intent(context, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
-    }
-
-    public void downloadAndInstall(String build, Context ctx) {
-        createDirectory();
-        downloadAPK(build, ctx);
-    }
-
-    private void createDirectory() {
-        //create XML repository directory
-        File directory = new File(
-                Environment.getExternalStorageDirectory()
-                        + File.separator + ALPHAWALLET_DIR);
-
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-    }
-
-    private void downloadAPK(String version, Context ctx) {
-        String destination = Environment.getExternalStorageDirectory()
-                + File.separator + ALPHAWALLET_DIR;
-
-        File testFile = new File(destination, "AlphaWallet-" + version + ".apk");
-        if (testFile.exists()) {
-            testFile.delete();
-        }
-        final Uri uri = Uri.parse("file://" + testFile.getPath());
-
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(ALPHAWALLET_FILE_URL));
-        request.setDescription(ctx.getString(R.string.alphawallet_update) + " " + version);
-        request.setTitle(ctx.getString(R.string.app_name));
-        request.setDestinationUri(uri);
-        final DownloadManager manager = (DownloadManager) ctx.getSystemService(Context.DOWNLOAD_SERVICE);
-        long downloadId = manager.enqueue(request);
-
-        //set BroadcastReceiver to install app when .apk is downloaded
-        BroadcastReceiver onComplete = new BroadcastReceiver() {
-            public void onReceive(Context ctxt, Intent intent) {
-                installIntent.postValue(testFile);
-                ctx.unregisterReceiver(this);
-            }
-        };
-
-        ctx.registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
     }
 
     public void getWalletName(Context context) {
@@ -342,15 +310,6 @@ public class HomeViewModel extends BaseViewModel {
         preferenceRepository.setFindWalletAddressDialogShown(isShown);
     }
 
-    public String getDefaultCurrency(){
-        return currencyRepository.getDefaultCurrency();
-    }
-
-    public void updateTickers()
-    {
-        tickerService.updateTickers();
-    }
-
     private void onENSError(Throwable throwable)
     {
         Timber.tag(TAG).e(throwable);
@@ -378,8 +337,6 @@ public class HomeViewModel extends BaseViewModel {
                     showActionSheet(activity, qrResult);
                     break;
                 case PAYMENT:
-                    showSend(activity, qrResult);
-                    break;
                 case TRANSFER:
                     showSend(activity, qrResult);
                     break;
@@ -464,7 +421,7 @@ public class HomeViewModel extends BaseViewModel {
         dialog.setContentView(contentView);
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
-        BottomSheetBehavior behavior = BottomSheetBehavior.from((View) contentView.getParent());
+        BottomSheetBehavior<View> behavior = BottomSheetBehavior.from((View) contentView.getParent());
         dialog.setOnShowListener(dialog -> behavior.setPeekHeight(contentView.getHeight()));
         dialog.show();
     }
@@ -496,7 +453,7 @@ public class HomeViewModel extends BaseViewModel {
      * This method will uniquely identify the device by creating an ID and store in preference.
      * This will be changed if user reinstall application or clear the storage explicitly.
      **/
-    public void identify(Context ctx)
+    public void identify()
     {
         String uuid = preferenceRepository.getUniqueId();
 
@@ -550,14 +507,6 @@ public class HomeViewModel extends BaseViewModel {
         preferenceRepository.setUpdateWarningCount(warns);
     }
 
-    public int getUpdateAsks() {
-        return preferenceRepository.getUpdateAsksCount();
-    }
-
-    public void setUpdateAsksCount(int asks) {
-        preferenceRepository.setUpdateAsksCount(asks);
-    }
-
     public void setInstallTime(int time) {
         preferenceRepository.setInstallTime(time);
     }
@@ -585,7 +534,7 @@ public class HomeViewModel extends BaseViewModel {
             emailPromptDialog.setCancelable(true);
             emailPromptDialog.setCanceledOnTouchOutside(true);
             emailPromptView.setParentDialog(emailPromptDialog);
-            BottomSheetBehavior behavior = BottomSheetBehavior.from((View) emailPromptView.getParent());
+            BottomSheetBehavior<View> behavior = BottomSheetBehavior.from((View) emailPromptView.getParent());
             emailPromptDialog.setOnShowListener(dialog -> behavior.setPeekHeight(emailPromptView.getHeight()));
             emailPromptDialog.show();
         }
@@ -607,33 +556,33 @@ public class HomeViewModel extends BaseViewModel {
                         .build();
 
                 Single.fromCallable(() -> {
-                    try (okhttp3.Response response = httpClient.newCall(request)
-                            .execute()) {
-                        return new Gson().<List<GitHubRelease>>fromJson(response.body().string(), new TypeToken<List<GitHubRelease>>() {
-                        }.getType());
-                    } catch (Exception e) {
-                        Timber.tag(TAG).e(e);
-                    }
-                    return null;
-                }).subscribeOn(Schedulers.io())
+                            try (okhttp3.Response response = httpClient.newCall(request)
+                                    .execute()) {
+                                return new Gson().<List<GitHubRelease>>fromJson(response.body().string(), new TypeToken<List<GitHubRelease>>() {
+                                }.getType());
+                            } catch (Exception e) {
+                                Timber.tag(TAG).e(e);
+                            }
+                            return null;
+                        }).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe((releases) -> {
 
-                    BottomSheetDialog dialog = new BottomSheetDialog(context);
+                            BottomSheetDialog dialog = new BottomSheetDialog(context);
 
-                    WhatsNewView view = new WhatsNewView(context, releases, v -> dialog.dismiss(), true);
-                    dialog.setContentView(view);
-                    dialog.setCancelable(true);
-                    dialog.setCanceledOnTouchOutside(true);
-                    BottomSheetBehavior behavior = BottomSheetBehavior.from((View) view.getParent());
-                    dialog.setOnShowListener(d -> behavior.setPeekHeight(view.getHeight()));
-                    dialog.show();
+                            WhatsNewView view = new WhatsNewView(context, releases, v -> dialog.dismiss(), true);
+                            dialog.setContentView(view);
+                            dialog.setCancelable(true);
+                            dialog.setCanceledOnTouchOutside(true);
+                            BottomSheetBehavior<View> behavior = BottomSheetBehavior.from((View) view.getParent());
+                            dialog.setOnShowListener(d -> behavior.setPeekHeight(view.getHeight()));
+                            dialog.show();
 
-                    preferenceRepository.setLastVersionCode(versionCode);
+                            preferenceRepository.setLastVersionCode(versionCode);
 
-                }).isDisposed();
+                        }).isDisposed();
             }
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Timber.e(e);
         }
 
     }
@@ -718,9 +667,59 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void sendMsgPumpToWC(Context context) {
+
         Timber.d("Start WC service");
-        Intent si = new Intent(context, WalletConnectService.class);
-        si.setAction(String.valueOf(WalletConnectActions.MSG_PUMP.ordinal()));
-        context.startService(si);
+        WCUtils.startServiceLocal(context, null, WalletConnectActions.MSG_PUMP);
+    }
+
+    // Restart walletconnect sessions if required
+    private void initWalletConnectSessions(Activity activity, Wallet wallet)
+    {
+        List<WCClient> clientMap = new ArrayList<>();
+        long cutOffTime = System.currentTimeMillis() - DateUtils.DAY_IN_MILLIS*2;
+        try (Realm realm = realmManager.getRealmInstance(WC_SESSION_DB))
+        {
+            RealmResults<RealmWCSession> items = realm.where(RealmWCSession.class)
+                    .greaterThan("lastUsageTime", cutOffTime)
+                    .sort("lastUsageTime", Sort.DESCENDING)
+                    .findAll();
+
+            for (RealmWCSession r : items)
+            {
+                String peerId = r.getPeerId();
+                if (!TextUtils.isEmpty(peerId))
+                {
+                    // restart the session if it's not already known by the service
+                    clientMap.add(WCUtils.createWalletConnectSession(activity, wallet,
+                            r.getSession(), peerId, r.getRemotePeerId()));
+                }
+            }
+        }
+
+        if (clientMap.size() > 0)
+        {
+            connectServiceAddClients(activity, clientMap);
+        }
+    }
+
+    private void connectServiceAddClients(Activity activity, List<WCClient> clientMap)
+    {
+        ServiceConnection connection = new ServiceConnection()
+        {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service)
+            {
+                WalletConnectService walletConnectService = ((WalletConnectService.LocalBinder) service).getService();
+                walletConnectService.addClients(clientMap);
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name)
+            {
+                Timber.tag(TAG).d("Service disconnected");
+            }
+        };
+
+        WCUtils.startServiceLocal(activity, connection, WalletConnectActions.CONNECT);
     }
 }

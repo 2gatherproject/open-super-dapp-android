@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import im.vector.app.BuildConfig;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -337,7 +336,7 @@ public class AWEnsResolver extends EnsResolver
         }
         catch (Exception e)
         {
-            Timber.tag("ENS").d(e.getMessage());
+            Timber.tag("ENS").e(e);
         }
 
         return "";

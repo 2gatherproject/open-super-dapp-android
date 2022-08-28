@@ -15,8 +15,8 @@ import io.reactivex.schedulers.Schedulers;
 public class DeleteWalletInteract {
 	private final WalletRepositoryType walletRepository;
 
-	@Inject
-	public DeleteWalletInteract(WalletRepositoryType walletRepository) {
+    @Inject
+    public DeleteWalletInteract(WalletRepositoryType walletRepository) {
 		this.walletRepository = walletRepository;
 	}
 

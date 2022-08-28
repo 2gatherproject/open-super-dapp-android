@@ -69,7 +69,7 @@ public class LegacyKeystore
             CipherInputStream cipherInputStream = new CipherInputStream(new FileInputStream(encryptedDataFilePath), outCipher);
             return KeyService.readBytesFromStream(cipherInputStream);
         } catch (UserNotAuthenticatedException e) {
-            throw new ServiceErrorException(ServiceErrorCode.USER_NOT_AUTHENTICATED, context.getString(R.string.authentication_error_alpha));
+            throw new ServiceErrorException(ServiceErrorCode.USER_NOT_AUTHENTICATED, context.getString(R.string.authentication_error));
         } catch (InvalidKeyException e) {
             throw new ServiceErrorException(ServiceErrorCode.INVALID_KEY, context.getString(R.string.invalid_private_key));
         } catch (IOException | CertificateException | KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidAlgorithmParameterException e) {

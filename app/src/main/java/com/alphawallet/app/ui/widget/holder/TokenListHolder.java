@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import im.vector.app.R;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.tokens.TokenCardMeta;
 import com.alphawallet.app.service.AssetDefinitionService;
@@ -18,6 +17,8 @@ import com.alphawallet.app.service.TokensService;
 import com.alphawallet.app.ui.widget.OnTokenManageClickListener;
 import com.alphawallet.app.widget.TokenIcon;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import im.vector.app.R;
 
 public class TokenListHolder extends BinderViewHolder<TokenCardMeta> implements View.OnClickListener, CompoundButton.OnCheckedChangeListener
 {

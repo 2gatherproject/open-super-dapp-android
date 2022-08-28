@@ -1,7 +1,5 @@
 package com.alphawallet.app.viewmodel;
 
-import static com.alphawallet.app.repository.TokenRepository.getWeb3jService;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -44,8 +42,6 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import im.vector.app.R;
 import io.reactivex.Observable;
@@ -53,6 +49,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+
+import static com.alphawallet.app.repository.TokenRepository.getWeb3jService;
+
+import javax.inject.Inject;
+
 @HiltViewModel
 public class TransactionDetailViewModel extends BaseViewModel {
     private final ExternalBrowserRouter externalBrowserRouter;
@@ -137,7 +138,7 @@ public class TransactionDetailViewModel extends BaseViewModel {
     public void startPendingTimeDisplay(final String txHash)
     {
         pendingUpdateDisposable = Observable.interval(0, 1, TimeUnit.SECONDS)
-            .doOnNext(l -> displayCurrentPendingTime(txHash)).subscribe();
+                .doOnNext(l -> displayCurrentPendingTime(txHash)).subscribe();
     }
 
     //TODO: move to display new transaction

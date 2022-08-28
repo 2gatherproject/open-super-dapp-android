@@ -17,7 +17,6 @@ import java.util.regex.Pattern;
 import im.vector.app.R;
 import timber.log.Timber;
 
-
 /**
  * Created by JB on 20/01/2021.
  */

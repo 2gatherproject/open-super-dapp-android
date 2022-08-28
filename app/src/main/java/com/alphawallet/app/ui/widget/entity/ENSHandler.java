@@ -4,8 +4,6 @@ package com.alphawallet.app.ui.widget.entity;
  * Created by JB on 28/10/2020.
  */
 
-import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -34,6 +32,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
 
 /**
  * Created by James on 4/12/2018.

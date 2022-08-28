@@ -1,10 +1,6 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.C.Key.TICKET_RANGE;
-import static com.alphawallet.app.C.Key.WALLET;
-import static com.alphawallet.app.C.PRUNE_ACTIVITY;
-import static com.alphawallet.app.entity.Operation.SIGN_DATA;
-
+import androidx.lifecycle.ViewModelProvider;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -12,6 +8,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -19,30 +18,33 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.alphawallet.app.C;
-import com.alphawallet.app.entity.FinishReceiver;
-import com.alphawallet.app.entity.SignAuthenticationCallback;
-import com.alphawallet.app.entity.SignaturePair;
-import com.alphawallet.app.entity.Wallet;
-import com.alphawallet.app.entity.tokens.Token;
-import com.alphawallet.app.ui.widget.entity.TicketRangeParcel;
-import com.alphawallet.app.viewmodel.RedeemSignatureDisplayModel;
 import com.alphawallet.app.web3.Web3TokenView;
 import com.alphawallet.app.web3.entity.PageReadyCallback;
-import com.alphawallet.app.widget.AWalletAlertDialog;
-import com.alphawallet.app.widget.SignTransactionDialog;
 import com.alphawallet.ethereum.EthereumNetworkBase;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.alphawallet.app.entity.FinishReceiver;
+import com.alphawallet.app.entity.SignAuthenticationCallback;
+import com.alphawallet.app.entity.SignaturePair;
+import com.alphawallet.app.entity.tokens.Token;
+import com.alphawallet.app.entity.Wallet;
+import com.alphawallet.app.ui.widget.entity.TicketRangeParcel;
 
-import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
 import timber.log.Timber;
+
+import com.alphawallet.app.viewmodel.RedeemSignatureDisplayModel;
+import com.alphawallet.app.widget.AWalletAlertDialog;
+import com.alphawallet.app.widget.SignTransactionDialog;
+
+import static com.alphawallet.app.C.Key.*;
+import static com.alphawallet.app.C.PRUNE_ACTIVITY;
+import static com.alphawallet.app.entity.Operation.SIGN_DATA;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by James on 24/01/2018.
@@ -147,7 +149,10 @@ public class RedeemSignatureDisplayActivity extends BaseActivity implements View
     protected void onDestroy()
     {
         super.onDestroy();
-        unregisterReceiver(finishReceiver);
+        if (finishReceiver != null)
+        {
+            finishReceiver.unregister();
+        }
     }
 
     @Override
@@ -173,7 +178,7 @@ public class RedeemSignatureDisplayActivity extends BaseActivity implements View
         dialog.setTitle(R.string.ticket_redeemed);
         dialog.setIcon(AWalletAlertDialog.SUCCESS);
         dialog.setOnDismissListener(v -> {
-            sendBroadcast(new Intent(PRUNE_ACTIVITY));
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(PRUNE_ACTIVITY));
         });
         dialog.show();
     }
@@ -253,7 +258,7 @@ public class RedeemSignatureDisplayActivity extends BaseActivity implements View
         dialog.setIcon(AWalletAlertDialog.ERROR);
         dialog.setMessage(getString(R.string.fail_sign));
         dialog.setOnDismissListener(v -> {
-            sendBroadcast(new Intent(PRUNE_ACTIVITY));
+            LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(PRUNE_ACTIVITY));
         });
         dialog.show();
     }

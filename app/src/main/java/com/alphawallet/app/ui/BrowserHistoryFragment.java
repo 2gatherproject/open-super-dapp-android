@@ -1,8 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_CLICK;
-import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_REMOVE_HISTORY;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +20,11 @@ import com.alphawallet.app.widget.AWalletAlertDialog;
 
 import java.util.List;
 
-import im.vector.app.R;
+import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_CLICK;
+import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_REMOVE_HISTORY;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import im.vector.app.R;
 
 @AndroidEntryPoint
 public class BrowserHistoryFragment extends Fragment {

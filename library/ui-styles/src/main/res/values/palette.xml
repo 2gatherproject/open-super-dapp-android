@@ -46,16 +46,16 @@
 
     <!--
 
-	These colors represent the branding palette of AlphaWallet.
+These colors represent the branding palette of AlphaWallet.
 
-	** ATTENTION **
-	If you want to customize or rebrand the app, define your new colors here.
+** ATTENTION **
+If you want to customize or rebrand the app, define your new colors here.
 
-	AVOID referencing these colors directly onto the view, as these do not provide
-	flexibility for light/dark modes. Prioritize using the color references defined
-	in `themes.xml` (ex. ?colorPrimary, ?colorSurface, etc).
+AVOID referencing these colors directly onto the view, as these do not provide
+flexibility for light/dark modes. Prioritize using the color references defined
+in `themes.xml` (ex. ?colorPrimary, ?colorSurface, etc).
 
-	-->
+-->
     <color name="pinkish_grey">#bdbdbd</color>
     <color name="pale_salmon">#fcbbb7</color>
     <color name="very_light_pink">#ffebea</color>
@@ -96,5 +96,6 @@
     <color name="venus">#232323</color>
     <color name="shark">#232325</color>
     <color name="atlantis">#7cca42</color>
+    <color name="yellow">#FDD835</color>
 
 </resources>

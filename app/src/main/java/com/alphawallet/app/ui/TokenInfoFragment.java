@@ -197,7 +197,7 @@ public class TokenInfoFragment extends BaseFragment {
         tabLayout.addTab(tabLayout.newTab().setText("1M"));
         tabLayout.addTab(tabLayout.newTab().setText("3M"));
         tabLayout.addTab(tabLayout.newTab().setText("1Y"));
-        
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab)

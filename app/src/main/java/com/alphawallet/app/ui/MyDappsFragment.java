@@ -24,7 +24,6 @@ import com.alphawallet.app.widget.AWalletAlertDialog;
 
 import java.util.List;
 
-import im.vector.app.BuildConfig;
 import im.vector.app.R;
 
 import timber.log.Timber;

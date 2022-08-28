@@ -1,7 +1,7 @@
 package com.alphawallet.app.interact;
 
-import com.alphawallet.app.entity.NetworkInfo;
 import com.alphawallet.app.repository.EthereumNetworkRepositoryType;
+import com.alphawallet.app.entity.NetworkInfo;
 
 import javax.inject.Inject;
 

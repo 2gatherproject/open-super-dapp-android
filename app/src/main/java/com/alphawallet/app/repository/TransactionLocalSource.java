@@ -1,12 +1,9 @@
 package com.alphawallet.app.repository;
 
 import com.alphawallet.app.entity.ActivityMeta;
-import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.Transaction;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.repository.entity.RealmAuxData;
-
-import org.web3j.protocol.core.methods.response.EthTransaction;
 
 import java.util.List;
 

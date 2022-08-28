@@ -1,18 +1,11 @@
 package com.alphawallet.app.ui.widget.adapter;
 
-import static com.alphawallet.app.service.TickerService.getCurrencyWithoutSymbol;
-import static java.lang.String.format;
-import static java.util.Objects.requireNonNull;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.entity.CurrencyItem;
 import com.alphawallet.app.repository.CurrencyRepository;
@@ -23,8 +16,14 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.vector.app.R;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
+import static com.alphawallet.app.service.TickerService.getCurrencyWithoutSymbol;
+import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
+
+import im.vector.app.R;
 
 public class PriceAlertAdapter extends RecyclerView.Adapter<PriceAlertAdapter.PriceAlertViewHolder>
 {

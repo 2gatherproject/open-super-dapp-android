@@ -22,12 +22,9 @@ import com.alphawallet.app.service.TokensService;
 import com.alphawallet.app.ui.TokenActivity;
 import com.alphawallet.app.ui.widget.entity.StatusType;
 import com.alphawallet.app.util.Utils;
-import com.alphawallet.app.widget.ChainName;
 import com.alphawallet.app.widget.TokenIcon;
 import com.alphawallet.app.repository.EthereumNetworkBase;
 import com.alphawallet.token.entity.ContractAddress;
-
-import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
 
 public class TransactionHolder extends BinderViewHolder<TransactionMeta> implements View.OnClickListener
 {

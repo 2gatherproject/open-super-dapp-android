@@ -1,18 +1,11 @@
 package com.alphawallet.app.entity;
 
-import static com.alphawallet.token.tools.ParseMagicLink.currencyLink;
-import static com.alphawallet.token.tools.ParseMagicLink.spawnable;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Base64;
 
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.TokenRepository;
-import com.alphawallet.token.entity.MagicLinkData;
-import com.alphawallet.token.entity.MessageData;
-import com.alphawallet.token.entity.SalesOrderMalformed;
-import com.alphawallet.token.tools.ParseMagicLink;
 
 import org.web3j.crypto.Sign;
 
@@ -20,7 +13,13 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.vector.app.BuildConfig;
+import com.alphawallet.token.entity.MagicLinkData;
+import com.alphawallet.token.entity.MessageData;
+import com.alphawallet.token.entity.SalesOrderMalformed;
+import com.alphawallet.token.tools.ParseMagicLink;
+
+import static com.alphawallet.token.tools.ParseMagicLink.currencyLink;
+import static com.alphawallet.token.tools.ParseMagicLink.spawnable;
 
 import timber.log.Timber;
 

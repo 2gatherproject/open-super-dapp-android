@@ -23,22 +23,26 @@ import dagger.assisted.AssistedInject
 import im.vector.app.core.di.MavericksAssistedViewModelFactory
 import im.vector.app.core.di.hiltMavericksViewModelFactory
 import im.vector.app.core.platform.VectorViewModel
-import im.vector.app.features.location.LocationSharingServiceConnection
+import im.vector.app.features.location.live.StopLiveLocationShareUseCase
+import im.vector.app.features.location.live.tracking.LocationSharingServiceConnection
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import org.matrix.android.sdk.api.session.room.location.UpdateLiveLocationShareResult
 
-class LocationLiveMapViewModel @AssistedInject constructor(
-        @Assisted private val initialState: LocationLiveMapViewState,
+class LiveLocationMapViewModel @AssistedInject constructor(
+        @Assisted private val initialState: LiveLocationMapViewState,
         getListOfUserLiveLocationUseCase: GetListOfUserLiveLocationUseCase,
         private val locationSharingServiceConnection: LocationSharingServiceConnection,
-) : VectorViewModel<LocationLiveMapViewState, LocationLiveMapAction, LocationLiveMapViewEvents>(initialState), LocationSharingServiceConnection.Callback {
+        private val stopLiveLocationShareUseCase: StopLiveLocationShareUseCase,
+) : VectorViewModel<LiveLocationMapViewState, LiveLocationMapAction, LiveLocationMapViewEvents>(initialState), LocationSharingServiceConnection.Callback {
 
     @AssistedFactory
-    interface Factory : MavericksAssistedViewModelFactory<LocationLiveMapViewModel, LocationLiveMapViewState> {
-        override fun create(initialState: LocationLiveMapViewState): LocationLiveMapViewModel
+    interface Factory : MavericksAssistedViewModelFactory<LiveLocationMapViewModel, LiveLocationMapViewState> {
+        override fun create(initialState: LiveLocationMapViewState): LiveLocationMapViewModel
     }
 
-    companion object : MavericksViewModelFactory<LocationLiveMapViewModel, LocationLiveMapViewState> by hiltMavericksViewModelFactory()
+    companion object : MavericksViewModelFactory<LiveLocationMapViewModel, LiveLocationMapViewState> by hiltMavericksViewModelFactory()
 
     init {
         getListOfUserLiveLocationUseCase.execute(initialState.roomId)
@@ -47,22 +51,28 @@ class LocationLiveMapViewModel @AssistedInject constructor(
         locationSharingServiceConnection.bind(this)
     }
 
-    override fun handle(action: LocationLiveMapAction) {
+    override fun onCleared() {
+        locationSharingServiceConnection.unbind(this)
+        super.onCleared()
+    }
+
+    override fun handle(action: LiveLocationMapAction) {
         when (action) {
-            is LocationLiveMapAction.AddMapSymbol -> handleAddMapSymbol(action)
-            is LocationLiveMapAction.RemoveMapSymbol -> handleRemoveMapSymbol(action)
-            LocationLiveMapAction.StopSharing -> handleStopSharing()
+            is LiveLocationMapAction.AddMapSymbol -> handleAddMapSymbol(action)
+            is LiveLocationMapAction.RemoveMapSymbol -> handleRemoveMapSymbol(action)
+            LiveLocationMapAction.StopSharing -> handleStopSharing()
+            LiveLocationMapAction.ShowMapLoadingError -> handleShowMapLoadingError()
         }
     }
 
-    private fun handleAddMapSymbol(action: LocationLiveMapAction.AddMapSymbol) = withState { state ->
+    private fun handleAddMapSymbol(action: LiveLocationMapAction.AddMapSymbol) = withState { state ->
         val newMapSymbolIds = state.mapSymbolIds.toMutableMap().apply { set(action.key, action.value) }
         setState {
             copy(mapSymbolIds = newMapSymbolIds)
         }
     }
 
-    private fun handleRemoveMapSymbol(action: LocationLiveMapAction.RemoveMapSymbol) = withState { state ->
+    private fun handleRemoveMapSymbol(action: LiveLocationMapAction.RemoveMapSymbol) = withState { state ->
         val newMapSymbolIds = state.mapSymbolIds.toMutableMap().apply { remove(action.key) }
         setState {
             copy(mapSymbolIds = newMapSymbolIds)
@@ -70,14 +80,27 @@ class LocationLiveMapViewModel @AssistedInject constructor(
     }
 
     private fun handleStopSharing() {
-        locationSharingServiceConnection.stopLiveLocationSharing(initialState.roomId)
+        viewModelScope.launch {
+            val result = stopLiveLocationShareUseCase.execute(initialState.roomId)
+            if (result is UpdateLiveLocationShareResult.Failure) {
+                _viewEvents.post(LiveLocationMapViewEvents.Error(result.error))
+            }
+        }
     }
 
-    override fun onLocationServiceRunning() {
+    private fun handleShowMapLoadingError() {
+        setState { copy(loadingMapHasFailed = true) }
+    }
+
+    override fun onLocationServiceRunning(roomIds: Set<String>) {
         // NOOP
     }
 
     override fun onLocationServiceStopped() {
         // NOOP
+    }
+
+    override fun onLocationServiceError(error: Throwable) {
+        _viewEvents.post(LiveLocationMapViewEvents.Error(error))
     }
 }

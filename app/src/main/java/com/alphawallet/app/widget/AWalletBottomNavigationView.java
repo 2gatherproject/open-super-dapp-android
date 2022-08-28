@@ -26,7 +26,6 @@ import im.vector.app.R;
 public class AWalletBottomNavigationView extends LinearLayout
 {
     private final TextView dappBrowserLabel;
-    private final TextView messengerLabel;
     private final TextView walletLabel;
     private final TextView settingsBadge;
     private final TextView settingsLabel;
@@ -45,7 +44,7 @@ public class AWalletBottomNavigationView extends LinearLayout
         walletLabel = findViewById(R.id.nav_wallet_text);
         activityLabel = findViewById(R.id.nav_activity_text);
         dappBrowserLabel = findViewById(R.id.nav_browser_text);
-        messengerLabel = findViewById(R.id.nav_messenger_text);
+        TextView messengerLabel = findViewById(R.id.nav_messenger_text);
         settingsTab = findViewById(R.id.settings_tab);
         settingsLabel = findViewById(R.id.nav_settings_text);
         settingsBadge = findViewById(R.id.settings_badge);

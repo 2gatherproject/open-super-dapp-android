@@ -17,7 +17,6 @@ import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.util.Utils;
 
 import im.vector.app.R;
-
 /**
  * Created by JB on 28/11/2020.
  */

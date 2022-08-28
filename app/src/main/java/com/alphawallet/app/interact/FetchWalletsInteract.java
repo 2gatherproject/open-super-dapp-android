@@ -2,16 +2,19 @@ package com.alphawallet.app.interact;
 
 import android.text.TextUtils;
 
-import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.repository.WalletItem;
 import com.alphawallet.app.repository.WalletRepositoryType;
 
-import javax.inject.Inject;
-
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+
+import com.alphawallet.app.entity.Wallet;
+
+import javax.inject.Inject;
 
 public class FetchWalletsInteract {
 

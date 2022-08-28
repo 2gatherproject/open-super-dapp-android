@@ -1,11 +1,5 @@
 package com.alphawallet.app.service;
 
-import static com.alphawallet.app.entity.CryptoFunctions.sigFromByteArray;
-import static com.alphawallet.token.tools.ParseMagicLink.currencyLink;
-import static com.alphawallet.token.tools.ParseMagicLink.spawnable;
-
-import android.util.Log;
-
 import com.alphawallet.app.entity.CryptoFunctions;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.tokens.Ticket;
@@ -27,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import im.vector.app.BuildConfig;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import okhttp3.MediaType;
@@ -36,6 +29,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import timber.log.Timber;
+
+import static com.alphawallet.app.entity.CryptoFunctions.sigFromByteArray;
+import static com.alphawallet.token.tools.ParseMagicLink.currencyLink;
+import static com.alphawallet.token.tools.ParseMagicLink.spawnable;
 
 public class AlphaWalletService
 {
@@ -234,7 +231,7 @@ public class AlphaWalletService
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                Timber.e(e);
             }
 
             return result;
@@ -324,7 +321,7 @@ public class AlphaWalletService
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                Timber.e(e);
             }
 
             return result;

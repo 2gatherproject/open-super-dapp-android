@@ -1,7 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.ui.AddCustomRPCNetworkActivity.CHAIN_ID;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,6 +20,8 @@ import com.alphawallet.ethereum.NetworkInfo;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.alphawallet.app.ui.AddCustomRPCNetworkActivity.CHAIN_ID;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;

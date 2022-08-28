@@ -5,10 +5,8 @@ import static com.alphawallet.app.service.TokensService.EXPIRED_CONTRACT;
 
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.util.Pair;
 
-import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.CustomViewSettings;
 import com.alphawallet.app.entity.NetworkInfo;

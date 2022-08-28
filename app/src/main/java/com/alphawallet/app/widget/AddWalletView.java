@@ -1,11 +1,10 @@
 package com.alphawallet.app.widget;
 
 import android.content.Context;
+import androidx.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-
-import androidx.annotation.LayoutRes;
 
 import im.vector.app.R;
 
@@ -28,7 +27,6 @@ public class AddWalletView extends FrameLayout implements View.OnClickListener {
 
     private void init(@LayoutRes int layoutId) {
         LayoutInflater.from(getContext()).inflate(layoutId, this, true);
-        findViewById(R.id.close_action).setOnClickListener(this);
         findViewById(R.id.new_account_action).setOnClickListener(this);
         findViewById(R.id.import_account_action).setOnClickListener(this);
         findViewById(R.id.watch_account_action).setOnClickListener(this);

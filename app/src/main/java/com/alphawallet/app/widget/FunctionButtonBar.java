@@ -10,7 +10,6 @@ import static com.alphawallet.ethereum.EthereumNetworkBase.XDAI_ID;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.VibrationEffect;
@@ -43,7 +42,6 @@ import com.alphawallet.app.repository.OnRampRepositoryType;
 import com.alphawallet.app.service.AssetDefinitionService;
 import com.alphawallet.app.ui.widget.NonFungibleAdapterInterface;
 import com.alphawallet.app.ui.widget.TokensAdapterCallback;
-import com.alphawallet.app.util.Utils;
 import com.alphawallet.token.entity.TSAction;
 import com.alphawallet.token.tools.TokenDefinition;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -109,15 +107,16 @@ public class FunctionButtonBar extends LinearLayout implements AdapterView.OnIte
         bottomSheet = new BottomSheetDialog(getContext());
         bottomSheet.setCancelable(true);
         bottomSheet.setCanceledOnTouchOutside(true);
-        moreActionsListView = new ListView(getContext());
+
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.layout_more_actions, this, false);
+        moreActionsListView = view.findViewById(R.id.list_view);
         moreActionsList = new ArrayList<>();
         moreActionsAdapter = new FunctionItemAdapter(getContext(),
                 R.layout.item_action, moreActionsList);
         moreActionsListView.setAdapter(moreActionsAdapter);
-        bottomSheet.setContentView(moreActionsListView);
+        bottomSheet.setContentView(view);
         moreActionsListView.setOnItemClickListener(this);
-        moreActionsListView.setDivider(new ColorDrawable(Utils.getColorFromAttr(getContext(), R.attr.colorSurfaceQuaternary)));
-        moreActionsListView.setDividerHeight(Utils.dp2px(context, 1));
     }
 
     private void resetButtonCount()
@@ -483,6 +482,11 @@ public class FunctionButtonBar extends LinearLayout implements AdapterView.OnIte
     public void setPrimaryButtonClickListener(OnClickListener listener)
     {
         primaryButton.setOnClickListener(listener);
+    }
+
+    public void setSecondaryButtonClickListener(OnClickListener listener)
+    {
+        secondaryButton.setOnClickListener(listener);
     }
 
     private void debounceButton(final View v)

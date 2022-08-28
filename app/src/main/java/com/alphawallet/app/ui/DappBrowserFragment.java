@@ -248,7 +248,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         else if (heightDifference == 0 && layoutParams.bottomMargin != navBarHeight)
         {
             //go back into full screen mode, and expand URL bar out
-            layoutParams.bottomMargin = navBarHeight;
+            layoutParams.bottomMargin = 0;
             webFrame.setLayoutParams(layoutParams);
             shrinkSearchBar();
         }
@@ -707,8 +707,8 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         expandCollapseView(layoutNavigation, false);
 
         disposable = Observable.zip(
-                Observable.interval(600, TimeUnit.MILLISECONDS).take(1),
-                Observable.fromArray(clear), (interval, item) -> item)
+                        Observable.interval(600, TimeUnit.MILLISECONDS).take(1),
+                        Observable.fromArray(clear), (interval, item) -> item)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::postBeginSearchSession);
@@ -1214,13 +1214,13 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
     public void onEthCall(Web3Call call)
     {
         Single.fromCallable(() -> {
-            //let's make the call
-            Web3j web3j = TokenRepository.getWeb3jService(activeNetwork.chainId);
-            //construct call
-            org.web3j.protocol.core.methods.request.Transaction transaction
-                    = createFunctionCallTransaction(wallet.address, null, null, call.gasLimit, call.to.toString(), call.value, call.payload);
-            return web3j.ethCall(transaction, call.blockParam).send();
-        }).map(EthCall::getValue)
+                    //let's make the call
+                    Web3j web3j = TokenRepository.getWeb3jService(activeNetwork.chainId);
+                    //construct call
+                    org.web3j.protocol.core.methods.request.Transaction transaction
+                            = createFunctionCallTransaction(wallet.address, null, null, call.gasLimit, call.to.toString(), call.value, call.payload);
+                    return web3j.ethCall(transaction, call.blockParam).send();
+                }).map(EthCall::getValue)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> web3.onCallFunctionSuccessful(call.leafPosition, result),
@@ -1387,7 +1387,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
                 confirmationDialog.fullExpand();
 
                 viewModel.calculateGasEstimate(wallet, Numeric.hexStringToByteArray(transaction.payload),
-                        activeNetwork.chainId, transaction.recipient.toString(), new BigDecimal(transaction.value), transaction.gasLimit)
+                                activeNetwork.chainId, transaction.recipient.toString(), new BigDecimal(transaction.value), transaction.gasLimit)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(estimate -> confirmationDialog.setGasEstimate(estimate),
@@ -2211,39 +2211,6 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
     public ActivityResultLauncher<Intent> gasSelectLauncher()
     {
         return getGasSettings;
-    }
-
-    // Required for if we have status bar showing
-    public void softKeyboardVisible()
-    {
-        if (getActivity() == null)
-        {
-            return;
-        }
-
-        //boolean requiresDappBrowserResize = !viewModel.fullScreenSelected();
-
-        Rect r = new Rect();
-        webFrame.getWindowVisibleDisplayFrame(r);
-
-        int heightDifference = webFrame.getRootView().getHeight() - r.bottom;
-
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) webFrame.getLayoutParams();
-
-        layoutParams.bottomMargin = heightDifference;
-        webFrame.setLayoutParams(layoutParams);
-    }
-
-    public void softKeyboardGone()
-    {
-        if (getActivity() == null)
-        {
-            return;
-        }
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) webFrame.getLayoutParams();
-        layoutParams.bottomMargin = ((HomeActivity) getActivity()).getNavBarHeight();
-        webFrame.setLayoutParams(layoutParams);
-        shrinkSearchBar();
     }
 
     @NotNull

@@ -1,7 +1,5 @@
 package com.alphawallet.app.service;
 
-import static com.alphawallet.app.entity.CryptoFunctions.sigFromByteArray;
-
 import android.text.TextUtils;
 
 import com.alphawallet.app.entity.Wallet;
@@ -43,12 +41,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static com.alphawallet.app.entity.CryptoFunctions.sigFromByteArray;
 
 public class KeystoreAccountService implements AccountKeystoreService
 {
@@ -60,7 +58,6 @@ public class KeystoreAccountService implements AccountKeystoreService
     private final KeyService keyService;
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Inject
     public KeystoreAccountService(File keyStoreFile, File baseFile, KeyService keyService) {
         keyFolder = keyStoreFile;
         databaseFolder = baseFile;
@@ -83,11 +80,11 @@ public class KeystoreAccountService implements AccountKeystoreService
     @Override
     public Single<Wallet> createAccount(String password) {
         return Single.fromCallable(() -> {
-            ECKeyPair ecKeyPair = Keys.createEcKeyPair();
-            WalletFile walletFile = org.web3j.crypto.Wallet.createLight(password, ecKeyPair);
-            return objectMapper.writeValueAsString(walletFile);
-        }).compose(upstream -> importKeystore(upstream.blockingGet(), password, password))
-        .subscribeOn(Schedulers.io());
+                    ECKeyPair ecKeyPair = Keys.createEcKeyPair();
+                    WalletFile walletFile = org.web3j.crypto.Wallet.createLight(password, ecKeyPair);
+                    return objectMapper.writeValueAsString(walletFile);
+                }).compose(upstream -> importKeystore(upstream.blockingGet(), password, password))
+                .subscribeOn(Schedulers.io());
     }
 
     /**
@@ -232,20 +229,20 @@ public class KeystoreAccountService implements AccountKeystoreService
     @Override
     public Single<SignatureFromKey> signTransaction(Wallet signer, String toAddress, BigInteger amount, BigInteger gasPrice, BigInteger gasLimit, long nonce, byte[] data, long chainId) {
         return Single.fromCallable(() -> {
-            RawTransaction rtx = formatRawTransaction(toAddress, amount, gasPrice, gasLimit, nonce, data);
-            byte[] signData = TransactionEncoder.encode(rtx, chainId);
-            SignatureFromKey returnSig = keyService.signData(signer, signData);
-            Sign.SignatureData sigData = sigFromByteArray(returnSig.signature);
-            if (sigData == null)
-            {
-                returnSig.sigType = SignatureReturnType.KEY_CIPHER_ERROR;
-                returnSig.failMessage = "Incorrect signature length"; //should never see this message
-            }
-            else sigData = TransactionEncoder.createEip155SignatureData(sigData, chainId);
-            returnSig.signature = encode(rtx, sigData);
-            return returnSig;
-        })
-        .subscribeOn(Schedulers.io());
+                    RawTransaction rtx = formatRawTransaction(toAddress, amount, gasPrice, gasLimit, nonce, data);
+                    byte[] signData = TransactionEncoder.encode(rtx, chainId);
+                    SignatureFromKey returnSig = keyService.signData(signer, signData);
+                    Sign.SignatureData sigData = sigFromByteArray(returnSig.signature);
+                    if (sigData == null)
+                    {
+                        returnSig.sigType = SignatureReturnType.KEY_CIPHER_ERROR;
+                        returnSig.failMessage = "Incorrect signature length"; //should never see this message
+                    }
+                    else sigData = TransactionEncoder.createEip155SignatureData(sigData, chainId);
+                    returnSig.signature = encode(rtx, sigData);
+                    return returnSig;
+                })
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -368,42 +365,42 @@ public class KeystoreAccountService implements AccountKeystoreService
     @Override
     public Single<Wallet[]> fetchAccounts() {
         return Single.fromCallable(() -> {
-            File[] contents = keyFolder.listFiles();
-            List<Date> fileDates = new ArrayList<>();
-            Map<Date, String> walletMap = new HashMap<>();
-            List<Wallet> wallets = new ArrayList<>();
-            if (contents == null || contents.length == 0) return new Wallet[0];
-            //Wallet[] result = new Wallet[contents.length];
-            for (File f : contents)
-            {
-                String fName = f.getName();
-                int index = fName.lastIndexOf("-");
-                String address = "0x" + fName.substring(index + 1);
-                if (Utils.isAddressValid(address))
-                {
-                    String d = fName.substring(5, index-1).replace("T", " ").substring(0, 23);
-                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss.SSS", Locale.ROOT);
-                    Date date = simpleDateFormat.parse(d);
-                    fileDates.add(date);
-                    walletMap.put(date, address);
-                }
-            }
+                    File[] contents = keyFolder.listFiles();
+                    List<Date> fileDates = new ArrayList<>();
+                    Map<Date, String> walletMap = new HashMap<>();
+                    List<Wallet> wallets = new ArrayList<>();
+                    if (contents == null || contents.length == 0) return new Wallet[0];
+                    //Wallet[] result = new Wallet[contents.length];
+                    for (File f : contents)
+                    {
+                        String fName = f.getName();
+                        int index = fName.lastIndexOf("-");
+                        String address = "0x" + fName.substring(index + 1);
+                        if (Utils.isAddressValid(address))
+                        {
+                            String d = fName.substring(5, index-1).replace("T", " ").substring(0, 23);
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss.SSS", Locale.ROOT);
+                            Date date = simpleDateFormat.parse(d);
+                            fileDates.add(date);
+                            walletMap.put(date, address);
+                        }
+                    }
 
-            Collections.sort(fileDates);
+                    Collections.sort(fileDates);
 
-            //now build a date sorted array:
-            for (Date d : fileDates)
-            {
-                String address = walletMap.get(d);
-                Wallet wallet = new Wallet(address);
-                wallet.type = WalletType.KEYSTORE;
-                wallet.walletCreationTime = d.getTime();
-                wallets.add(wallet);
-            }
+                    //now build a date sorted array:
+                    for (Date d : fileDates)
+                    {
+                        String address = walletMap.get(d);
+                        Wallet wallet = new Wallet(address);
+                        wallet.type = WalletType.KEYSTORE;
+                        wallet.walletCreationTime = d.getTime();
+                        wallets.add(wallet);
+                    }
 
-            return wallets.toArray(new Wallet[0]);
-        })
-        .subscribeOn(Schedulers.io());
+                    return wallets.toArray(new Wallet[0]);
+                })
+                .subscribeOn(Schedulers.io());
     }
 
     /**

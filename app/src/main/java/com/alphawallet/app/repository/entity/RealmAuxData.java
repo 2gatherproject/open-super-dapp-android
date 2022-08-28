@@ -9,7 +9,6 @@ import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.EventResult;
 import com.alphawallet.app.ui.widget.entity.ENSHandler;
 import com.alphawallet.app.ui.widget.entity.StatusType;
-import com.alphawallet.app.util.Utils;
 
 import java.math.BigInteger;
 import java.util.HashMap;

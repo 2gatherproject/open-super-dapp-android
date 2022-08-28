@@ -9,7 +9,6 @@ import androidx.annotation.LayoutRes;
 
 import im.vector.app.R;
 
-
 public class WalletFragmentActionsView extends FrameLayout implements View.OnClickListener {
     private OnClickListener onCopyWalletAddressClickListener;
     private OnClickListener onShowMyWalletAddressClickListener;

@@ -1,5 +1,7 @@
 package com.alphawallet.app.ui.widget.entity;
 
+import static com.alphawallet.app.entity.tokenscript.TokenscriptFunction.ZERO_ADDRESS;
+
 import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -15,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static com.alphawallet.app.entity.tokenscript.TokenscriptFunction.ZERO_ADDRESS;
 
 /**
  * Created by JB on 17/12/2020.

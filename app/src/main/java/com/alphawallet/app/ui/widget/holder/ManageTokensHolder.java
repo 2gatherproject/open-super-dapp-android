@@ -11,7 +11,6 @@ import com.alphawallet.app.ui.widget.TokensAdapterCallback;
 import com.alphawallet.app.ui.widget.entity.ManageTokensData;
 
 import im.vector.app.R;
-
 public class ManageTokensHolder extends BinderViewHolder<ManageTokensData> {
     public static final int VIEW_TYPE = 2015;
 

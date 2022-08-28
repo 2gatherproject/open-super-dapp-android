@@ -1,18 +1,17 @@
 package com.alphawallet.app.entity;
 
-import android.util.Base64;
-
-import com.alphawallet.app.util.Utils;
-import com.alphawallet.app.web3j.StructuredDataEncoder;
-import com.alphawallet.token.entity.CryptoFunctionsInterface;
-import com.alphawallet.token.entity.ProviderTypedData;
-
 import org.web3j.crypto.Keys;
 import org.web3j.crypto.Sign;
 
 import java.math.BigInteger;
 import java.security.SignatureException;
 import java.util.Arrays;
+import android.util.Base64;
+
+import com.alphawallet.app.util.Utils;
+import com.alphawallet.app.web3j.StructuredDataEncoder;
+import com.alphawallet.token.entity.CryptoFunctionsInterface;
+import com.alphawallet.token.entity.ProviderTypedData;
 
 import timber.log.Timber;
 import wallet.core.jni.Hash;

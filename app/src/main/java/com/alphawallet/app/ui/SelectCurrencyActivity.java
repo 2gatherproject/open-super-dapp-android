@@ -14,17 +14,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
-import im.vector.app.R;
 import com.alphawallet.app.entity.CurrencyItem;
-import com.alphawallet.app.ui.widget.divider.ListDivider;
 import com.google.android.material.radiobutton.MaterialRadioButton;
 
 import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import im.vector.app.R;
 
 @AndroidEntryPoint
-public class SelectCurrencyActivity extends BaseActivity {
+public class SelectCurrencyActivity extends BaseActivity
+{
     private RecyclerView recyclerView;
     private SelectCurrencyAdapter adapter;
     private String currentCurrency;
@@ -45,7 +45,6 @@ public class SelectCurrencyActivity extends BaseActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             adapter = new SelectCurrencyAdapter(currencyItems, currentCurrency);
             recyclerView.setAdapter(adapter);
-            recyclerView.addItemDecoration(new ListDivider(this));
         }
     }
 
@@ -81,7 +80,8 @@ public class SelectCurrencyActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class SelectCurrencyAdapter extends RecyclerView.Adapter<SelectCurrencyAdapter.SelectCurrencyViewHolder> {
+    public class SelectCurrencyAdapter extends RecyclerView.Adapter<SelectCurrencyAdapter.SelectCurrencyViewHolder>
+    {
         private final ArrayList<CurrencyItem> dataSet;
         private String selectedItemId;
 
@@ -144,7 +144,8 @@ public class SelectCurrencyActivity extends BaseActivity {
             return dataSet.size();
         }
 
-        class SelectCurrencyViewHolder extends RecyclerView.ViewHolder {
+        class SelectCurrencyViewHolder extends RecyclerView.ViewHolder
+        {
             MaterialRadioButton radioButton;
             ImageView flag;
             TextView code;

@@ -7,7 +7,7 @@ import android.widget.RatingBar;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.alphawallet.app.R;
+import im.vector.app.R;
 import com.alphawallet.app.repository.PreferenceRepositoryType;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.play.core.review.ReviewInfo;

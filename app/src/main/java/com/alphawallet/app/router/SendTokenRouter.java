@@ -10,8 +10,6 @@ import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.ui.SendActivity;
 
-import timber.log.Timber;
-
 public class SendTokenRouter {
     public void open(Activity context, String address, String symbol, int decimals, Wallet wallet, Token token, long chainId) {
         Intent intent = new Intent(context, SendActivity.class);

@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import im.vector.app.R;
 import com.alphawallet.app.entity.ActivityMeta;
 import com.alphawallet.app.entity.TransactionMeta;
 import com.alphawallet.app.entity.Wallet;
@@ -21,16 +20,12 @@ import com.alphawallet.app.repository.entity.RealmTransaction;
 import com.alphawallet.app.repository.entity.RealmTransfer;
 import com.alphawallet.app.service.TokensService;
 import com.alphawallet.app.ui.widget.adapter.ActivityAdapter;
-import com.alphawallet.app.ui.widget.divider.ListDivider;
 import com.alphawallet.app.ui.widget.entity.TokenTransferData;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
-import io.reactivex.disposables.Disposable;
+import im.vector.app.R;
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -42,14 +37,14 @@ import io.realm.Sort;
  */
 public class ActivityHistoryList extends LinearLayout
 {
-    private ActivityAdapter activityAdapter;
-    private Realm realm;
-    private RealmResults<RealmTransaction> realmTransactionUpdates;
-    private RealmQuery<RealmTransaction> realmUpdateQuery;
     private final RecyclerView recentTransactionsView;
     private final LinearLayout noTxNotice;
     private final ProgressBar loadingTransactions;
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private ActivityAdapter activityAdapter;
+    private Realm realm;
+    private RealmResults<RealmTransaction> realmTransactionUpdates;
+    private RealmQuery<RealmTransaction> realmUpdateQuery;
 
     public ActivityHistoryList(Context context, @Nullable AttributeSet attrs)
     {
@@ -58,7 +53,6 @@ public class ActivityHistoryList extends LinearLayout
 
         recentTransactionsView = findViewById(R.id.list);
         recentTransactionsView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recentTransactionsView.addItemDecoration(new ListDivider(getContext()));
         loadingTransactions = findViewById(R.id.loading_transactions);
         noTxNotice = findViewById(R.id.layout_no_recent_transactions);
     }
@@ -214,7 +208,8 @@ public class ActivityHistoryList extends LinearLayout
         handler.removeCallbacksAndMessages(null);
         if (realmTransactionUpdates != null) realmTransactionUpdates.removeAllChangeListeners();
         if (realm != null && !realm.isClosed()) realm.close();
-        if (activityAdapter != null && recentTransactionsView != null) activityAdapter.onDestroy(recentTransactionsView);
+        if (activityAdapter != null && recentTransactionsView != null)
+            activityAdapter.onDestroy(recentTransactionsView);
         realmUpdateQuery = null;
     }
 }

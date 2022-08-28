@@ -17,6 +17,21 @@
 #
 
 #######################################################################################################################
+# Check frozen class modification
+#######################################################################################################################
+
+echo "Check if frozen class modified"
+git diff "HEAD@{1}" --name-only | grep -e OlmInboundGroupSessionWrapper.kt -e OlmInboundGroupSessionWrapper2.kt
+FROZEN_CHANGED=$?
+if [ ${FROZEN_CHANGED} -eq 0 ]; then
+  echo "❌ FROZEN CLASS CHANGED ERROR"
+  exit 1
+else
+  echo "Frozen check OK"
+fi
+
+
+#######################################################################################################################
 # Check drawable quantity
 #######################################################################################################################
 
@@ -66,10 +81,6 @@ echo "Search for forbidden patterns in code..."
 
 ${searchForbiddenStringsScript} ./tools/check/forbidden_strings_in_code.txt \
     ./matrix-sdk-android/src/main/java \
-<<<<<<< HEAD
-=======
-<<<<<<<
->>>>>>> v1.4.19-v3.54-with-old-patch
     ./matrix-sdk-android-flow/src/main/java \
     ./library/core-utils/src/main/java \
     ./library/jsonviewer/src/main/java \
@@ -79,8 +90,6 @@ ${searchForbiddenStringsScript} ./tools/check/forbidden_strings_in_code.txt \
     ./vector/src/release/java \
     ./vector/src/fdroid/java \
     ./vector/src/gplay/java
-<<<<<<< HEAD
-=======
 =======
     ./matrix-sdk-android-rx/src/main/java \
     ./app/src/main/java \
@@ -88,8 +97,7 @@ ${searchForbiddenStringsScript} ./tools/check/forbidden_strings_in_code.txt \
     ./app/src/release/java \
     ./app/src/fdroid/java \
     ./app/src/gplay/java
->>>>>>>
->>>>>>> v1.4.19-v3.54-with-old-patch
+=======
 
 resultForbiddenStringInCode=$?
 
@@ -118,24 +126,17 @@ echo
 echo "Search for forbidden patterns in resources..."
 
 ${searchForbiddenStringsScript} ./tools/check/forbidden_strings_in_resources.txt \
-<<<<<<< HEAD
-=======
-<<<<<<<
->>>>>>> v1.4.19-v3.54-with-old-patch
     ./library/ui-styles/src/main/res/values \
     ./vector/src/main/res/color \
     ./vector/src/main/res/layout \
     ./vector/src/main/res/values \
     ./vector/src/main/res/xml
-<<<<<<< HEAD
-=======
 =======
     ./app/src/main/res/color \
     ./app/src/main/res/layout \
     ./app/src/main/res/values \
     ./app/src/main/res/xml
->>>>>>>
->>>>>>> v1.4.19-v3.54-with-old-patch
+=======
 
 resultForbiddenStringInResource=$?
 
@@ -175,7 +176,6 @@ echo "Search for kotlin files with more than ${maxLines} lines..."
 
 ${checkLongFilesScript} ${maxLines} \
     ./matrix-sdk-android/src/main/java \
-<<<<<<< HEAD
     ./matrix-sdk-android-flow/src/main/java \
     ./vector/src/androidTest/java \
     ./vector/src/debug/java \
@@ -185,7 +185,6 @@ ${checkLongFilesScript} ${maxLines} \
     ./vector/src/release/java \
     ./vector/src/sharedTest/java \
     ./vector/src/test/java
-=======
     ./matrix-sdk-android-rx/src/main/java \
     ./app/src/androidTest/java \
     ./app/src/debug/java \
@@ -195,7 +194,7 @@ ${checkLongFilesScript} ${maxLines} \
     ./app/src/release/java \
     ./app/src/sharedTest/java \
     ./app/src/test/java
->>>>>>> v1.4.19-v3.54-with-old-patch
+=======
 
 resultLongFiles=$?
 
@@ -206,11 +205,9 @@ resultLongFiles=$?
 echo
 echo "Search for png files in /drawable..."
 
-<<<<<<< HEAD
-ls -1U ./vector/src/main/res/drawable/*.png
-=======
 ls -1U ./app/src/main/res/drawable/*.png
->>>>>>> v1.4.19-v3.54-with-old-patch
+=======
+ls -1U ./vector/src/main/res/drawable/*.png
 resultTmp=$?
 
 # Inverse the result, cause no file found is an error for ls but this is what we want!

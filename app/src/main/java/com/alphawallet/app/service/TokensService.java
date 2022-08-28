@@ -2,17 +2,13 @@ package com.alphawallet.app.service;
 
 import static com.alphawallet.app.repository.TokensRealmSource.databaseKey;
 import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
-import static com.alphawallet.ethereum.EthereumNetworkBase.MATIC_ID;
-import static com.alphawallet.ethereum.EthereumNetworkBase.RINKEBY_ID;
 
 import android.text.TextUtils;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.Nullable;
 
-import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
 import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.ContractLocator;
@@ -50,6 +46,7 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 
+import im.vector.app.BuildConfig;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -141,7 +138,7 @@ public class TokensService
                         .filter(tokenInfo -> (!TextUtils.isEmpty(tokenInfo.name) || !TextUtils.isEmpty(tokenInfo.symbol)) && tokenInfo.chainId != 0)
                         .map(tokenInfo -> { tokenInfo.isEnabled = false; return tokenInfo; }) //set default visibility to false
                         .flatMap(tokenInfo -> tokenRepository.determineCommonType(tokenInfo).toObservable()
-                            .map(contractType -> tokenFactory.createToken(tokenInfo, contractType, ethereumNetworkRepository.getNetworkByChain(t.chainId).getShortName())))
+                                .map(contractType -> tokenFactory.createToken(tokenInfo, contractType, ethereumNetworkRepository.getNetworkByChain(t.chainId).getShortName())))
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io())
                         .subscribe(this::finishAddToken, err -> onCheckError(err, t), this::finishTokenCheck);
@@ -241,12 +238,12 @@ public class TokensService
         setupFilters();
 
         eventTimer = Single.fromCallable(() -> {
-            startupPass();
-            addUnresolvedContracts(ethereumNetworkRepository.getAllKnownContracts(getNetworkFilters()));
-            checkIssueTokens();
-            pendingTokenMap.clear();
-            return true;
-        }).subscribeOn(Schedulers.io())
+                    startupPass();
+                    addUnresolvedContracts(ethereumNetworkRepository.getAllKnownContracts(getNetworkFilters()));
+                    checkIssueTokens();
+                    pendingTokenMap.clear();
+                    return true;
+                }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateCycle, this::onError);
     }
@@ -646,15 +643,15 @@ public class TokensService
     private void checkOpenSea(long chainId)
     {
         if ((openSeaQueryDisposable != null && !openSeaQueryDisposable.isDisposed())
-            || openseaService == null || !EthereumNetworkBase.hasOpenseaAPI(chainId)
-            || !openseaService.canCheckChain(chainId)) return;
+                || openseaService == null || !EthereumNetworkBase.hasOpenseaAPI(chainId)
+                || !openseaService.canCheckChain(chainId)) return;
 
         NetworkInfo info = ethereumNetworkRepository.getNetworkByChain(chainId);
 
         if (info.chainId == transferCheckChain) return; //currently checking this chainId in TransactionsNetworkClient
 
         final Wallet wallet = new Wallet(currentAddress);
-        
+
         Timber.tag(TAG).d("Fetch from opensea : " + currentAddress + " : " + info.getShortName());
 
         openSeaCheckId = info.chainId;
@@ -983,7 +980,7 @@ public class TokensService
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io())
                         .subscribe())
-                        .isDisposed();
+                .isDisposed();
     }
 
     private Completable enableToken(String walletAddr, Token token)
@@ -1213,11 +1210,11 @@ public class TokensService
         {
             done = true;
             Single.fromCallable(() -> {
-                tickerService.deleteTickers();
-                return true;
-            }).subscribeOn(Schedulers.io())
+                        tickerService.deleteTickers();
+                        return true;
+                    }).subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io()).subscribe(b -> {
-            }).isDisposed();
+                    }).isDisposed();
         }
     }
 

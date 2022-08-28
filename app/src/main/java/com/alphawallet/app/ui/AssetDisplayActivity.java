@@ -1,8 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.C.Key.WALLET;
-import static com.alphawallet.app.widget.AWalletAlertDialog.WARNING;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,10 +47,15 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.alphawallet.app.C.Key.WALLET;
+import static com.alphawallet.app.widget.AWalletAlertDialog.WARNING;
 
 /**
  * Created by James on 22/01/2018.
@@ -80,7 +82,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 @AndroidEntryPoint
 public class AssetDisplayActivity extends BaseActivity implements StandardFunctionInterface, PageReadyCallback,
-                                                                    Runnable, ActionSheetCallback
+        Runnable, ActionSheetCallback
 {
     private static final int TOKEN_SIZING_DELAY = 3000; //3 seconds until timeout waiting for tokenview size calculation
 
@@ -244,7 +246,10 @@ public class AssetDisplayActivity extends BaseActivity implements StandardFuncti
     protected void onDestroy()
     {
         super.onDestroy();
-        unregisterReceiver(finishReceiver);
+        if (finishReceiver != null)
+        {
+            finishReceiver.unregister();
+        }
         viewModel.clearFocusToken();
         if (adapter != null) adapter.onDestroy(tokenView);
         viewModel.onDestroy();

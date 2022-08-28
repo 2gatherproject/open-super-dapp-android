@@ -38,7 +38,7 @@ public abstract class EthereumNetworkBase { // implements EthereumNetworkReposit
     public static final long PALM_ID = 0x2a15c308dL; //11297108109
     public static final long PALM_TEST_ID = 0x2a15c3083L; //11297108099
     public static final long KLAYTN_ID = 8217;
-    public static final long KLAYTN_BOABAB_ID = 1001;
+    public static final long KLAYTN_BAOBAB_ID = 1001;
     public static final long IOTEX_MAINNET_ID = 4689;
     public static final long IOTEX_TESTNET_ID = 4690;
     public static final long AURORA_MAINNET_ID = 1313161554;
@@ -51,7 +51,7 @@ public abstract class EthereumNetworkBase { // implements EthereumNetworkReposit
 
     public static final String MAINNET_RPC_URL = "https://mainnet.infura.io/v3/da3717f25f824cc1baa32d812386d93f";
     public static final String CLASSIC_RPC_URL = "https://www.ethercluster.com/etc";
-    public static final String XDAI_RPC_URL = "https://rpc.xdaichain.com";
+    public static final String XDAI_RPC_URL = "https://rpc.ankr.com/gnosis";
     public static final String POA_RPC_URL = "https://core.poa.network/";
     public static final String ROPSTEN_RPC_URL = "https://ropsten.infura.io/v3/da3717f25f824cc1baa32d812386d93f";
     public static final String RINKEBY_RPC_URL = "https://rinkeby.infura.io/v3/da3717f25f824cc1baa32d812386d93f";
@@ -111,9 +111,9 @@ public abstract class EthereumNetworkBase { // implements EthereumNetworkReposit
             put(ARTIS_TAU1_ID, new NetworkInfo("ARTIS tau1 (Test)", "ATS", ARTIS_TAU1_RPC_URL, "https://explorer.tau1.artis.network/tx/",
                     ARTIS_TAU1_ID, false));
             put(BINANCE_TEST_ID, new NetworkInfo("BSC TestNet (Test)", "T-BSC", BINANCE_TEST_RPC_URL, "https://explorer.binance.org/smart-testnet/tx/",
-                    BINANCE_MAIN_ID, false));
-            put(BINANCE_MAIN_ID, new NetworkInfo("Binance (BSC)", "BSC", BINANCE_MAIN_RPC_URL, "https://explorer.binance.org/smart/tx/",
                     BINANCE_TEST_ID, false));
+            put(BINANCE_MAIN_ID, new NetworkInfo("Binance (BSC)", "BSC", BINANCE_MAIN_RPC_URL, "https://explorer.binance.org/smart/tx/",
+                    BINANCE_MAIN_ID, false));
             put(HECO_ID, new NetworkInfo("Heco", "HT", HECO_RPC_URL, "https://hecoinfo.com/tx/",
                     HECO_ID, false));
             put(HECO_TEST_ID, new NetworkInfo("Heco (Test)", "HT", HECO_TEST_RPC_URL, "https://testnet.hecoinfo.com/tx/",
@@ -152,8 +152,8 @@ public abstract class EthereumNetworkBase { // implements EthereumNetworkReposit
 
             put(KLAYTN_ID, new NetworkInfo("Klaytn Cypress","KLAY", KLAYTN_RPC, "https://scope.klaytn.com/tx/",
                     KLAYTN_ID, false));
-            put(KLAYTN_BOABAB_ID, new NetworkInfo("Klaytn Boabab (Test)","KLAY", KLAYTN_BAOBAB_RPC, "https://baobab.scope.klaytn.com/tx/",
-                    KLAYTN_BOABAB_ID, false));
+            put(KLAYTN_BAOBAB_ID, new NetworkInfo("Klaytn Baobab (Test)","KLAY", KLAYTN_BAOBAB_RPC, "https://baobab.scope.klaytn.com/tx/",
+                    KLAYTN_BAOBAB_ID, false));
             put(AURORA_MAINNET_ID, new NetworkInfo("Aurora","ETH", AURORA_MAINNET_RPC_URL, "https://aurorascan.dev/tx/",
                     AURORA_MAINNET_ID, false));
             put(AURORA_TESTNET_ID, new NetworkInfo("Aurora (Test)","ETH", AURORA_TESTNET_RPC_URL, "https://testnet.aurorascan.dev/tx/",

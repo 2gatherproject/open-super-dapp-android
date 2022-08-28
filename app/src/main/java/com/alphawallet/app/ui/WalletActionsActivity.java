@@ -21,6 +21,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alphawallet.app.entity.BackupOperationType;
 import com.alphawallet.app.entity.ErrorEnvelope;
@@ -33,6 +34,8 @@ import com.alphawallet.app.widget.AWalletAlertDialog;
 import com.alphawallet.app.widget.InputAddress;
 import com.alphawallet.app.widget.SettingsItemView;
 import com.alphawallet.app.widget.UserAvatar;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
@@ -273,7 +276,7 @@ public class WalletActionsActivity extends BaseActivity implements Runnable, Vie
                     backupSuccessful();
                     finish();
                 }
-    });
+            });
 
     private void exportJSON(Wallet wallet) {
         Intent intent = new Intent(this, BackupKeyActivity.class);
@@ -286,7 +289,7 @@ public class WalletActionsActivity extends BaseActivity implements Runnable, Vie
     private void backupSuccessful() {
         Intent intent = new Intent(BACKUP_WALLET_SUCCESS);
         intent.putExtra("Key", wallet.address);
-        sendBroadcast(intent);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     private void hideDialog() {

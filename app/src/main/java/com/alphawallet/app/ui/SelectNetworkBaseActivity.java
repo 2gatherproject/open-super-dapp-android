@@ -10,11 +10,11 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import im.vector.app.R;
-import com.alphawallet.app.ui.widget.divider.ListDivider;
 import com.alphawallet.app.widget.StandardHeader;
 import com.alphawallet.app.widget.TestNetDialog;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import im.vector.app.R;
 
 public abstract class SelectNetworkBaseActivity extends BaseActivity
 {
@@ -88,10 +88,8 @@ public abstract class SelectNetworkBaseActivity extends BaseActivity
         testnetRecyclerView = findViewById(R.id.test_list);
 
         mainnetRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mainnetRecyclerView.addItemDecoration(new ListDivider(this));
 
         testnetRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        testnetRecyclerView.addItemDecoration(new ListDivider(this));
     }
 
     void hideSwitches()

@@ -21,16 +21,17 @@ import com.airbnb.mvrx.MavericksState
 import im.vector.app.features.location.LocationData
 import org.matrix.android.sdk.api.util.MatrixItem
 
-data class LocationLiveMapViewState(
+data class LiveLocationMapViewState(
         val roomId: String,
         val userLocations: List<UserLiveLocationViewState> = emptyList(),
         /**
          * Map to keep track of symbol ids associated to each user Id.
          */
-        val mapSymbolIds: Map<String, Long> = emptyMap()
+        val mapSymbolIds: Map<String, Long> = emptyMap(),
+        val loadingMapHasFailed: Boolean = false,
 ) : MavericksState {
-    constructor(locationLiveMapViewArgs: LocationLiveMapViewArgs) : this(
-            roomId = locationLiveMapViewArgs.roomId
+    constructor(liveLocationMapViewArgs: LiveLocationMapViewArgs) : this(
+            roomId = liveLocationMapViewArgs.roomId
     )
 }
 

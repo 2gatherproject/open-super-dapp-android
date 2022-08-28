@@ -1,7 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_CLICK;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +18,12 @@ import com.alphawallet.app.util.DappBrowserUtils;
 
 import java.util.List;
 
-import dagger.hilt.android.AndroidEntryPoint;
+import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_CLICK;
+
 import im.vector.app.R;
 import timber.log.Timber;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class DiscoverDappsFragment extends Fragment implements OnDappClickListener {

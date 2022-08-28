@@ -128,7 +128,7 @@ emoji_picker_datasource['categories'] = [x for x in emoji_picker_datasource['cat
 # Write result to file (overwrite previous), without escaping unicode characters
 print("Writing emoji_picker_datasource.json...")
 scripts_dir = os.path.dirname(os.path.abspath(__file__))
-with open(os.path.join(scripts_dir, "../app/src/main/res/raw/emoji_picker_datasource.json"), "w") as outfile:
+with open(os.path.join(scripts_dir, "../vector/src/main/res/raw/emoji_picker_datasource.json"), "w") as outfile:
     json.dump(emoji_picker_datasource, outfile, ensure_ascii=False, separators=(',', ':'))
 
 # Also export a formatted version

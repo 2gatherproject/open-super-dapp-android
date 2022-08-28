@@ -38,7 +38,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InterruptedIOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -93,7 +92,7 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
             OkHttpClient httpClient,
             Gson gson,
             RealmManager realmManager
-            ) {
+    ) {
         this.httpClient = httpClient;
         this.gson = gson;
         this.realmManager = realmManager;
@@ -451,12 +450,6 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
                     return getEtherscanTransactions(result);
                 }
             }
-            catch (InterruptedIOException e)
-            {
-                //If user switches account or network during a fetch
-                //this exception is going to be thrown because we're terminating the API call
-                //Don't display error
-            }
             catch (Exception e)
             {
                 Timber.e(e);
@@ -548,7 +541,7 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
     }
 
     private int processEtherscanEvents(Realm instance, String walletAddress, NetworkInfo networkInfo,
-                                        TokensService svs, EtherscanEvent[] events, boolean isNFTCheck) throws Exception
+                                       TokensService svs, EtherscanEvent[] events, boolean isNFTCheck) throws Exception
     {
         //Now update tokens if we don't already know this token
         writeTokens(walletAddress, networkInfo, events, svs);
@@ -694,15 +687,9 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
                 result = "0";
             }
         }
-        catch (InterruptedIOException e)
-        {
-            //If user switches account or network during a fetch
-            //this exception is going to be thrown because we're terminating the API call
-            //Don't display error
-        }
         catch (Exception e)
         {
-            if (networkInfo.chainId != ARTIS_TAU1_ID && BuildConfig.DEBUG) e.printStackTrace();
+            if (networkInfo.chainId != ARTIS_TAU1_ID && BuildConfig.DEBUG) Timber.e(e);
         }
 
         return result;
@@ -720,11 +707,12 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
         }
         else if (networkInfo.chainId == MATIC_ID || networkInfo.chainId == MATIC_TEST_ID)
         {
+
             return POLYGONSCAN_API_KEY;
         }
         else if (networkInfo.chainId == AURORA_MAINNET_ID || networkInfo.chainId == AURORA_TESTNET_ID)
         {
-          return AURORASCAN_API_KEY;
+            return AURORASCAN_API_KEY;
         }
         else
         {
@@ -754,12 +742,6 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
             {
                 return new EtherscanTransaction[0];
             }
-        }
-        catch (InterruptedIOException e)
-        {
-            //If user switches account or network during a fetch
-            //this exception is going to be thrown because we're terminating the API call
-            //Don't display error
         }
         catch (Exception e)
         {

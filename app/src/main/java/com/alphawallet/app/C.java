@@ -76,7 +76,7 @@ public abstract class C {
     public static final String GOERLI_SYMBOL = "GÖETH";
     public static final String ARTIS_SIGMA1_SYMBOL = "ATS";
     public static final String ARTIS_TAU1_SYMBOL = "ATS";
-    public static final String BINANCE_SYMBOL = "BSC";
+    public static final String BINANCE_SYMBOL = "BNB";
     public static final String HECO_SYMBOL = "HT";
     public static final String FANTOM_SYMBOL = "FTM";
     public static final String AVALANCHE_SYMBOL = "AVAX";
@@ -97,6 +97,8 @@ public abstract class C {
     //some important known contracts - NB must be all lower case for switch statement
     public static final String DAI_TOKEN = "0x6b175474e89094c44da98b954eedeac495271d0f";
     public static final String SAI_TOKEN = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
+
+    public static final String ALPHAWALLET_WEB = "https://www.alphawallet.com";
 
     public static final String XDAI_BRIDGE_DAPP = "https://bridge.xdaichain.com/";
 
@@ -171,8 +173,6 @@ public abstract class C {
             "com.stormbird.wallet.ADDED";
     public static final String CHANGED_LOCALE =
             "com.stormbird.wallet.CHANGED_LOCALE";
-    public static final String DOWNLOAD_READY =
-            "com.stormbird.wallet.DOWNLOAD_READY";
     public static final String PAGE_LOADED =
             "com.stormbird.wallet.PAGE_LOADED";
     public static final String RESET_TOOLBAR =
@@ -240,6 +240,13 @@ public abstract class C {
         int CANT_GET_STORE_PASSWORD = 2;
         int ALREADY_ADDED = 3;
         int EMPTY_COLLECTION = 4;
+
+        // Swap Error Codes
+        int INSUFFICIENT_BALANCE = 5;
+        int SWAP_CHAIN_ERROR = 6;
+        int SWAP_CONNECTIONS_ERROR = 7;
+        int SWAP_QUOTE_ERROR = 8;
+        int SWAP_TIMEOUT_ERROR = 9;
     }
 
     public interface Key {
@@ -249,6 +256,7 @@ public abstract class C {
         String MARKETPLACE_EVENT = "marketplace_event";
         String SHOULD_SHOW_SECURITY_WARNING = "should_show_security_warning";
         String FROM_SETTINGS = "from_settings";
+        String API_V1_REQUEST_URL = "api_v1_request_url";
     }
 
     public static final String DAPP_HOMEPAGE_KEY = "dappHomePage";
@@ -301,6 +309,7 @@ public abstract class C {
     public static final int THEME_AUTO = 2;
 
     // OpenSea APIs
+    public static final String OPENSEA_COLLECTION_API_MAINNET = "https://api.opensea.io/collection/";
     public static final String OPENSEA_ASSETS_API_MAINNET = "https://api.opensea.io/api/v1/assets";
     public static final String OPENSEA_ASSETS_API_RINKEBY = "https://testnets-api.opensea.io/api/v1/assets";
     public static final String OPENSEA_ASSETS_API_MATIC = "https://api.opensea.io/api/v2/assets/matic";
@@ -308,4 +317,17 @@ public abstract class C {
     public static final String OPENSEA_SINGLE_ASSET_API_RINKEBY = "https://testnets-api.opensea.io/api/v1/asset/";
     public static final String OPENSEA_SINGLE_ASSET_API_MATIC = "https://api.opensea.io/api/v2/metadata/matic/";
 
+    // Progress Info
+    public interface ProgressInfo {
+        int FETCHING_CHAINS = 1;
+        int FETCHING_CONNECTIONS = 2;
+        int FETCHING_QUOTE = 3;
+    }
+
+    //Timing
+    public static long CONNECT_TIMEOUT = 10; //Seconds
+    public static long READ_TIMEOUT = 10;
+    public static long WRITE_TIMEOUT = 10;
+    public static long PING_INTERVAL = 10;
+    public static final long LONG_WRITE_TIMEOUT = 30;
 }

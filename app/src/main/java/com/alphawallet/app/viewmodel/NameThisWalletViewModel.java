@@ -1,8 +1,6 @@
 package com.alphawallet.app.viewmodel;
 
 
-import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
-
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -25,6 +23,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+
+import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
 
 @HiltViewModel
 public class NameThisWalletViewModel extends BaseViewModel

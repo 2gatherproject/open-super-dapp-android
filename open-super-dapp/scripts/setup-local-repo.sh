@@ -38,6 +38,15 @@ else
   exit 4      
 fi
 
+# Save current branch
+START_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo Saved starting branch $START_BRANCH.
+
+# Stash changes just in case the user did not
+echo Stashing any changes if user did not...
+git add --all 
+git stash
+
 echo Setting git config merge.renameLimit 999999 for this repo to assist in matching renaming...
 git config merge.renameLimit 999999
 
@@ -97,8 +106,8 @@ fi
 echo Checking out alpha-wallet-android $2 as alpha-wallet-main...
 git checkout tags/$2 -b alpha-wallet-main
 
-echo Leaving git on develop branch...
-git checkout develop
+echo Leaving git on initial branch $START_BRANCH...
+git checkout $START_BRANCH
 
 echo Done! Your repo is now ready for development.
 echo You can now merge element-main and alpha-wallet-main into your development WIP branch

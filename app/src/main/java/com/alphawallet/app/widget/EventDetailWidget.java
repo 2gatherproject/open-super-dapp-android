@@ -1,12 +1,13 @@
 package com.alphawallet.app.widget;
 
+import static com.alphawallet.app.ui.widget.holder.TransactionHolder.TRANSACTION_BALANCE_PRECISION;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import im.vector.app.R;
 import com.alphawallet.app.entity.Transaction;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.EventResult;
@@ -16,7 +17,7 @@ import com.alphawallet.app.ui.widget.entity.TokenTransferData;
 
 import java.util.Map;
 
-import static com.alphawallet.app.ui.widget.holder.TransactionHolder.TRANSACTION_BALANCE_PRECISION;
+import im.vector.app.R;
 
 /**
  * Created by JB on 8/12/2020.

@@ -15,12 +15,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+import javax.inject.Inject;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
 public class TokenAlertsViewModel extends BaseViewModel {
@@ -71,18 +70,18 @@ public class TokenAlertsViewModel extends BaseViewModel {
     {
         tickerService.convertPair(TickerService.getCurrencySymbolTxt(), priceAlert.getCurrency())
                 .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe((rate) -> {
-                // check if current price is higher than in alert, mark as 'drops to' or 'rises above' otherwise
-                double currentTokenPrice = Double.parseDouble(tokensService.getTokenTicker(token).price) * rate;
-                double alertPrice = Double.parseDouble(priceAlert.getValue());
-                priceAlert.setAbove(alertPrice > currentTokenPrice);
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((rate) -> {
+                    // check if current price is higher than in alert, mark as 'drops to' or 'rises above' otherwise
+                    double currentTokenPrice = Double.parseDouble(tokensService.getTokenTicker(token).price) * rate;
+                    double alertPrice = Double.parseDouble(priceAlert.getValue());
+                    priceAlert.setAbove(alertPrice > currentTokenPrice);
 
-                List<PriceAlert> list = getPriceAlerts();
-                list.add(priceAlert);
+                    List<PriceAlert> list = getPriceAlerts();
+                    list.add(priceAlert);
 
-                updateStoredAlerts(list);
-            }, Throwable::printStackTrace).isDisposed();
+                    updateStoredAlerts(list);
+                }, Throwable::printStackTrace).isDisposed();
     }
 
     private List<PriceAlert> getPriceAlerts()

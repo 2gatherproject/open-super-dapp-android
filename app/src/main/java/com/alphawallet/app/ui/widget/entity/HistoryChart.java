@@ -33,6 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import timber.log.Timber;
 
 public class HistoryChart extends View
 {
@@ -140,7 +141,7 @@ public class HistoryChart extends View
                 }
                 catch (Exception e)
                 {
-                    e.printStackTrace();
+                    Timber.e(e);
                 }
                 return null;
             });

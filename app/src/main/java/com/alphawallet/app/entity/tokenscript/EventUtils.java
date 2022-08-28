@@ -1,7 +1,5 @@
 package com.alphawallet.app.entity.tokenscript;
 
-import static org.web3j.tx.Contract.staticExtractEventParameters;
-
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.token.entity.Attribute;
 import com.alphawallet.token.entity.AttributeInterface;
@@ -132,9 +130,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.vector.app.BuildConfig;
 import io.reactivex.Single;
 import timber.log.Timber;
+
+import static org.web3j.tx.Contract.staticExtractEventParameters;
 
 /**
  * Created by JB on 23/03/2020.

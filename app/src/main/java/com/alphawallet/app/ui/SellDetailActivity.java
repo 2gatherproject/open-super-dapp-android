@@ -1,13 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.C.EXTRA_PRICE;
-import static com.alphawallet.app.C.EXTRA_STATE;
-import static com.alphawallet.app.C.EXTRA_TOKENID_LIST;
-import static com.alphawallet.app.C.Key.WALLET;
-import static com.alphawallet.app.C.PRUNE_ACTIVITY;
-import static com.alphawallet.app.entity.Operation.SIGN_DATA;
-import static com.alphawallet.token.tools.Convert.getEthString;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -28,6 +20,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,9 +51,18 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingFormatArgumentException;
 
-import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
 import timber.log.Timber;
+
+import static com.alphawallet.app.C.EXTRA_PRICE;
+import static com.alphawallet.app.C.EXTRA_STATE;
+import static com.alphawallet.app.C.EXTRA_TOKENID_LIST;
+import static com.alphawallet.app.C.Key.WALLET;
+import static com.alphawallet.app.C.PRUNE_ACTIVITY;
+import static com.alphawallet.app.entity.Operation.SIGN_DATA;
+import static com.alphawallet.token.tools.Convert.getEthString;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by James on 21/02/2018.
@@ -167,7 +169,10 @@ public class SellDetailActivity extends BaseActivity implements TokensAdapterCal
     protected void onDestroy()
     {
         super.onDestroy();
-        unregisterReceiver(finishReceiver);
+        if (finishReceiver != null)
+        {
+            finishReceiver.unregister();
+        }
     }
 
     private void setupPage(Wallet wallet)
@@ -384,7 +389,7 @@ public class SellDetailActivity extends BaseActivity implements TokensAdapterCal
 
         //set for now
         String time = String.format(Locale.getDefault(), "%02d:%02d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-                                    Calendar.getInstance().get(Calendar.MINUTE));
+                Calendar.getInstance().get(Calendar.MINUTE));
         expiryTimeEditText.setText(time);
     }
 
@@ -494,7 +499,7 @@ public class SellDetailActivity extends BaseActivity implements TokensAdapterCal
 
     ActivityResultLauncher<Intent> sellLinkFinalResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                sendBroadcast(new Intent(PRUNE_ACTIVITY)); //TODO: implement prune via result codes
+                sendBroadcastToPrune(); //TODO: implement prune via result codes
             });
 
     private void sellLinkFinal(String universalLink) {
@@ -551,7 +556,7 @@ public class SellDetailActivity extends BaseActivity implements TokensAdapterCal
         switch (requestCode)
         {
             case SEND_INTENT_REQUEST_CODE:
-                sendBroadcast(new Intent(PRUNE_ACTIVITY));
+                sendBroadcastToPrune();
                 break;
 
             case SignTransactionDialog.REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS:
@@ -561,6 +566,11 @@ public class SellDetailActivity extends BaseActivity implements TokensAdapterCal
             default:
                 super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void sendBroadcastToPrune()
+    {
+        LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(PRUNE_ACTIVITY));
     }
 
     @Override

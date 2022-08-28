@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.alphawallet.app.C;
-import com.alphawallet.app.entity.Wallet;
-import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.ui.TransferTicketDetailActivity;
+import com.alphawallet.app.entity.tokens.Token;
+import com.alphawallet.app.entity.Wallet;
 
 import javax.inject.Inject;
 
@@ -19,6 +19,7 @@ public class TransferTicketDetailRouter {
     @Inject
     public TransferTicketDetailRouter() {
     }
+
 
     public void open(Context context, Token token, String ticketIDs, Wallet wallet) {
         Intent intent = new Intent(context, TransferTicketDetailActivity.class);

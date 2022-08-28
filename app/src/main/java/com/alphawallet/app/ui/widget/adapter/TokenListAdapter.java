@@ -10,7 +10,6 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
-import im.vector.app.R;
 import com.alphawallet.app.entity.KnownContract;
 import com.alphawallet.app.entity.TokenManageType;
 import com.alphawallet.app.entity.UnknownToken;
@@ -36,6 +35,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;

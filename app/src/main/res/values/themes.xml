@@ -68,6 +68,12 @@
         <!-- The color applied to chart tabs -->
         <item name="colorSurfaceDark">@color/surface_dark</item>
 
+        <item name="colorSurfaceSearch">@color/surface_search</item>
+
+        <item name="colorIconBackgroundCompensate">@color/dark_mode_icon_background_compensate</item>
+
+        <item name="colorSurfaceVariant"></item>
+
 
         <!-- Default Component Styles -->
         <item name="android:textColor">@color/text_primary</item>
@@ -95,6 +101,15 @@
 
     <style name="AppTheme.NoActionBar.Splash">
         <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Transparent">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
     <style name="AppTheme.DarkOverlay">
@@ -126,6 +141,10 @@
         <item name="android:textColorPrimaryInverse">@color/text_primary_inverse</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="android:textColorSecondaryInverse">@color/text_secondary_inverse</item>
+        <item name="materialButtonStyle">@style/Aw.Component.Button.Primary</item>
+        <item name="switchStyle">@style/Aw.Component.Switch</item>
+        <item name="checkboxStyle">@style/Aw.Component.CheckBox</item>
+        <item name="radioButtonStyle">@style/Aw.Component.RadioButton</item>
     </style>
 
 </resources>

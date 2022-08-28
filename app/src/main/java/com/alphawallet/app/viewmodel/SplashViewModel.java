@@ -49,7 +49,7 @@ public class SplashViewModel extends ViewModel
         this.keyService = keyService;
 
         // increase launch count
-        this.preferenceRepository.incrementLaunchCount();
+//        this.preferenceRepository.incrementLaunchCount();
     }
 
     public void fetchWallets()
@@ -79,21 +79,6 @@ public class SplashViewModel extends ViewModel
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
                 .isDisposed();
-    }
-
-    private String stripFilename(String name)
-    {
-        int index = name.lastIndexOf(".apk");
-        if (index > 0)
-        {
-            name = name.substring(0, index);
-        }
-        index = name.lastIndexOf("-");
-        if (index > 0)
-        {
-            name = name.substring(index+1);
-        }
-        return name;
     }
 
     public void StoreHDKey(String address, KeyService.AuthenticationLevel authLevel)

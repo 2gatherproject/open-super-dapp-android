@@ -129,6 +129,11 @@ public class QRParser {
                 }
             }
         }
+        else if (result.type == EIP681Type.OTHER && validAddress(result.getAddress()))
+        {
+            //promote type
+            result.type = EIP681Type.OTHER_PROTOCOL;
+        }
 
         return result;
     }
@@ -137,7 +142,8 @@ public class QRParser {
 
         QRResult result = parse(url);
 
-        if (result == null || result.type == EIP681Type.OTHER) {
+        if (result == null || result.type == EIP681Type.OTHER)
+        {
             return null;
         }
 
@@ -170,5 +176,16 @@ public class QRParser {
         }
 
         return false;
+    }
+
+    private boolean isEmpty(String val)
+    {
+        return (val == null || val.length() == 0);
+    }
+
+    public static boolean validAddress(String address)
+    {
+        return address != null && ((address.startsWith("0x") && address.length() > 10)
+                || (address.contains(".") && address.indexOf(".") <= address.length() - 2));
     }
 }

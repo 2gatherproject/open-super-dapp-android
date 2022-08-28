@@ -20,7 +20,6 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.util.Patterns;
 import android.util.TypedValue;
 import android.webkit.URLUtil;
@@ -68,7 +67,6 @@ import java.util.regex.Pattern;
 
 import timber.log.Timber;
 
-import im.vector.app.BuildConfig;
 import im.vector.app.R;
 
 public class Utils {

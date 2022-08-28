@@ -346,6 +346,9 @@ class BugReporter @Inject constructor(
                     // Special for Element
                     builder.addFormDataPart("label", "[Element]")
 
+                    // Possible values for BuildConfig.BUILD_TYPE: "debug", "nightly", "release".
+                    builder.addFormDataPart("label", BuildConfig.BUILD_TYPE)
+
                     when (reportType) {
                         ReportType.BUG_REPORT -> {
                             /* nop */
@@ -492,11 +495,7 @@ class BugReporter @Inject constructor(
      */
     fun openBugReportScreen(activity: FragmentActivity, reportType: ReportType = ReportType.BUG_REPORT) {
         screenshot = takeScreenshot(activity)
-        activeSessionHolder.getSafeActiveSession()?.let {
-            it.logDbUsageInfo()
-            it.cryptoService().logDbUsageInfo()
-        }
-
+        matrix.debugService().logDbUsageInfo()
         activity.startActivity(BugReportActivity.intent(activity, reportType))
     }
 

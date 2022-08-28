@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,6 +71,7 @@ import com.alphawallet.app.widget.SystemView;
 import com.alphawallet.token.tools.Numeric;
 
 import org.jetbrains.annotations.NotNull;
+import org.web3j.protocol.core.methods.response.EthEstimateGas;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -80,6 +83,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
@@ -571,7 +576,7 @@ public class TransferTicketDetailActivity extends BaseActivity
                         break;
                     default:
                         Timber.tag("SEND").e(String.format(getString(R.string.barcode_error_format),
-                                                    "Code: " + resultCode
+                                "Code: " + resultCode
                         ));
                         break;
                 }
@@ -681,7 +686,7 @@ public class TransferTicketDetailActivity extends BaseActivity
 
     ActivityResultLauncher<Intent> transferLinkFinalResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                sendBroadcast(new Intent(PRUNE_ACTIVITY)); //TODO: implement prune via result codes
+                LocalBroadcastManager.getInstance(this).sendBroadcast(new Intent(PRUNE_ACTIVITY)); //TODO: implement prune via result codes
             });
 
     private void transferLinkFinal(String universalLink)
@@ -723,7 +728,7 @@ public class TransferTicketDetailActivity extends BaseActivity
 
         //set for now
         String time = String.format(Locale.getDefault(), "%02d:%02d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-                                    Calendar.getInstance().get(Calendar.MINUTE));
+                Calendar.getInstance().get(Calendar.MINUTE));
         expiryTimeEditText.setText(time);
     }
 

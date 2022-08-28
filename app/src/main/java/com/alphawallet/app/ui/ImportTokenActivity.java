@@ -1,17 +1,11 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.C.IMPORT_STRING;
-import static com.alphawallet.app.entity.Operation.SIGN_DATA;
-import static com.alphawallet.ethereum.EthereumNetworkBase.XDAI_ID;
-import static com.alphawallet.token.tools.Convert.getEthString;
-import static com.alphawallet.token.tools.ParseMagicLink.currencyLink;
-import static com.alphawallet.token.tools.ParseMagicLink.spawnable;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -27,8 +21,8 @@ import com.alphawallet.app.entity.CryptoFunctions;
 import com.alphawallet.app.entity.ErrorEnvelope;
 import com.alphawallet.app.entity.NetworkInfo;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
-import com.alphawallet.app.entity.tokendata.TokenTicker;
 import com.alphawallet.app.entity.tokens.Token;
+import com.alphawallet.app.entity.tokendata.TokenTicker;
 import com.alphawallet.app.repository.EthereumNetworkRepository;
 import com.alphawallet.app.router.HomeRouter;
 import com.alphawallet.app.service.TickerService;
@@ -48,9 +42,19 @@ import com.alphawallet.token.tools.ParseMagicLink;
 
 import java.math.BigDecimal;
 
-import dagger.hilt.android.AndroidEntryPoint;
+import javax.inject.Inject;
+
 import im.vector.app.R;
 import timber.log.Timber;
+
+import static com.alphawallet.app.C.IMPORT_STRING;
+import static com.alphawallet.app.entity.Operation.SIGN_DATA;
+import static com.alphawallet.ethereum.EthereumNetworkBase.XDAI_ID;
+import static com.alphawallet.token.tools.Convert.getEthString;
+import static com.alphawallet.token.tools.ParseMagicLink.currencyLink;
+import static com.alphawallet.token.tools.ParseMagicLink.spawnable;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by James on 9/03/2018.
@@ -359,7 +363,7 @@ public class ImportTokenActivity extends BaseActivity implements View.OnClickLis
         {
             case spawnable:
                 importTickets.setText(R.string.action_import);
-                if (token != null) 
+                if (token != null)
                     tokenView.displayTicketHolder(token, ticketRange, viewModel.getAssetDefinitionService());
                 break;
             case currencyLink:

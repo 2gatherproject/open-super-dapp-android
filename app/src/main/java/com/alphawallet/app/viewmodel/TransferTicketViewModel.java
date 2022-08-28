@@ -1,12 +1,9 @@
 package com.alphawallet.app.viewmodel;
 
-import static com.alphawallet.app.entity.DisplayState.TRANSFER_TO_ADDRESS;
-
-import android.content.Context;
-
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import android.content.Context;
+import androidx.annotation.Nullable;
 
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.tokens.Token;
@@ -17,11 +14,13 @@ import com.alphawallet.app.service.TokensService;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+
+import static com.alphawallet.app.entity.DisplayState.TRANSFER_TO_ADDRESS;
+
+import javax.inject.Inject;
 
 @HiltViewModel
 public class TransferTicketViewModel extends BaseViewModel {

@@ -261,8 +261,7 @@ class AutoRageShaker @Inject constructor(
         this.currentActiveSessionId = sessionId
 
         hasSynced = session.syncService().hasAlreadySynced()
-        session.syncService().getSyncRequestStateLive()
-                .asFlow()
+        session.syncService().getSyncRequestStateFlow()
                 .onEach {
                     hasSynced = it !is SyncRequestState.InitialSyncProgressing
                 }

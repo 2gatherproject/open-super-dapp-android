@@ -1,8 +1,6 @@
 package com.alphawallet.app.repository;
 
-import static com.alphawallet.app.entity.CryptoFunctions.sigFromByteArray;
 import static com.alphawallet.app.repository.TokenRepository.getWeb3jService;
-import static com.alphawallet.app.service.KeyService.FAILED_SIGNATURE;
 
 import com.alphawallet.app.entity.ActivityMeta;
 import com.alphawallet.app.entity.Transaction;
@@ -15,16 +13,8 @@ import com.alphawallet.app.service.AccountKeystoreService;
 import com.alphawallet.app.service.TransactionsService;
 import com.alphawallet.token.entity.Signable;
 
-import org.web3j.crypto.RawTransaction;
-import org.web3j.crypto.Sign;
-import org.web3j.crypto.TransactionEncoder;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
-import org.web3j.protocol.core.methods.response.EthTransaction;
-import org.web3j.protocol.core.methods.response.TransactionReceipt;
-import org.web3j.rlp.RlpEncoder;
-import org.web3j.rlp.RlpList;
-import org.web3j.rlp.RlpType;
 import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;

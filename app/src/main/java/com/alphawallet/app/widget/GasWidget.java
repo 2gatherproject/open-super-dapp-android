@@ -34,8 +34,8 @@ import com.alphawallet.app.web3.entity.Web3Transaction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+import im.vector.app.BuildConfig;
 import im.vector.app.R;
-import im.vector.app.config.BuildConfig;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
@@ -320,7 +320,7 @@ public class GasWidget extends LinearLayout implements Runnable, GasWidgetInterf
 
         Token baseCurrency = tokensService.getTokenOrBase(token.tokenInfo.chainId, token.getWallet());
         BigInteger networkFee = gs.gasPrice.maxFeePerGas.multiply(getUseGasLimit());
-        String gasAmountInBase = BalanceUtils.getScaledValueScientific(new BigDecimal(networkFee), baseCurrency.tokenInfo.decimals);
+        String gasAmountInBase = BalanceUtils.getSlidingBaseValue(new BigDecimal(networkFee), baseCurrency.tokenInfo.decimals, GasSettingsActivity.GAS_PRECISION);
         if (gasAmountInBase.equals("0")) gasAmountInBase = "0.0001";
         String displayStr = getContext().getString(R.string.gas_amount, gasAmountInBase, baseCurrency.getSymbol());
 

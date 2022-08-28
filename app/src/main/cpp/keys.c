@@ -2,9 +2,9 @@
 #include <string.h>
 #include <alloca.h>
 #include <jni.h>
-#if __has_include ("..\..\..\..\..\keys.secret")
+#if __has_include ("../../../../../keys.secret")
 #   define HAS_KEYS 1
-#   include "..\..\..\..\..\keys.secret"
+#   include "../../../../../keys.secret"
 #else
 #   define HAS_KEYS 0
 #endif
@@ -122,6 +122,16 @@ Java_com_alphawallet_app_repository_EthereumNetworkBase_getSecondaryInfuraKey( J
 #else
     const jstring key = "da3717f25f824cc1baa32d812386d93f";
     return (*env)->NewStringUTF(env, key);
+#endif
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_alphawallet_app_repository_EthereumNetworkBase_getKlaytnKey( JNIEnv* env, jobject thiz )
+{
+#if (HAS_KEYS == 1)
+    return getDecryptedKey(env, klaytnKey);
+#else
+    return (*env)->NewStringUTF(env, "");
 #endif
 }
 

@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Pair;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.ContractInteract;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.EventSync;
@@ -51,7 +52,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import im.vector.app.R;
 import io.reactivex.Single;
 import io.realm.Realm;
 
@@ -223,8 +223,8 @@ public class Token
 
     public String getName()
     {
-        if (TextUtils.isEmpty(tokenInfo.name) || tokenInfo.name.length() < tokenInfo.symbol.length()) {
-            return sanitiseString(!TextUtils.isEmpty(tokenInfo.symbol) ? tokenInfo.symbol : "");
+        if (!TextUtils.isEmpty(tokenInfo.symbol) && (TextUtils.isEmpty(tokenInfo.name) || tokenInfo.name.length() < tokenInfo.symbol.length())) {
+            return sanitiseString(tokenInfo.symbol);
         } else {
             return sanitiseString(!TextUtils.isEmpty(tokenInfo.name) ? tokenInfo.name : "");
         }
@@ -306,7 +306,7 @@ public class Token
         if (tokenInfo != null) decimals = tokenInfo.decimals;
         BigDecimal decimalDivisor = BigDecimal.valueOf(Math.pow(10, decimals));
         return decimals > 0
-               ? balance.divide(decimalDivisor, scale, RoundingMode.DOWN).stripTrailingZeros() : balance;
+                ? balance.divide(decimalDivisor, scale, RoundingMode.DOWN).stripTrailingZeros() : balance;
     }
 
     public int getContractType()
@@ -437,11 +437,11 @@ public class Token
         return new Function(
                 "spawnPassTo",
                 Arrays.asList(new org.web3j.abi.datatypes.generated.Uint256(expiry),
-                              getDynArray(tokenIds),
-                              new org.web3j.abi.datatypes.generated.Uint8(v),
-                              new org.web3j.abi.datatypes.generated.Bytes32(r),
-                              new org.web3j.abi.datatypes.generated.Bytes32(s),
-                              new org.web3j.abi.datatypes.Address(recipient)),
+                        getDynArray(tokenIds),
+                        new org.web3j.abi.datatypes.generated.Uint8(v),
+                        new org.web3j.abi.datatypes.generated.Bytes32(r),
+                        new org.web3j.abi.datatypes.generated.Bytes32(s),
+                        new org.web3j.abi.datatypes.Address(recipient)),
                 Collections.emptyList());
     }
     public Function getTradeFunction(BigInteger expiry, List<BigInteger> tokenIds, int v, byte[] r, byte[] s)
@@ -449,10 +449,10 @@ public class Token
         return new Function(
                 "trade",
                 Arrays.asList(new org.web3j.abi.datatypes.generated.Uint256(expiry),
-                              getDynArray(tokenIds),
-                              new org.web3j.abi.datatypes.generated.Uint8(v),
-                              new org.web3j.abi.datatypes.generated.Bytes32(r),
-                              new org.web3j.abi.datatypes.generated.Bytes32(s)),
+                        getDynArray(tokenIds),
+                        new org.web3j.abi.datatypes.generated.Uint8(v),
+                        new org.web3j.abi.datatypes.generated.Bytes32(r),
+                        new org.web3j.abi.datatypes.generated.Bytes32(s)),
                 Collections.emptyList());
     }
 
@@ -673,8 +673,8 @@ public class Token
     protected org.web3j.abi.datatypes.DynamicArray getDynArray(List<BigInteger> indices)
     {
         return new org.web3j.abi.datatypes.DynamicArray<>(
-                        org.web3j.abi.datatypes.generated.Uint256.class,
-                        org.web3j.abi.Utils.typeMap(indices, org.web3j.abi.datatypes.generated.Uint256.class));
+                org.web3j.abi.datatypes.generated.Uint256.class,
+                org.web3j.abi.Utils.typeMap(indices, org.web3j.abi.datatypes.generated.Uint256.class));
     }
 
     @Override

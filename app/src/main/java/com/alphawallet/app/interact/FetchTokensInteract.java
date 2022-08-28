@@ -3,9 +3,10 @@ package com.alphawallet.app.interact;
 import com.alphawallet.app.entity.ContractLocator;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.Wallet;
-import com.alphawallet.app.entity.tokendata.TokenTicker;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.tokens.TokenCardMeta;
+import com.alphawallet.app.entity.tokendata.TokenTicker;
+import com.alphawallet.app.entity.tokens.TokenInfo;
 import com.alphawallet.app.repository.TokenRepositoryType;
 import com.alphawallet.app.service.AssetDefinitionService;
 
@@ -43,7 +44,7 @@ public class FetchTokensInteract {
     public Observable<Token> updateBalance(String address, Token token)
     {
         if (token == null) return Observable.fromCallable(()
-                                      -> new Token(null, BigDecimal.ZERO, 0, "", ContractType.NOT_SET));
+                -> new Token(new TokenInfo(), BigDecimal.ZERO, 0, "", ContractType.NOT_SET));
         return tokenRepository.fetchActiveTokenBalance(address, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

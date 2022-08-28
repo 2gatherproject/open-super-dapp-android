@@ -40,9 +40,8 @@ import com.mapbox.mapboxsdk.Mapbox
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.google.GoogleEmojiProvider
 import dagger.hilt.android.HiltAndroidApp
+import im.vector.app.core.debug.FlipperProxy
 import im.vector.app.core.di.ActiveSessionHolder
-import im.vector.app.core.extensions.configureAndStart
-import im.vector.app.core.extensions.startSyncing
 import im.vector.app.core.time.Clock
 import im.vector.app.features.analytics.VectorAnalytics
 import im.vector.app.features.call.webrtc.WebRtcCallManager
@@ -61,6 +60,8 @@ import im.vector.app.features.settings.VectorPreferences
 import im.vector.app.features.themes.ThemeUtils
 import im.vector.app.features.version.VersionProvider
 import im.vector.app.push.fcm.FcmHelper
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import org.jitsi.meet.sdk.log.JitsiMeetDefaultLogHandler
 import org.matrix.android.sdk.api.Matrix
 import org.matrix.android.sdk.api.auth.AuthenticationService
@@ -100,6 +101,8 @@ class VectorApplication :
     @Inject lateinit var vectorFileLogger: VectorFileLogger
     @Inject lateinit var vectorAnalytics: VectorAnalytics
     @Inject lateinit var matrix: Matrix
+    @Inject lateinit var flipperProxy: FlipperProxy
+    @Inject lateinit var fcmHelper: FcmHelper
 
     // font thread handler
     private var fontThreadHandler: Handler? = null
@@ -116,7 +119,9 @@ class VectorApplication :
     override fun onCreate() {
         enableStrictModeIfNeeded()
         super.onCreate()
+        Realm.init(this)
         appContext = this
+        flipperProxy.init(matrix)
         vectorAnalytics.init()
         invitesAcceptor.initialize()
         autoRageShaker.initialize()
@@ -163,18 +168,10 @@ class VectorApplication :
             doNotShowDisclaimerDialog(this)
         }
 
-        if (authenticationService.hasAuthenticatedSessions() && !activeSessionHolder.hasActiveSession()) {
-            val lastAuthenticatedSession = authenticationService.getLastAuthenticatedSession()!!
-            activeSessionHolder.setActiveSession(lastAuthenticatedSession)
-            lastAuthenticatedSession.configureAndStart(applicationContext, startSyncing = false)
-        }
-
-        ProcessLifecycleOwner.get().lifecycle.addObserver(startSyncOnFirstStart)
-
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onResume(owner: LifecycleOwner) {
                 Timber.i("App entered foreground")
-                FcmHelper.onEnterForeground(appContext, activeSessionHolder)
+                fcmHelper.onEnterForeground(activeSessionHolder)
                 activeSessionHolder.getSafeActiveSession()?.also {
                     it.syncService().stopAnyBackgroundSync()
                 }
@@ -182,7 +179,7 @@ class VectorApplication :
 
             override fun onPause(owner: LifecycleOwner) {
                 Timber.i("App entered background")
-                FcmHelper.onEnterBackground(appContext, vectorPreferences, activeSessionHolder, clock)
+                fcmHelper.onEnterBackground(activeSessionHolder)
             }
         })
         ProcessLifecycleOwner.get().lifecycle.addObserver(appStateHandler)
@@ -201,14 +198,6 @@ class VectorApplication :
 
         // Initialize Mapbox before inflating mapViews
         Mapbox.getInstance(this)
-    }
-
-    private val startSyncOnFirstStart = object : DefaultLifecycleObserver {
-        override fun onStart(owner: LifecycleOwner) {
-            Timber.i("App process started")
-            authenticationService.getLastAuthenticatedSession()?.startSyncing(appContext)
-            ProcessLifecycleOwner.get().lifecycle.removeObserver(this)
-        }
     }
 
     private fun enableStrictModeIfNeeded() {

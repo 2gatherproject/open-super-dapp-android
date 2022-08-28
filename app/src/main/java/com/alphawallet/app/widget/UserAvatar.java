@@ -33,7 +33,6 @@ import com.bumptech.glide.request.target.Target;
 
 import java.nio.charset.StandardCharsets;
 
-import im.vector.app.BuildConfig;
 import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

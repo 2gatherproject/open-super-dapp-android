@@ -3,11 +3,12 @@ package com.alphawallet.app.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import androidx.annotation.Nullable;
+
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 
 import com.alphawallet.app.entity.DApp;
 import com.alphawallet.app.util.DappBrowserUtils;

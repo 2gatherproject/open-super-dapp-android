@@ -1,7 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static java.util.Collections.singletonList;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
@@ -23,6 +21,8 @@ import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
+
+import static java.util.Collections.singletonList;
 
 @AndroidEntryPoint
 public class AddCustomRPCNetworkActivity extends BaseActivity implements StandardFunctionInterface

@@ -2,21 +2,22 @@ package com.alphawallet.app.interact;
 
 import com.alphawallet.app.entity.ActivityMeta;
 import com.alphawallet.app.entity.ContractType;
+import com.alphawallet.app.entity.tokens.TokenInfo;
 import com.alphawallet.app.entity.Transaction;
 import com.alphawallet.app.entity.Wallet;
-import com.alphawallet.app.entity.tokens.TokenInfo;
 import com.alphawallet.app.repository.TokenRepositoryType;
 import com.alphawallet.app.repository.TransactionRepositoryType;
-import com.alphawallet.app.repository.entity.RealmAuxData;
-
-import java.util.List;
-
-import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
+
+import com.alphawallet.app.repository.entity.RealmAuxData;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 public class FetchTransactionsInteract {
 

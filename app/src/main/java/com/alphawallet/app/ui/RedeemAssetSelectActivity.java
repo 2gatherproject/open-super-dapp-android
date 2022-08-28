@@ -1,7 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.C.Key.TICKET_RANGE;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +28,9 @@ import com.alphawallet.token.entity.TicketRange;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+
+import static com.alphawallet.app.C.Key.TICKET_RANGE;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
@@ -125,7 +127,10 @@ public class RedeemAssetSelectActivity extends BaseActivity implements TokensAda
     protected void onDestroy()
     {
         super.onDestroy();
-        unregisterReceiver(finishReceiver);
+        if (finishReceiver != null)
+        {
+            finishReceiver.unregister();
+        }
     }
 
     @Override

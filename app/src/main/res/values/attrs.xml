@@ -172,17 +172,35 @@
         <attr name="square" format="boolean" />
     </declare-styleable>
     <declare-styleable name="DialogInfoItem">
+        <attr name="title" />
+        <attr name="text" />
+        <attr name="showActionText" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="TokenSelector">
+        <attr name="tsShowMaxButton" format="boolean" />
+        <attr name="tsShowLabel" format="boolean" />
+        <attr name="tsEditable" format="boolean" />
+        <attr name="tsLabelRes" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="SimpleSheetWidget">
+        <attr name="swLabelRes" format="integer" />
+        <attr name="swValueRes" format="integer" />
+        <attr name="swCaptionRes" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="BottomSheetToolbarView">
         <attr name="title"/>
         <attr name="text"/>
-        <attr name="showActionText" format="boolean"/>
     </declare-styleable>
     <attr name="seedWordStyle" format="reference" />
     <attr name="whatsNewEntryStyle" format="reference" />
-<!--    <attr name="colorSurfaceSecondary" format="reference" />-->
+    <attr name="colorSurfaceSecondary" format="reference" />
     <attr name="colorSurfaceTertiary" format="reference" />
     <attr name="colorSurfaceQuaternary" format="reference" />
     <attr name="colorSurfaceQuinary" format="reference" />
     <attr name="colorSurfaceDark" format="reference" />
+    <attr name="colorSurfaceSearch" format="reference" />
+    <attr name="colorIconBackgroundCompensate" format="reference" />
+
 
     <declare-styleable name="NodeStatusInfo">
         <attr name="android:icon"/>
