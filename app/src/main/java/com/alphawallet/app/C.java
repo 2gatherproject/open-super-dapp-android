@@ -39,8 +39,8 @@ public abstract class C {
     public static final String FANTOM_TEST_NETWORK = "Fantom (Test)";
     public static final String AVALANCHE_NETWORK = "Avalanche";
     public static final String FUJI_TEST_NETWORK = "Avalanche FUJI (Test)";
-    public static final String MATIC_NETWORK = "Polygon";
-    public static final String MATIC_TEST_NETWORK = "Mumbai (Test)";
+    public static final String POLYGON_NETWORK = "Polygon";
+    public static final String POLYGON_TEST_NETWORK = "Mumbai (Test)";
     public static final String OPTIMISTIC_NETWORK = "Optimistic";
     public static final String OPTIMISTIC_TEST_NETWORK = "Optimistic (Test)";
     public static final String CRONOS_MAIN_NETWORK = "Cronos";
@@ -80,7 +80,7 @@ public abstract class C {
     public static final String HECO_SYMBOL = "HT";
     public static final String FANTOM_SYMBOL = "FTM";
     public static final String AVALANCHE_SYMBOL = "AVAX";
-    public static final String MATIC_SYMBOL = "MATIC";
+    public static final String POLYGON_SYMBOL = "MATIC";
     public static final String CRONOS_SYMBOL = "CRO";
     public static final String CRONOS_TEST_SYMBOL = "tCRO";
     public static final String ARBITRUM_SYMBOL = "AETH";
@@ -299,6 +299,7 @@ public abstract class C {
     public static final String AN_USE_GAS = "Gas Settings";
     public static final String AN_CALL_ACTIONSHEET = "Use ActionSheet";
     public static final String AN_USE_ONRAMP = "Use OnRamp";
+    public static final String AN_USE_COINBASE_PAY = "Use Coinbase Pay";
     public static final String APP_NAME = "PACKAGE_NAME";
 
     public static final String ALPHAWALLET_LOGO_URI = "https://alphawallet.com/wp-content/themes/alphawallet/img/alphawallet-logo.svg";

@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.GitHubRelease;
 
 import java.text.ParseException;
@@ -19,8 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import im.vector.app.R;
 
 
 public class WhatsNewView extends ConstraintLayout

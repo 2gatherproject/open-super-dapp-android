@@ -1,6 +1,7 @@
 package com.alphawallet.app.ui;
 
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -39,6 +40,8 @@ import timber.log.Timber;
 import com.alphawallet.app.viewmodel.RedeemSignatureDisplayModel;
 import com.alphawallet.app.widget.AWalletAlertDialog;
 import com.alphawallet.app.widget.SignTransactionDialog;
+
+import javax.inject.Inject;
 
 import static com.alphawallet.app.C.Key.*;
 import static com.alphawallet.app.C.PRUNE_ACTIVITY;

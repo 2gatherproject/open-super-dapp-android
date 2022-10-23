@@ -44,7 +44,7 @@ public class FetchTokensInteract {
     public Observable<Token> updateBalance(String address, Token token)
     {
         if (token == null) return Observable.fromCallable(()
-                -> new Token(new TokenInfo(), BigDecimal.ZERO, 0, "", ContractType.NOT_SET));
+                                      -> new Token(new TokenInfo(), BigDecimal.ZERO, 0, "", ContractType.NOT_SET));
         return tokenRepository.fetchActiveTokenBalance(address, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

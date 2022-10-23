@@ -10,11 +10,15 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+
+import im.vector.app.R;
 import com.alphawallet.app.ui.widget.entity.SearchToolbarCallback;
 import com.alphawallet.app.util.KeyboardUtils;
 
-import im.vector.app.R;
+import org.jetbrains.annotations.Contract;
 
 /**
  * Created by JB on 9/12/2021.

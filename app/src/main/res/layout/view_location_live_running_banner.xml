@@ -65,7 +65,7 @@
 
     <Button
         android:id="@+id/locationLiveRunningBannerStop"
-        style="@style/Widget.Vector.Button.Text.LocationLive"
+        style="@style/Widget.Vector.Button.Text.LiveLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/location_share_live_stop"

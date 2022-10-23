@@ -39,7 +39,7 @@ Open Super dApp gratefully builds off the excellent open source mobile apps Elem
 ### Development
 This app can be developed using [Android Studio](https://developer.android.com/studio/), using standard development flows and techniques.
 
-The main repo branches are `develop` for active development, and `main` for code that has been released.
+The main repo branch is `main` for code that has been released. WIP branches are squash merged onto main in preparation for new releases.
 
 #### Upgrading Element and AlphaWallet
 Open Super dApp is "downstream" of the [element-android](https://github.com/vector-im/element-android) and [alpha-wallet-android](https://github.com/AlphaWallet/alpha-wallet-android) projects. This means that when either project issues a new releases, this new release can be merged into Open Super dApp. Only new code conflicts will need to be resolved. Please read the [Upgrading/Merging](UPGRADING-MERGING.md) document for more specific details regarding this process.

@@ -17,7 +17,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.entity.TransactionData;
@@ -46,8 +48,6 @@ import java.util.List;
 import java.util.Map;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.BuildConfig;
-import im.vector.app.R;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import timber.log.Timber;

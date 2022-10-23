@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.LayoutRes;
 
 import com.alphawallet.app.entity.StandardFunctionInterface;
+import com.alphawallet.app.repository.KeyProviderFactory;
 import com.alphawallet.app.util.KeyboardUtils;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.mailchimp.sdk.api.model.Contact;
@@ -26,10 +27,6 @@ import im.vector.app.R;
 
 
 public class EmailPromptView extends LinearLayout implements StandardFunctionInterface {
-
-    static {
-        System.loadLibrary("keys");
-    }
 
     private BottomSheetDialog parentDialog;
 
@@ -84,7 +81,7 @@ public class EmailPromptView extends LinearLayout implements StandardFunctionInt
                 return ;
             }
 
-            String sdkKey = getMailchimpKey();
+            String sdkKey = KeyProviderFactory.get().getMailchimpKey();
             try {
 
                 KeyboardUtils.hideKeyboard(this);

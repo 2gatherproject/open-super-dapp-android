@@ -1,7 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,7 +26,7 @@ import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.TokenRepository;
 import com.alphawallet.app.ui.QRScanning.DisplayUtils;
 import com.alphawallet.app.ui.widget.entity.AmountReadyCallback;
-import com.alphawallet.app.util.AWEnsResolver;
+import com.alphawallet.app.util.ens.AWEnsResolver;
 import com.alphawallet.app.util.KeyboardUtils;
 import com.alphawallet.app.util.QRUtils;
 import com.alphawallet.app.viewmodel.MyAddressViewModel;
@@ -45,6 +43,8 @@ import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
 
 @AndroidEntryPoint
 public class MyAddressActivity extends BaseActivity implements AmountReadyCallback

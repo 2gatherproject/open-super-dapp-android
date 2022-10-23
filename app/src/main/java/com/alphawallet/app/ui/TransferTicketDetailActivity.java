@@ -39,6 +39,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.CustomViewSettings;
 import com.alphawallet.app.entity.DisplayState;
 import com.alphawallet.app.entity.ErrorEnvelope;
@@ -87,7 +88,6 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -576,7 +576,7 @@ public class TransferTicketDetailActivity extends BaseActivity
                         break;
                     default:
                         Timber.tag("SEND").e(String.format(getString(R.string.barcode_error_format),
-                                "Code: " + resultCode
+                                                    "Code: " + resultCode
                         ));
                         break;
                 }
@@ -728,7 +728,7 @@ public class TransferTicketDetailActivity extends BaseActivity
 
         //set for now
         String time = String.format(Locale.getDefault(), "%02d:%02d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-                Calendar.getInstance().get(Calendar.MINUTE));
+                                    Calendar.getInstance().get(Calendar.MINUTE));
         expiryTimeEditText.setText(time);
     }
 

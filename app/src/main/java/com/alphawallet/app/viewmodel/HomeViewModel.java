@@ -58,7 +58,7 @@ import com.alphawallet.app.ui.AddTokenActivity;
 import com.alphawallet.app.ui.HomeActivity;
 import com.alphawallet.app.ui.ImportWalletActivity;
 import com.alphawallet.app.ui.SendActivity;
-import com.alphawallet.app.util.AWEnsResolver;
+import com.alphawallet.app.util.ens.AWEnsResolver;
 import com.alphawallet.app.util.QRParser;
 import com.alphawallet.app.util.RateApp;
 import com.alphawallet.app.util.Utils;
@@ -185,6 +185,10 @@ public class HomeViewModel extends BaseViewModel {
         return splashActivity;
     }
 
+    public LiveData<Wallet> defaultWallet() {
+        return defaultWallet;
+    }
+
     public void prepare(Activity activity) {
         progress.postValue(false);
         disposable = genericWalletInteract
@@ -192,7 +196,7 @@ public class HomeViewModel extends BaseViewModel {
                 .subscribe(w -> {
                     onDefaultWallet(w);
                     initWalletConnectSessions(activity, w);
-                }, this::onError);
+                    }, this::onError);
     }
 
     public void onClean()
@@ -556,15 +560,15 @@ public class HomeViewModel extends BaseViewModel {
                         .build();
 
                 Single.fromCallable(() -> {
-                            try (okhttp3.Response response = httpClient.newCall(request)
-                                    .execute()) {
-                                return new Gson().<List<GitHubRelease>>fromJson(response.body().string(), new TypeToken<List<GitHubRelease>>() {
-                                }.getType());
-                            } catch (Exception e) {
-                                Timber.tag(TAG).e(e);
-                            }
-                            return null;
-                        }).subscribeOn(Schedulers.io())
+                    try (okhttp3.Response response = httpClient.newCall(request)
+                            .execute()) {
+                        return new Gson().<List<GitHubRelease>>fromJson(response.body().string(), new TypeToken<List<GitHubRelease>>() {
+                        }.getType());
+                    } catch (Exception e) {
+                        Timber.tag(TAG).e(e);
+                    }
+                    return null;
+                }).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe((releases) -> {
 
                             BottomSheetDialog dialog = new BottomSheetDialog(context);
@@ -579,7 +583,7 @@ public class HomeViewModel extends BaseViewModel {
 
                             preferenceRepository.setLastVersionCode(versionCode);
 
-                        }).isDisposed();
+                }).isDisposed();
             }
         } catch (PackageManager.NameNotFoundException e) {
             Timber.e(e);
@@ -721,5 +725,15 @@ public class HomeViewModel extends BaseViewModel {
         };
 
         WCUtils.startServiceLocal(activity, connection, WalletConnectActions.CONNECT);
+    }
+
+    public boolean checkNewWallet(String address)
+    {
+        return preferenceRepository.isNewWallet(address);
+    }
+
+    public void setNewWallet(String address, boolean isNewWallet)
+    {
+        preferenceRepository.setNewWallet(address, isNewWallet);
     }
 }

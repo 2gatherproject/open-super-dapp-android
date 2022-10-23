@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.tokens.TokenPortfolio;
 import com.alphawallet.app.service.TickerService;

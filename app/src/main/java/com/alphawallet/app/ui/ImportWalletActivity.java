@@ -1,8 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.C.ErrorCode.ALREADY_ADDED;
-import static com.alphawallet.app.widget.AWalletAlertDialog.ERROR;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,6 +59,9 @@ import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static com.alphawallet.app.C.ErrorCode.ALREADY_ADDED;
+import static com.alphawallet.app.widget.AWalletAlertDialog.ERROR;
 
 @AndroidEntryPoint
 public class ImportWalletActivity extends BaseActivity implements OnImportSeedListener, ImportWalletCallback, OnImportKeystoreListener, OnImportPrivateKeyListener

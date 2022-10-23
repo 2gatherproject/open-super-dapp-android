@@ -8,7 +8,6 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.never;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 import android.content.Context;
 import android.content.Intent;
@@ -37,15 +36,11 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowToast;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-
 @RunWith(AndroidJUnit4.class)
-@Config(shadows = {ShadowRealm.class, ShadowJsInjectorClient.class})
+@Config(shadows = {ShadowRealm.class, ShadowJsInjectorClient.class}, application = TestApplication.class)
 public class Web3ViewClientTest
 {
     private static final String PACKAGE_NAME_OF_TELEGRAM = "org.telegram.messenger";

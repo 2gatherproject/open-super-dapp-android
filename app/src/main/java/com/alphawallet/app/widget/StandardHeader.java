@@ -7,9 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.material.switchmaterial.SwitchMaterial;
-
 import im.vector.app.R;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 /**
  * Created by JB on 26/08/2021.

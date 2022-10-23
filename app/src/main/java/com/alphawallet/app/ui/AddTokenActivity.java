@@ -101,7 +101,7 @@ public class AddTokenActivity extends BaseActivity implements AddressReadyCallba
 
 
         FunctionButtonBar functionBar = findViewById(R.id.layoutButtons);
-        functionBar.setupFunctions(this, new ArrayList<>(Collections.singletonList(R.string.action_save)));
+        functionBar.setupFunctions(this, new ArrayList<>(Collections.singletonList(R.string.action_save_alpha)));
         functionBar.revealButtons();
 
         progressLayout = findViewById(R.id.layout_progress);

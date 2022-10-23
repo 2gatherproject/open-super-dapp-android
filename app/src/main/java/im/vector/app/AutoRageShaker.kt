@@ -17,7 +17,6 @@
 package im.vector.app
 
 import android.content.SharedPreferences
-import androidx.lifecycle.asFlow
 import im.vector.app.core.di.ActiveSessionHolder
 import im.vector.app.features.rageshake.BugReporter
 import im.vector.app.features.rageshake.ReportType

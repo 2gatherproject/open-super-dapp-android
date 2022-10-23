@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alphawallet.app.C;
 import com.alphawallet.app.entity.AnalyticsProperties;
+import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.NetworkInfo;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
 import com.alphawallet.app.entity.TransactionData;
@@ -103,7 +104,7 @@ public class SendViewModel extends BaseViewModel {
 
     public void fetchToken(long chainId, String address, String walletAddress)
     {
-        tokensService.update(address, chainId)
+        tokensService.update(address, chainId, ContractType.NOT_SET)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tokenInfo -> gotTokenUpdate(tokenInfo, walletAddress), this::onError).isDisposed();

@@ -1,6 +1,8 @@
 package com.alphawallet.app.viewmodel;
 
 
+import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
+
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -11,8 +13,8 @@ import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.interact.GenericWalletInteract;
 import com.alphawallet.app.repository.TokenRepository;
 import com.alphawallet.app.repository.WalletItem;
-import com.alphawallet.app.util.AWEnsResolver;
-import com.alphawallet.app.util.EnsResolver;
+import com.alphawallet.app.util.ens.AWEnsResolver;
+import com.alphawallet.app.util.ens.EnsResolver;
 
 import javax.annotation.Nullable;
 import javax.inject.Inject;
@@ -106,7 +108,7 @@ public class NameThisWalletViewModel extends BaseViewModel
         if (!TextUtils.isEmpty(newName) && EnsResolver.isValidEnsName(newName))
         {
             //does this new name correspond to ENS?
-            ensResolver.resolveENSAddress(newName, true)
+            ensResolver.resolveENSAddress(newName)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(addr -> checkAddress(addr, newName, onSuccess))

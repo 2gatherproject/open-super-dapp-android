@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.walletconnect.WalletConnectSessionItem;
 import com.alphawallet.app.repository.EthereumNetworkRepository;
@@ -39,7 +40,6 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import timber.log.Timber;
 
 

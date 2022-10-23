@@ -18,10 +18,11 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.repository.TokenRepository;
 import com.alphawallet.app.ui.widget.entity.AvatarWriteCallback;
-import com.alphawallet.app.util.AWEnsResolver;
+import com.alphawallet.app.util.ens.AWEnsResolver;
 import com.alphawallet.app.util.Blockies;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -33,7 +34,6 @@ import com.bumptech.glide.request.target.Target;
 
 import java.nio.charset.StandardCharsets;
 
-import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;

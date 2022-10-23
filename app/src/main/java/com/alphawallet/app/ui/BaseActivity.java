@@ -9,8 +9,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import im.vector.app.R;
 import com.alphawallet.app.viewmodel.BaseViewModel;
+
+import im.vector.app.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -91,6 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                onBackPressed();
                 finish();
                 break;
         }

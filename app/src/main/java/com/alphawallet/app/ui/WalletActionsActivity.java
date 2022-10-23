@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.BackupOperationType;
 import com.alphawallet.app.entity.ErrorEnvelope;
 import com.alphawallet.app.entity.Wallet;
@@ -38,7 +40,6 @@ import com.alphawallet.app.widget.UserAvatar;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class WalletActionsActivity extends BaseActivity implements Runnable, View.OnClickListener, AddressReadyCallback
@@ -105,6 +106,14 @@ public class WalletActionsActivity extends BaseActivity implements Runnable, Vie
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_wallet_manage, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
     private void onTaskStatusChanged(Boolean isTaskRunning) {
 
     }
@@ -122,6 +131,14 @@ public class WalletActionsActivity extends BaseActivity implements Runnable, Vie
         {
             onBackPressed();
             return true;
+        }
+        else if (item.getItemId() == R.id.action_key_status)
+        {
+            //show the key status
+            Intent intent = new Intent(this, WalletDiagnosticActivity.class);
+            intent.putExtra("wallet", wallet);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -276,7 +293,7 @@ public class WalletActionsActivity extends BaseActivity implements Runnable, Vie
                     backupSuccessful();
                     finish();
                 }
-            });
+    });
 
     private void exportJSON(Wallet wallet) {
         Intent intent = new Intent(this, BackupKeyActivity.class);

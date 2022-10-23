@@ -1,7 +1,7 @@
 package com.alphawallet.app.interact;
 
 import com.alphawallet.app.repository.WalletRepositoryType;
-import com.alphawallet.app.util.AWEnsResolver;
+import com.alphawallet.app.util.ens.AWEnsResolver;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,14 +23,14 @@ public class ImportWalletInteract {
 
     public Single<Wallet> importKeystore(String keystore, String password, String newPassword) {
         return walletRepository
-                .importKeystoreToWallet(keystore, password, newPassword)
+                        .importKeystoreToWallet(keystore, password, newPassword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Single<Wallet> importPrivateKey(String privateKey, String newPassword) {
         return walletRepository
-                .importPrivateKeyToWallet(privateKey, newPassword)
+                        .importPrivateKeyToWallet(privateKey, newPassword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

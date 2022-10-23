@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.ContractLocator;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.tokens.Token;
@@ -34,7 +35,6 @@ import com.alphawallet.app.viewmodel.TokenManagementViewModel;
 import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import io.realm.Realm;
 import io.realm.RealmResults;
 

@@ -8,6 +8,7 @@ import com.alphawallet.app.entity.tokens.TokenPortfolio;
 import com.alphawallet.app.entity.tokens.TokenStats;
 import com.alphawallet.app.service.AssetDefinitionService;
 import com.alphawallet.app.service.TokensService;
+import com.alphawallet.app.ui.TokenInfoFragment;
 
 import javax.inject.Inject;
 

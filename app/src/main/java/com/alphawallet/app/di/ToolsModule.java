@@ -32,13 +32,13 @@ public class ToolsModule {
                 .connectTimeout(C.CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(C.READ_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(C.WRITE_TIMEOUT, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(false)
+				.retryOnConnectionFailure(false)
                 .build();
-    }
+	}
 
-    @Singleton
+	@Singleton
     @Provides
     RealmManager provideRealmManager() {
-        return new RealmManager();
+	    return new RealmManager();
     }
 }

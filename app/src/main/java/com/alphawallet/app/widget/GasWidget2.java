@@ -220,7 +220,7 @@ public class GasWidget2 extends LinearLayout implements Runnable, GasWidgetInter
         try(Realm realm = tokensService.getTickerRealmInstance())
         {
             RealmGasSpread rgs = realm.where(RealmGasSpread.class)
-                    .equalTo("chainId", token.tokenInfo.chainId).findFirst();
+                .equalTo("chainId", token.tokenInfo.chainId).findFirst();
 
             if (rgs != null)
             {

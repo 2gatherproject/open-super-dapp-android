@@ -8,11 +8,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import im.vector.app.R;
 import com.alphawallet.app.util.LocaleUtils;
 
 import java.util.Date;
-
-import im.vector.app.R;
 
 public class TransactionDateHolder extends BinderViewHolder<Date>
 {

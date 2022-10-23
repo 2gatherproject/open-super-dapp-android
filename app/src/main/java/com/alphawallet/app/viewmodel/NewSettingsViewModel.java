@@ -1,10 +1,9 @@
 package com.alphawallet.app.viewmodel;
 
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import android.content.Context;
 
 import com.alphawallet.app.entity.CurrencyItem;
 import com.alphawallet.app.entity.LocaleItem;

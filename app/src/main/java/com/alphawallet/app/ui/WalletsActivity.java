@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.CreateWalletCallbackInterface;
 import com.alphawallet.app.entity.CustomViewSettings;
 import com.alphawallet.app.entity.ErrorEnvelope;
@@ -42,7 +43,6 @@ import com.google.android.material.snackbar.Snackbar;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class WalletsActivity extends BaseActivity implements
@@ -281,7 +281,7 @@ public class WalletsActivity extends BaseActivity implements
                 if (importedWallet != null)
                 {
                     requiresHomeRefresh = true;
-                    viewModel.setDefaultWallet(importedWallet);
+                    viewModel.setDefaultWallet(importedWallet, true);
                 }
             }
         }
@@ -377,7 +377,7 @@ public class WalletsActivity extends BaseActivity implements
     private void onCreatedWallet(Wallet wallet)
     {
         hideToolbar();
-        viewModel.setDefaultWallet(wallet);
+        viewModel.setDefaultWallet(wallet, true);
         callNewWalletPage(wallet);
         finish();
     }
@@ -401,7 +401,7 @@ public class WalletsActivity extends BaseActivity implements
     private void onSetWalletDefault(Wallet wallet)
     {
         requiresHomeRefresh = true;
-        viewModel.setDefaultWallet(wallet);
+        viewModel.setDefaultWallet(wallet, false);
     }
 
     private void hideDialog()

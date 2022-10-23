@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,7 +21,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.EnsNodeNotSyncCallback;
 import com.alphawallet.app.entity.ErrorEnvelope;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
@@ -53,7 +54,6 @@ import com.alphawallet.app.widget.SystemView;
 import com.alphawallet.token.tools.Numeric;
 
 import org.jetbrains.annotations.NotNull;
-import org.web3j.protocol.core.methods.response.EthEstimateGas;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -61,11 +61,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.BuildConfig;
-import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -117,7 +113,7 @@ public class TransferNFTActivity extends BaseActivity implements TokensAdapterCa
 
         addressInput = findViewById(R.id.input_address);
         addressInput.setAddressCallback(this);
-        addressInput.setEnsNodeNotSyncCallback(this);
+        //addressInput.setEnsNodeNotSyncCallback(this);
 
         sendAddress = null;
         ensAddress = null;
@@ -522,7 +518,7 @@ public class TransferNFTActivity extends BaseActivity implements TokensAdapterCa
             dialog.setButtonListener(v -> dialog.dismiss());
             dialog.setSecondaryButtonText(R.string.ignore);
             dialog.setSecondaryButtonListener(v -> {
-                addressInput.setEnsHandlerNodeSyncFlag(false);  // skip node sync check
+                //addressInput.setEnsHandlerNodeSyncFlag(false);  // skip node sync check
                 // re enter current input to resolve again
                 String currentInput = addressInput.getEditText().getText().toString();
                 addressInput.getEditText().setText("");

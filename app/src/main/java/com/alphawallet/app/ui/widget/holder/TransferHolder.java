@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.Transaction;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.interact.FetchTransactionsInteract;
@@ -32,8 +33,6 @@ import com.alphawallet.token.tools.TokenDefinition;
 
 import java.math.BigInteger;
 import java.util.Map;
-
-import im.vector.app.R;
 
 /**
  * Created by JB on 17/12/2020.

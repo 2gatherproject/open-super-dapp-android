@@ -13,12 +13,12 @@ import static com.alphawallet.ethereum.EthereumNetworkBase.HECO_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.IOTEX_MAINNET_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.KLAYTN_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
-import static com.alphawallet.ethereum.EthereumNetworkBase.MATIC_ID;
+import static com.alphawallet.ethereum.EthereumNetworkBase.POLYGON_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.MILKOMEDA_C1_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.OPTIMISTIC_MAIN_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.POA_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.RINKEBY_ID;
-import static com.alphawallet.ethereum.EthereumNetworkBase.XDAI_ID;
+import static com.alphawallet.ethereum.EthereumNetworkBase.GNOSIS_ID;
 import static org.web3j.protocol.core.methods.request.Transaction.createEthCallTransaction;
 
 import android.text.TextUtils;
@@ -130,8 +130,8 @@ public class TickerService
         sharedPrefs.commit();
 
         tickerUpdateTimer = Observable.interval(0, UPDATE_TICKER_CYCLE, TimeUnit.MINUTES)
-                .doOnNext(l -> tickerUpdate())
-                .subscribe();
+                    .doOnNext(l -> tickerUpdate())
+                    .subscribe();
     }
 
     private void tickerUpdate()
@@ -271,7 +271,7 @@ public class TickerService
         for (TokenCardMeta tcm : erc20Tokens)
         {
             if (!dexGuruQuery.containsKey(tcm.tokenId) // don't include any token in the dexguru queue
-                    && (!currentTickerMap.containsKey(tcm.getAddress())
+                && (!currentTickerMap.containsKey(tcm.getAddress())
                     || currentTickerMap.get(tcm.getAddress()) < staleTime)) //include tokens who's tickers have gone stale
             {
                 lookupMap.put(tcm.getAddress().toLowerCase(), tcm);
@@ -613,12 +613,12 @@ public class TickerService
         if (ticker != null && address != null)
         {
             Single.fromCallable(() -> {
-                        localSource.updateERC20Tickers(chainId, new HashMap<String, TokenTicker>()
-                        {{ put(address, ticker); }});
-                        return true;
-                    }).subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe().isDisposed();
+                localSource.updateERC20Tickers(chainId, new HashMap<String, TokenTicker>()
+                {{ put(address, ticker); }});
+                return true;
+            }).subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe().isDisposed();
         }
     }
 
@@ -694,9 +694,9 @@ public class TickerService
     // Update this list from here: https://api.coingecko.com/api/v3/asset_platforms
     public static final Map<Long, String> coinGeckoChainIdToAPIName = new HashMap<Long, String>(){{
         put(MAINNET_ID, "ethereum");
-        put(XDAI_ID, "xdai");
+        put(GNOSIS_ID, "xdai");
         put(BINANCE_MAIN_ID, "binance-smart-chain");
-        put(MATIC_ID, "polygon-pos");
+        put(POLYGON_ID, "polygon-pos");
         put(CLASSIC_ID, "ethereum-classic");
         put(FANTOM_ID, "fantom");
         put(AVALANCHE_ID, "avalanche");
@@ -717,7 +717,7 @@ public class TickerService
     private static final Map<Long, String> dexGuruChainIdToAPISymbol = new HashMap<Long, String>(){{
         put(MAINNET_ID, "eth");
         put(BINANCE_MAIN_ID, "bsc");
-        put(MATIC_ID, "polygon");
+        put(POLYGON_ID, "polygon");
         put(AVALANCHE_ID, "avalanche");
     }};
 
@@ -731,12 +731,12 @@ public class TickerService
         put(MAINNET_ID, "ethereum");
         put(CLASSIC_ID, "ethereum-classic");
         put(POA_ID, "poa-network");
-        put(XDAI_ID, "xdai");
+        put(GNOSIS_ID, "xdai");
         put(BINANCE_MAIN_ID, "binancecoin");
         put(HECO_ID, "huobi-token");
         put(AVALANCHE_ID, "avalanche-2");
         put(FANTOM_ID, "fantom");
-        put(MATIC_ID, "matic-network");
+        put(POLYGON_ID, "matic-network");
         put(ARBITRUM_MAIN_ID, "ethereum");
         put(OPTIMISTIC_MAIN_ID, "ethereum");
         put(KLAYTN_ID, "klay-token");

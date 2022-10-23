@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.ErrorEnvelope;
 import com.alphawallet.app.entity.NetworkInfo;
@@ -43,7 +44,6 @@ import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import im.vector.app.R;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -138,7 +138,7 @@ public class TransactionDetailViewModel extends BaseViewModel {
     public void startPendingTimeDisplay(final String txHash)
     {
         pendingUpdateDisposable = Observable.interval(0, 1, TimeUnit.SECONDS)
-                .doOnNext(l -> displayCurrentPendingTime(txHash)).subscribe();
+            .doOnNext(l -> displayCurrentPendingTime(txHash)).subscribe();
     }
 
     //TODO: move to display new transaction

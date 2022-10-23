@@ -8,8 +8,8 @@ import static com.alphawallet.ethereum.EthereumNetworkBase.AURORA_MAINNET_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.AURORA_TESTNET_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.BINANCE_MAIN_ID;
 import static com.alphawallet.ethereum.EthereumNetworkBase.BINANCE_TEST_ID;
-import static com.alphawallet.ethereum.EthereumNetworkBase.MATIC_ID;
-import static com.alphawallet.ethereum.EthereumNetworkBase.MATIC_TEST_ID;
+import static com.alphawallet.ethereum.EthereumNetworkBase.POLYGON_ID;
+import static com.alphawallet.ethereum.EthereumNetworkBase.POLYGON_TEST_ID;
 
 import android.text.TextUtils;
 
@@ -26,6 +26,8 @@ import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.tokens.ERC721Token;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.tokens.TokenInfo;
+import com.alphawallet.app.repository.KeyProvider;
+import com.alphawallet.app.repository.KeyProviderFactory;
 import com.alphawallet.app.repository.TransactionsRealmCache;
 import com.alphawallet.app.repository.entity.RealmAuxData;
 import com.alphawallet.app.repository.entity.RealmToken;
@@ -73,34 +75,24 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
     private final String BSC_EXPLORER_API_KEY;
     private final String POLYGONSCAN_API_KEY;
     private final String AURORASCAN_API_KEY;
+    private final KeyProvider keyProvider = KeyProviderFactory.get();
 
     private final OkHttpClient httpClient;
     private final Gson gson;
     private final RealmManager realmManager;
 
-    static {
-        System.loadLibrary("keys");
-    }
-
-    public static native String getEtherscanKey();
-    public static native String getBSCExplorerKey();
-    public static native String getCovalentKey();
-    public static native String getPolygonScanKey();
-    public static native String getAuroraScanKey();
-
     public TransactionsNetworkClient(
             OkHttpClient httpClient,
             Gson gson,
-            RealmManager realmManager
-    ) {
+            RealmManager realmManager) {
         this.httpClient = httpClient;
         this.gson = gson;
         this.realmManager = realmManager;
 
-        BSC_EXPLORER_API_KEY = getBSCExplorerKey().length() > 0 ? "&apikey=" + getBSCExplorerKey() : "";
-        ETHERSCAN_API_KEY = "&apikey=" + getEtherscanKey();
-        POLYGONSCAN_API_KEY = getPolygonScanKey().length() > 3 ? "&apikey=" + getPolygonScanKey() : "";
-        AURORASCAN_API_KEY = getAuroraScanKey().length() > 3 ? "&apikey=" + getAuroraScanKey() : "";
+        BSC_EXPLORER_API_KEY = keyProvider.getBSCExplorerKey().length() > 0 ? "&apikey=" + keyProvider.getBSCExplorerKey() : "";
+        ETHERSCAN_API_KEY = "&apikey=" + keyProvider.getEtherscanKey();
+        POLYGONSCAN_API_KEY = keyProvider.getPolygonScanKey().length() > 3 ? "&apikey=" + keyProvider.getPolygonScanKey() : "";
+        AURORASCAN_API_KEY = keyProvider.getAuroraScanKey().length() > 3 ? "&apikey=" + keyProvider.getAuroraScanKey() : "";
     }
 
     @Override
@@ -175,7 +167,7 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
                 {
                     lastTransaction = syncDownwards(updates, instance, svs, networkInfo, tokenAddress, 9999999999L);
                 }
-                else // try to sydenc upwards from the last read
+                else // try to sync upwards from the last read
                 {
                     lastTransaction = syncUpwards(updates, instance, svs, networkInfo, tokenAddress, lastBlockNumber);
                 }
@@ -541,7 +533,7 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
     }
 
     private int processEtherscanEvents(Realm instance, String walletAddress, NetworkInfo networkInfo,
-                                       TokensService svs, EtherscanEvent[] events, boolean isNFTCheck) throws Exception
+                                        TokensService svs, EtherscanEvent[] events, boolean isNFTCheck) throws Exception
     {
         //Now update tokens if we don't already know this token
         writeTokens(walletAddress, networkInfo, events, svs);
@@ -705,14 +697,13 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
         {
             return BSC_EXPLORER_API_KEY;
         }
-        else if (networkInfo.chainId == MATIC_ID || networkInfo.chainId == MATIC_TEST_ID)
+        else if (networkInfo.chainId == POLYGON_ID || networkInfo.chainId == POLYGON_TEST_ID)
         {
-
             return POLYGONSCAN_API_KEY;
         }
         else if (networkInfo.chainId == AURORA_MAINNET_ID || networkInfo.chainId == AURORA_TESTNET_ID)
         {
-            return AURORASCAN_API_KEY;
+          return AURORASCAN_API_KEY;
         }
         else
         {
@@ -723,7 +714,7 @@ public class TransactionsNetworkClient implements TransactionsNetworkClientType
     private EtherscanTransaction[] readCovalentTransactions(TokensService svs, String accountAddress, NetworkInfo networkInfo, boolean ascending, int page, int pageSize) throws JSONException
     {
         String covalent = "" + networkInfo.chainId + "/address/" + accountAddress.toLowerCase() + "/transactions_v2/?";
-        String args = "block-signed-at-asc=" + (ascending ? "true" : "false") + "&page-number=" + (page - 1) + "&page-size=" + pageSize + "&key=" + getCovalentKey(); //read logs to get all the transfers
+        String args = "block-signed-at-asc=" + (ascending ? "true" : "false") + "&page-number=" + (page - 1) + "&page-size=" + pageSize + "&key=" + keyProvider.getCovalentKey(); //read logs to get all the transfers
         String fullUrl = networkInfo.etherscanAPI.replace(COVALENT, covalent);
         String result = null;
 

@@ -8,10 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import im.vector.app.R;
 import com.alphawallet.app.ui.widget.OnTokenManageClickListener;
 import com.alphawallet.app.ui.widget.entity.ManageTokensLabelData;
-
-import im.vector.app.R;
 
 public class TokenLabelViewHolder extends BinderViewHolder<ManageTokensLabelData> implements View.OnClickListener {
 

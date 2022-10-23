@@ -72,7 +72,7 @@ public class NotificationService
         //openAppIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         openAppIntent.setData(Uri.parse(AWSTARTUP + content));
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
-                openAppIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+                                                                openAppIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_alpha_notification)

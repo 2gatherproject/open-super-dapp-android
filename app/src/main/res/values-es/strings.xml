@@ -44,8 +44,6 @@
 \nImportando cuenta…</string>
     <string name="initial_sync_start_importing_account_rooms">Sincronización inicial:
 \nImportando salas</string>
-    <string name="initial_sync_start_importing_account_groups">Sincronización inicial:
-\nImportando comunidades</string>
     <string name="initial_sync_start_importing_account_data">Sincronización inicial:
 \nImportando datos de la cuenta</string>
     <string name="event_status_sending_message">Enviando mensaje…</string>
@@ -230,6 +228,7 @@
     <string name="action_cancel">Cancelar</string>
     <string name="action_save">Guardar</string>
     <string name="action_leave">Salir</string>
+    <string name="action_send">Enviar</string>
     <string name="action_quote">Citar</string>
     <string name="later">Más Tarde</string>
     <string name="permalink">Enlace Permanente</string>
@@ -288,7 +287,6 @@
     <string name="auth_email_already_defined">Esta dirección de correo electrónico ya está definida.</string>
     <string name="auth_forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="auth_recaptcha_message">Este Servidor Doméstico quiere asegurarse de que no eres un robot</string>
-    <string name="auth_reset_password_missing_email">Debes ingresar la dirección de correo electrónico vinculada a tu cuenta.</string>
     <string name="auth_reset_password_error_unauthorized">No se pudo verificar la dirección de correo electrónico: asegúrate de hacer clic en el enlace del correo electrónico</string>
     <string name="login_error_invalid_home_server">Por favor introduce una URL válida</string>
     <string name="login_error_bad_json">JSON mal formado</string>
@@ -494,7 +492,6 @@
     <string name="notification_noisy">Ruidoso</string>
     <string name="encrypted_message">Mensaje cifrado</string>
     <string name="loading">Cargando…</string>
-    <string name="groups_header">Comunidades</string>
     <string name="start_voice_call_prompt_msg">¿Seguro que quieres iniciar una llamada de voz?</string>
     <string name="start_video_call_prompt_msg">¿Seguro que quieres iniciar una llamada de vídeo?</string>
     <string name="room_participants_ban_prompt_msg">Vetar un usuario lo echará de esta sala y evitará que se una nuevamente.</string>
@@ -667,7 +664,7 @@
     <string name="settings_troubleshoot_test_fcm_failed_account_missing_quick_fix">Añadir cuenta</string>
     <string name="settings_troubleshoot_test_token_registration_title">Token de registro</string>
     <string name="settings_troubleshoot_test_token_registration_success">Token FCM registrado correctamente en el Servidor.</string>
-    <string name="settings_troubleshoot_test_token_registration_failed">Error al registrar el token FCM en el Servidor 
+    <string name="settings_troubleshoot_test_token_registration_failed">Error al registrar el token FCM en el Servidor
 \n%1$s</string>
     <string name="keys_backup_settings_deleting_backup">Borrando copia de seguridad…</string>
     <string name="keys_backup_settings_delete_confirm_title">Borrar copia de seguridad</string>
@@ -869,7 +866,6 @@
     <string name="action_change">Cambiar</string>
     <string name="change_room_directory_network">Cambiar red</string>
     <string name="please_wait">Espere por favor…</string>
-    <string name="group_all_communities">Todas la comunidades</string>
     <string name="room_preview_no_preview">Esta sala no se puede previsualizar</string>
     <string name="fab_menu_create_room">Salas</string>
     <string name="fab_menu_create_chat">Chats</string>
@@ -1379,7 +1375,7 @@
     <string name="login_reset_password_success_notice_2">Ha cerrado sesión en todas las sesiones y ya no recibirá notificaciones automáticas. Para volver a habilitar las notificaciones, inicie sesión nuevamente en cada dispositivo.</string>
     <string name="login_reset_password_success_submit">Volver a Iniciar sesión</string>
     <string name="login_reset_password_cancel_confirmation_title">Advertencia</string>
-    <string name="login_reset_password_cancel_confirmation_content">u contraseña aún no ha cambiado. 
+    <string name="login_reset_password_cancel_confirmation_content">u contraseña aún no ha cambiado.
 \n
 \n¿Detener el proceso de cambio de contraseña\?</string>
     <string name="login_set_email_title">Establecer dirección de correo electrónico</string>
@@ -1434,9 +1430,9 @@
     <string name="signed_out_title">Estás desconectado</string>
     <string name="signed_out_notice">Puede deberse a varias razones:
 \n
-\n• Has cambiado tu contraseña en otra sesión. 
+\n• Has cambiado tu contraseña en otra sesión.
 \n
-\n• Ha eliminado esta sesión de otra sesión. 
+\n• Ha eliminado esta sesión de otra sesión.
 \n
 \n• El administrador de su servidor ha invalidado su acceso por motivos de seguridad.</string>
     <string name="signed_out_submit">Iniciar sesión de nuevo</string>
@@ -1452,7 +1448,7 @@
 \nBórrelo si terminó de usar este dispositivo o si desea iniciar sesión en otra cuenta.</string>
     <string name="soft_logout_clear_data_submit">Borrar todos los datos</string>
     <string name="soft_logout_clear_data_dialog_title">Borrar datos</string>
-    <string name="soft_logout_clear_data_dialog_content">¿Borrar todos los datos almacenados actualmente en este dispositivo\? 
+    <string name="soft_logout_clear_data_dialog_content">¿Borrar todos los datos almacenados actualmente en este dispositivo\?
 \nVuelva a iniciar sesión para acceder a los datos y mensajes de su cuenta.</string>
     <string name="soft_logout_clear_data_dialog_e2e_warning_content">Perderás el acceso a los mensajes seguros a menos que inicies sesión para recuperar tus claves de cifrado.</string>
     <string name="soft_logout_sso_not_same_user_error">La sesión actual es para el usuario %1$s y usted proporciona las credenciales para el usuario %2$s. Esto no está suportado por ${app_name}.
@@ -1468,7 +1464,7 @@
     <string name="room_profile_encrypted_subtitle">Los mensajes de esta sala están cifrados Extremo-a-Extremo.
 \n
 \nSus mensajes están protegidos y sólo usted y el destinatario tienen las claves únicas para descifrarlos.</string>
-    <string name="verify_cannot_cross_sign">Esta sesión no puede compartir esta verificación con sus otras sesiones. 
+    <string name="verify_cannot_cross_sign">Esta sesión no puede compartir esta verificación con sus otras sesiones.
 \nLa verificación se guardará localmente y se compartirá en una versión futura de la aplicación.</string>
     <string name="command_description_rainbow_emote">Envía el emote dado coloreado como un arcoíris</string>
     <string name="room_settings_enable_encryption_dialog_content">Una vez habilitado, el cifrado de una sala no se puede deshabilitar. Los mensajes enviados en una sala cifrada no pueden ser vistos por el servidor, solo por los participantes de la sala. Habilitar el cifrado puede impedir que muchos bots y puentes funcionen correctamente.</string>
@@ -1480,10 +1476,10 @@
     <string name="verification_conclusion_ok_self_notice">Su nueva sesión ahora está verificada. Tiene acceso a sus mensajes cifrados y otros usuarios lo verán como de confianza.</string>
     <string name="encryption_information_dg_xsigning_complete">La firma cruzada está habilitada
 \n Claves privadas en el dispositivo.</string>
-    <string name="encryption_information_dg_xsigning_trusted">La firma cruzada está habilitada 
-\nLas llaves son de confianza. 
+    <string name="encryption_information_dg_xsigning_trusted">La firma cruzada está habilitada
+\nLas llaves son de confianza.
 \nNo se conocen las claves privadas</string>
-    <string name="encryption_information_dg_xsigning_not_trusted">La firma cruzada está habilitada. 
+    <string name="encryption_information_dg_xsigning_not_trusted">La firma cruzada está habilitada.
 \nLas claves no son de confianza</string>
     <string name="settings_hs_admin_e2e_disabled">El administrador de su servidor ha desactivado el cifrado Extremo-a-Extremo de forma predeterminada en salas privadas y mensajes directos.</string>
     <string name="settings_failed_to_get_crypto_device_info">No hay información criptográfica disponible</string>
@@ -1516,12 +1512,12 @@
     <string name="verify_cancel_self_verification_from_untrusted">Si cancela, no podrá leer mensajes cifrados en este dispositivo y otros usuarios no confiarán en él</string>
     <string name="verify_cancel_self_verification_from_trusted">Si cancela, no podrá leer mensajes cifrados en su nuevo dispositivo y otros usuarios no confiarán en él</string>
     <string name="verify_cancel_other">No verificarás %1$s (%2$s) si cancelas ahora. Comience de nuevo en su perfil de usuario.</string>
-    <string name="verify_not_me_self_verification">Uno de los siguientes puede verse comprometido: 
+    <string name="verify_not_me_self_verification">Uno de los siguientes puede verse comprometido:
 \n
-\n- Tu contraseña 
-\n- Tu servidor doméstico 
-\n- Este dispositivo o el otro dispositivo 
-\n- La conexión a Internet que está usando cualquiera de los dispositivos 
+\n- Tu contraseña
+\n- Tu servidor doméstico
+\n- Este dispositivo o el otro dispositivo
+\n- La conexión a Internet que está usando cualquiera de los dispositivos
 \n
 \nLe recomendamos que cambie su contraseña y clave de recuperación en Configuración de inmediato.</string>
     <string name="verify_cancelled_notice">Se canceló la verificación. Puede iniciar la verificación de nuevo.</string>
@@ -2448,7 +2444,6 @@
     <string name="sent_live_location">Compartieron su localización en vivo</string>
     <string name="sent_location">Compartieron su localización</string>
     <string name="ftue_profile_picture_subtitle">Puedes cambiar esto en todo momento.</string>
-    <string name="ftue_display_name_subtitle">Esto se mostrará cuando mandes mensajes.</string>
     <string name="ftue_account_created_take_me_home">Llévame a casa</string>
     <string name="ftue_account_created_personalize">Personalizar perfil</string>
     <string name="ftue_auth_use_case_connect_to_server">Conectar a servidor</string>
@@ -2476,7 +2471,6 @@
     <string name="settings_show_latest_profile">Mostrar última información del usuario</string>
     <string name="a11y_presence_busy">Ocupado</string>
     <string name="live_location_bottom_sheet_last_updated_at">Actualizado hace %1$s</string>
-    <string name="live_location_bottom_sheet_stop_sharing">Dejar de compartir</string>
     <string name="labs_enable_live_location_summary">Implementación temporal: las ubicaciones persisten en el historial de la sala</string>
     <string name="labs_enable_live_location">Activar compartir ubicación en tiempo real</string>
     <string name="location_share_live_remaining_time">Queda %1$s</string>
@@ -2526,7 +2520,6 @@
 
     <!-- Alpha Wallet start -->
     <!-- String related to sending -->
-    <string name="action_send">Enviar</string>
     <string name="action_send_tkn">Enviar %1$s</string>
     <string name="recipient">Destinatario</string>
     <string name="error_field_required">Este campo es obligatorio</string>
@@ -2610,7 +2603,7 @@
     <string name="no_transactions_yet">Las actividades aparecerán aquí</string>
     <string name="unknown_balance_without_symbol">--</string>
     <string name="dummy_transaction_value">&#45;&#45;</string>
-    <string name="title_dialog_sending">Enviando…</string>
+    <string name="title_dialog_sending">Enviando...</string>
     <string name="scan_qr">Obtener dirección a partir del código QR</string>
     <string name="info_gas_price">Cuanto más alto sea el precio del gas, más cara será la tarifa de tu transacción, pero más rápido se procesará por la red Ethereum.</string>
     <string name="info_gas_limit">El límite de gas evita que los contratos inteligentes consuman todo tu Ethereum. Intentaremos calcular el límite de gas de forma automática, pero algunos contratos inteligentes requieren un límite de gas personalizado.</string>
@@ -3167,7 +3160,7 @@
     <string name="error_browse_selection">La imagen seleccionada no contiene ningún dato.</string>
     <string name="display_tokens">Mostrar tokens</string>
     <string name="hidden_tokens">Tokens ocultos</string>
-    <string name="search_for_tokens">Buscar tokens…</string>
+    <string name="search_for_tokens">Buscar tokens...</string>
     <string name="title_wallet_connect">WalletConnect</string>
     <string name="action_end_session">Finalizar sesión</string>
     <string name="dialog_send_eth_transaction">Enviar transacción ETH</string>
@@ -3444,6 +3437,18 @@
     <string name="label_provider">Provider</string>
     <string name="delete_empty">Delete Empty</string>
     <string name="delete_all">Delete All</string>
-    <!-- Alpha Wallet end -->
-
+    <string name="buy_with_coinbase_pay">Buy with Coinbase Pay</string>
+    <string name="buy_with_ramp">Buy with Ramp</string>
+    <string name="title_buy_with_coinbase_pay">Buy with Coinbase Pay</string>
+    <string name="key_status">Key Status</string>
+    <string name="fix_key_state">Fix Key State</string>
+    <string name="run_key_diagnostic">Run Key Diagnostic</string>
+    <string name="key_diagnostic">Key Diagnostic</string>
+    <string name="key_found">Key found</string>
+    <string name="key_not_found">Unable to find Key</string>
+    <string name="seed_phrase_public_key">Seed Phrase detected public key: %1$s</string>
+    <string name="keystore_public_key">Decoded Keystore public key: %1$s</string>
+    <string name="enclave_locked">Locked</string>
+    <string name="key_type_in_database">Key type in Database</string>
+    <string name="key_entry_in_secure_enclave">Key Entry in Secure Enclave</string>
 </resources>

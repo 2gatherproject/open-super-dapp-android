@@ -20,7 +20,7 @@
             android:layout_height="?android:attr/actionBarSize"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom" />
-        
+
     </RelativeLayout>
 
     <LinearLayout

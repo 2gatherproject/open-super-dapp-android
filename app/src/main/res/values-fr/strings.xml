@@ -52,8 +52,6 @@
 \nImportation des salons où vous avez été invité</string>
     <string name="initial_sync_start_importing_account_left_rooms">Synchronisation initiale :
 \nImportation des salons que vous avez quittés</string>
-    <string name="initial_sync_start_importing_account_groups">Synchronisation initiale :
-\nImportation des communautés</string>
     <string name="initial_sync_start_importing_account_data">Synchronisation initiale :
 \nImportation des données du compte</string>
     <string name="notice_room_update">%s a mis à niveau ce salon.</string>
@@ -204,6 +202,7 @@
     <string name="notice_room_server_acl_set_title_by_you">Vous avez paramétré les ACL pour ce salon.</string>
     <string name="notice_room_server_acl_set_title">%s paramètre les autorisations étendues (ACL) du serveur pour ce salon.</string>
     <string name="title_activity_settings">Paramètres</string>
+    <string name="action_save">Enregistrer</string>
     <string name="later">Plus tard</string>
     <string name="permalink">Permalien</string>
     <string name="view_source">Afficher la source</string>
@@ -369,7 +368,6 @@
     <string name="auth_invalid_email">Ceci ne ressemble pas à une adresse électronique valide</string>
     <string name="auth_email_already_defined">Cette adresse électronique est déjà utilisée.</string>
     <string name="auth_recaptcha_message">Ce serveur d’accueil souhaite s’assurer que vous n’êtes pas un robot</string>
-    <string name="auth_reset_password_missing_email">L’adresse électronique liée à votre compte doit être saisie.</string>
     <string name="auth_reset_password_error_unauthorized">Impossible de vérifier l’adresse électronique : assurez-vous d’avoir cliqué sur le lien dans le courriel</string>
     <string name="login_error_limit_exceeded">Trop de requêtes ont été envoyées</string>
     <string name="action_leave">Quitter</string>
@@ -468,7 +466,6 @@
     <string name="notification_noisy">Notification sonore</string>
     <string name="encrypted_message">Message chiffré</string>
     <string name="loading">Chargement…</string>
-    <string name="groups_header">Communautés</string>
     <string name="start_voice_call_prompt_msg">Voulez-vous vraiment engager un nouvel appel audio \?</string>
     <string name="start_video_call_prompt_msg">Voulez-vous vraiment engager un nouvel appel vidéo \?</string>
     <string name="room_participants_ban_prompt_msg">Bannir un utilisateur va l’expulser du salon et l’empêcher de le rejoindre à nouveau.</string>
@@ -680,7 +677,7 @@
     <string name="passphrase_passphrase_too_weak">La phrase secrète est trop faible</string>
     <string name="keys_backup_passphrase_not_empty_error_message">Veuillez supprimer la phrase secrète si vous voulez que ${app_name} génère une clé de récupération.</string>
     <string name="keys_backup_setup_step1_title">Ne perdez jamais vos messages chiffrés</string>
-    <string name="keys_backup_setup_step1_description">Les messages dans les salons chiffrés sont sécurisés avec un chiffrement de bout en bout. Seuls vous et le(s) destinataire(s) avez les clés pour lire ces messages. 
+    <string name="keys_backup_setup_step1_description">Les messages dans les salons chiffrés sont sécurisés avec un chiffrement de bout en bout. Seuls vous et le(s) destinataire(s) avez les clés pour lire ces messages.
 \n
 \nSauvegardez vos clés de façon sécurisée pour éviter de les perdre.</string>
     <string name="keys_backup_setup_step2_button_title">Définir la phrase secrète</string>
@@ -848,7 +845,6 @@
     <string name="create_new_room">Créer un nouveau salon</string>
     <string name="error_no_network">Aucun réseau. Vérifiez votre connexion Internet.</string>
     <string name="action_change">Changer</string>
-    <string name="group_all_communities">Toutes les communautés</string>
     <string name="room_preview_no_preview">Impossible d’avoir un aperçu de ce salon</string>
     <string name="fab_menu_create_room">Salons</string>
     <string name="fab_menu_create_chat">Conversations privées</string>
@@ -1267,7 +1263,7 @@
         <item quantity="one">%d session active</item>
         <item quantity="other">%d sessions actives</item>
     </plurals>
-    <string name="crosssigning_verify_this_session">Vérifier cette session</string>
+    <string name="crosssigning_verify_this_session">Vérifier cet appareil</string>
     <string name="verification_open_other_to_verify">Utilisez une session existante pour vérifier celle-ci, ce qui lui permettra d’avoir accès aux messages chiffrés.</string>
     <string name="verification_profile_verify">Vérifier</string>
     <string name="verification_profile_verified">Vérifié</string>
@@ -2420,7 +2416,6 @@
     <string name="ftue_profile_picture_title">Ajouter une photo de profil</string>
     <string name="ftue_display_name_entry_footer">Vous pourrez le changer plus tard</string>
     <string name="ftue_display_name_entry_title">Nom d’affichage</string>
-    <string name="ftue_display_name_subtitle">Il sera affiché quand vous enverrez des messages.</string>
     <string name="ftue_display_name_title">Choisissez un nom d’affichage</string>
     <string name="ftue_account_created_subtitle">Votre compte %s a été créé</string>
     <string name="ftue_account_created_congratulations_title">Félicitations !</string>
@@ -2476,7 +2471,6 @@
 \nCette action va redémarrer l’application et pourra prendre du temps.</string>
     <string name="initial_sync_request_title">Requête de synchronisation initiale</string>
     <string name="live_location_bottom_sheet_last_updated_at">Mis-à-jour il y a %1$s</string>
-    <string name="live_location_bottom_sheet_stop_sharing">Arrêter le partage</string>
     <string name="labs_enable_live_location_summary">Implémentation temporaire : les positions sont persistantes dans l’historique du salon</string>
     <string name="labs_enable_live_location">Activer le partage de position en continu</string>
     <string name="location_share_live_remaining_time">%1$s restant</string>
@@ -2544,8 +2538,8 @@
     <string name="ftue_auth_forgot_password">Mot de passe oublié</string>
     <string name="ftue_auth_email_resend_email">Renvoyer le courriel</string>
     <string name="ftue_auth_email_verification_footer">Pas reçu de courriel \?</string>
-    <string name="ftue_auth_email_verification_subtitle">Pour confirmer votre courriel, appuyez sur le bouton dans le courriel que nous venons d’envoyer à %s</string>
-    <string name="ftue_auth_email_verification_title">Relevez vos courriels pour la vérification.</string>
+    <string name="ftue_auth_email_verification_subtitle">Suivez les instructions envoyées à %s</string>
+    <string name="ftue_auth_email_verification_title">Vérifiez votre courriel</string>
     <string name="ftue_auth_phone_confirmation_resend_code">Renvoyer le code</string>
     <string name="ftue_auth_phone_confirmation_subtitle">Un code a été envoyé au %s</string>
     <string name="ftue_auth_phone_confirmation_title">Confirmer votre numéro de téléphone</string>
@@ -2582,6 +2576,25 @@
     <string name="font_size_section_manually">Choisir manuellement</string>
     <string name="font_size_section_auto">Automatique</string>
     <string name="font_size_title">Choisir la taille de la police</string>
+    <string name="labs_enable_element_call_permission_shortcuts_summary">Approuve automatiquement les widgets de Element Call et leur donner l’accès au micro et à la caméra</string>
+    <string name="labs_enable_element_call_permission_shortcuts">Activer les raccourcis de permission de Element Call</string>
+    <string name="live_location_description">Position en direct</string>
+    <string name="verify_invalid_qr_notice">Ce QR code semble incorrect. Veuillez réessayer la vérification avec une autre méthode.</string>
+    <string name="crosssigning_cannot_verify_this_session_desc">Vous ne pourrez plus accéder à l’historique des messages chiffrés. Réinitialiser votre sauvegarde sécurisée des messages et vos clés de récupération pour un nouveau départ.</string>
+    <string name="crosssigning_cannot_verify_this_session">Impossible de vérifier cet appareil</string>
+    <string name="ftue_auth_choose_server_sign_in_subtitle">Quelle est l’adresse de votre serveur \?</string>
+    <string name="ftue_auth_sign_in_choose_server_header">Où seront vos conversations</string>
+    <string name="updating_your_data">Mise-à-jour de vos données…</string>
+    <plurals name="search_space_multiple_parents">
+        <item quantity="one">%1$s et %2$d autre</item>
+        <item quantity="other">%1$s et %2$d autres</item>
+    </plurals>
+    <string name="search_space_two_parents">%1$s et %2$s</string>
+    <string name="auth_reset_password_error_unverified">Courriel non vérifié, relevez votre boîte de réception</string>
+    <string name="location_share_loading_map_error">Impossible de charger la carte
+\nCe serveur d’accueil n’a peut-être pas été configuré pour afficher les cartes.</string>
+    <string name="a11y_open_settings">Ouvrir les paramètres</string>
+    <string name="all_chats">Toutes les conversations</string>
 
     <!-- Alpha Wallet start -->
     <!-- String related to sending -->
@@ -2911,7 +2924,7 @@
     <string name="token_mint">Battre</string>
     <string name="token_burn">Brûler</string>
 
-    <string name="action_save">Sauvegarder</string>
+    <string name="action_save_alpha">Sauvegarder</string>
     <string name="action_contract_info">Info du contrat</string>
     <string name="contract_address">Adressee du contrat</string>
     <string name="input_address">Adressee Ethereum ou nom ENS</string>
@@ -3526,6 +3539,18 @@
     <string name="label_provider">Provider</string>
     <string name="delete_empty">Delete Empty</string>
     <string name="delete_all">Delete All</string>
-    <!-- Alpha Wallet end -->
-
+    <string name="buy_with_coinbase_pay">Buy with Coinbase Pay</string>
+    <string name="buy_with_ramp">Buy with Ramp</string>
+    <string name="title_buy_with_coinbase_pay">Buy with Coinbase Pay</string>
+    <string name="key_status">Key Status</string>
+    <string name="fix_key_state">Fix Key State</string>
+    <string name="run_key_diagnostic">Run Key Diagnostic</string>
+    <string name="key_diagnostic">Key Diagnostic</string>
+    <string name="key_found">Key found</string>
+    <string name="key_not_found">Unable to find Key</string>
+    <string name="seed_phrase_public_key">Seed Phrase detected public key: %1$s</string>
+    <string name="keystore_public_key">Decoded Keystore public key: %1$s</string>
+    <string name="enclave_locked">Locked</string>
+    <string name="key_type_in_database">Key type in Database</string>
+    <string name="key_entry_in_secure_enclave">Key Entry in Secure Enclave</string>
 </resources>

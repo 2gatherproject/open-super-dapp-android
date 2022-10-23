@@ -18,51 +18,53 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.repository.entity.RealmWalletData;
 import com.alphawallet.app.service.TickerService;
 import com.alphawallet.app.ui.widget.entity.WalletClickCallback;
+import com.alphawallet.app.util.Blockies;
+import com.alphawallet.app.util.Utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import im.vector.app.R;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class WalletSummaryHeaderHolder extends BinderViewHolder<Wallet> implements View.OnClickListener {
 
-    public static final int VIEW_TYPE = 1045;
+	public static final int VIEW_TYPE = 1045;
 
-    private final Realm realm;
-    private RealmResults<RealmWalletData> realmUpdate;
+	private final Realm realm;
+	private RealmResults<RealmWalletData> realmUpdate;
 
-    private TextView summaryBalance;
-    private TextView summaryChange;
-    private View walletClickLayout;
+	private TextView summaryBalance;
+	private TextView summaryChange;
+	private View walletClickLayout;
 
-    private final WalletClickCallback clickCallback;
+	private final WalletClickCallback clickCallback;
 
-    public WalletSummaryHeaderHolder(int resId, ViewGroup parent, WalletClickCallback callback, Realm realm) {
-        super(resId, parent);
-        clickCallback = callback;
-        this.realm = realm;
+	public WalletSummaryHeaderHolder(int resId, ViewGroup parent, WalletClickCallback callback, Realm realm) {
+		super(resId, parent);
+		clickCallback = callback;
+		this.realm = realm;
 
-        this.summaryBalance = findViewById(R.id.summary_balance);
-        this.summaryChange = findViewById(R.id.summary_change);
-        this.walletClickLayout = findViewById(R.id.wallet_click_layer);
-    }
+		this.summaryBalance = findViewById(R.id.summary_balance);
+		this.summaryChange = findViewById(R.id.summary_change);
+		this.walletClickLayout = findViewById(R.id.wallet_click_layer);
+	}
 
-    @Override
-    public void bind(@Nullable Wallet data, @NonNull Bundle addition) {
+	@Override
+	public void bind(@Nullable Wallet data, @NonNull Bundle addition) {
 
-        if (realmUpdate != null) realmUpdate.removeAllChangeListeners();
+		if (realmUpdate != null) realmUpdate.removeAllChangeListeners();
 
-        //update using addition
-        double fiatValue = addition.getDouble(FIAT_VALUE, 0.00);
-        double oldFiatValue = addition.getDouble(FIAT_CHANGE, 0.00);
+		//update using addition
+		double fiatValue = addition.getDouble(FIAT_VALUE, 0.00);
+		double oldFiatValue = addition.getDouble(FIAT_CHANGE, 0.00);
 
-        String balanceTxt = TickerService.getCurrencyString(fiatValue);
+		String balanceTxt = TickerService.getCurrencyString(fiatValue);
 
         if (addition.getBoolean(IS_MAINNET_ACTIVE))
         {
@@ -73,7 +75,7 @@ public class WalletSummaryHeaderHolder extends BinderViewHolder<Wallet> implemen
             summaryBalance.setText(R.string.testnet);
             summaryChange.setText(R.string.mode_test);
         }
-    }
+	}
 
     private void setWalletChange(double fiatValue, double oldFiatValue)
     {
@@ -95,5 +97,5 @@ public class WalletSummaryHeaderHolder extends BinderViewHolder<Wallet> implemen
     @Override
     public void onClick(View view) {
 
-    }
+	}
 }

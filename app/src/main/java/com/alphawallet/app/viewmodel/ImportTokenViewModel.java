@@ -249,7 +249,7 @@ public class ImportTokenViewModel extends BaseViewModel
     private void setupTokenAddr(String contractAddress)
     {
         disposable = tokensService
-                .update(contractAddress, importOrder.chainId)
+                .update(contractAddress, importOrder.chainId, ContractType.NOT_SET)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::getTokenSpec, this::onError);

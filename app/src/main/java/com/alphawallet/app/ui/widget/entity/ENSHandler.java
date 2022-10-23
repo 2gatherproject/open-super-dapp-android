@@ -4,6 +4,8 @@ package com.alphawallet.app.ui.widget.entity;
  * Created by JB on 28/10/2020.
  */
 
+import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
+
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,7 +18,7 @@ import com.alphawallet.app.C;
 import com.alphawallet.app.entity.EnsNodeNotSyncCallback;
 import com.alphawallet.app.repository.TokenRepository;
 import com.alphawallet.app.ui.widget.adapter.AutoCompleteAddressAdapter;
-import com.alphawallet.app.util.AWEnsResolver;
+import com.alphawallet.app.util.ens.AWEnsResolver;
 import com.alphawallet.app.util.Utils;
 import com.alphawallet.app.widget.InputAddress;
 import com.google.gson.Gson;
@@ -227,7 +229,7 @@ public class ENSHandler implements Runnable
             host.setWaitingSpinner(true);
             host.ENSName(to);
 
-            disposable = ensResolver.resolveENSAddress(to, performEnsSync)
+            disposable = ensResolver.resolveENSAddress(to)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(resolvedAddress -> onENSSuccess(resolvedAddress, to), this::onENSError);
@@ -332,9 +334,9 @@ public class ENSHandler implements Runnable
         PreferenceManager.getDefaultSharedPreferences(host.getContext()).edit().putString(C.ENS_HISTORY_PAIR, historyJson).apply();
     }
 
-    public void setEnsNodeNotSyncCallback(EnsNodeNotSyncCallback callback)
+    /*public void setEnsNodeNotSyncCallback(EnsNodeNotSyncCallback callback)
     {
         Timber.d("setEnsNodeNotSyncCallback: ");
         ensResolver.nodeNotSyncCallback = callback;
-    }
+    }*/
 }

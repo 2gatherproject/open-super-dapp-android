@@ -23,8 +23,8 @@ import okio.BufferedSource;
 import timber.log.Timber;
 
 public class LogInterceptor implements Interceptor {
-    private static final String TAG = "HTTP_TRACE";
-    private static final Charset UTF8 = StandardCharsets.UTF_8;
+	private static final String TAG = "HTTP_TRACE";
+	private static final Charset UTF8 = StandardCharsets.UTF_8;
 
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException

@@ -8,14 +8,13 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.service.TickerService;
 import com.alphawallet.app.service.TokensService;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import im.vector.app.R;
 
 public class TokenInfoHeaderView extends LinearLayout {
     private final TokenIcon icon;

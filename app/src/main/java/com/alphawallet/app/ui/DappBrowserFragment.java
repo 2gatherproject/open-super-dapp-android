@@ -707,8 +707,8 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         expandCollapseView(layoutNavigation, false);
 
         disposable = Observable.zip(
-                        Observable.interval(600, TimeUnit.MILLISECONDS).take(1),
-                        Observable.fromArray(clear), (interval, item) -> item)
+                Observable.interval(600, TimeUnit.MILLISECONDS).take(1),
+                Observable.fromArray(clear), (interval, item) -> item)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::postBeginSearchSession);
@@ -872,7 +872,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
             symbol.setVisibility(View.VISIBLE);
             String newBalanceStr = BalanceUtils.getScaledValueFixed(new BigDecimal(realmToken.getBalance()), ETHER_DECIMALS, TOKEN_BALANCE_PRECISION);
             balance.setText(newBalanceStr);
-            symbol.setText(activeNetwork.getShortName());
+            symbol.setText(activeNetwork != null ? activeNetwork.getShortName() : "");
         });
     }
 
@@ -1214,13 +1214,13 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
     public void onEthCall(Web3Call call)
     {
         Single.fromCallable(() -> {
-                    //let's make the call
-                    Web3j web3j = TokenRepository.getWeb3jService(activeNetwork.chainId);
-                    //construct call
-                    org.web3j.protocol.core.methods.request.Transaction transaction
-                            = createFunctionCallTransaction(wallet.address, null, null, call.gasLimit, call.to.toString(), call.value, call.payload);
-                    return web3j.ethCall(transaction, call.blockParam).send();
-                }).map(EthCall::getValue)
+            //let's make the call
+            Web3j web3j = TokenRepository.getWeb3jService(activeNetwork.chainId);
+            //construct call
+            org.web3j.protocol.core.methods.request.Transaction transaction
+                    = createFunctionCallTransaction(wallet.address, null, null, call.gasLimit, call.to.toString(), call.value, call.payload);
+            return web3j.ethCall(transaction, call.blockParam).send();
+        }).map(EthCall::getValue)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> web3.onCallFunctionSuccessful(call.leafPosition, result),
@@ -1387,7 +1387,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
                 confirmationDialog.fullExpand();
 
                 viewModel.calculateGasEstimate(wallet, Numeric.hexStringToByteArray(transaction.payload),
-                                activeNetwork.chainId, transaction.recipient.toString(), new BigDecimal(transaction.value), transaction.gasLimit)
+                        activeNetwork.chainId, transaction.recipient.toString(), new BigDecimal(transaction.value), transaction.gasLimit)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(estimate -> confirmationDialog.setGasEstimate(estimate),
@@ -1680,7 +1680,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         if (web3 != null)
         {
             String url = web3.getUrl();
-            return EthereumNetworkRepository.isDefaultDapp(url);
+            return DappBrowserUtils.isDefaultDapp(url);
         }
         else
         {
@@ -2277,7 +2277,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
     private String getDefaultDappUrl()
     {
         String customHome = viewModel.getHomePage(getContext());
-        return customHome != null ? customHome : EthereumNetworkRepository.defaultDapp(activeNetwork != null ? activeNetwork.chainId : 0);
+        return customHome != null ? customHome : DappBrowserUtils.defaultDapp(activeNetwork != null ? activeNetwork.chainId : 0);
     }
 
     @Override

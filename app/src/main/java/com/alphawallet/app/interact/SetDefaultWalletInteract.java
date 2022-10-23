@@ -10,16 +10,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class SetDefaultWalletInteract {
 
-    private final WalletRepositoryType accountRepository;
+	private final WalletRepositoryType accountRepository;
 
-    @Inject
-    public SetDefaultWalletInteract(WalletRepositoryType walletRepositoryType) {
-        this.accountRepository = walletRepositoryType;
-    }
+	public SetDefaultWalletInteract(WalletRepositoryType walletRepositoryType) {
+		this.accountRepository = walletRepositoryType;
+	}
 
-    public Completable set(Wallet wallet) {
-        return accountRepository
-                .setDefaultWallet(wallet)
-                .observeOn(AndroidSchedulers.mainThread());
-    }
+	public Completable set(Wallet wallet) {
+		return accountRepository
+				.setDefaultWallet(wallet)
+				.observeOn(AndroidSchedulers.mainThread());
+	}
 }

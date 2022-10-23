@@ -1,11 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.C.EXTRA_STATE;
-import static com.alphawallet.app.C.EXTRA_TOKENID_LIST;
-import static com.alphawallet.app.C.Key.WALLET;
-import static com.alphawallet.app.entity.DisplayState.TRANSFER_TO_ADDRESS;
-import static com.alphawallet.app.widget.AWalletAlertDialog.WARNING;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.entity.TransactionData;
@@ -44,8 +39,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+
+import static com.alphawallet.app.C.EXTRA_STATE;
+import static com.alphawallet.app.C.EXTRA_TOKENID_LIST;
+import static com.alphawallet.app.C.Key.WALLET;
+import static com.alphawallet.app.entity.DisplayState.TRANSFER_TO_ADDRESS;
+import static com.alphawallet.app.widget.AWalletAlertDialog.WARNING;
+
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class TokenDetailActivity extends BaseActivity implements StandardFunctionInterface, ActionSheetCallback

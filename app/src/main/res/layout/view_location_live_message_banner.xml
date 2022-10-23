@@ -57,7 +57,7 @@
 
     <Button
         android:id="@+id/locationLiveMessageBannerStop"
-        style="@style/Widget.Vector.Button.Text.LocationLive"
+        style="@style/Widget.Vector.Button.Text.LiveLocation"
         android:layout_width="45dp"
         android:layout_height="30dp"
         android:text="@string/location_share_live_stop"

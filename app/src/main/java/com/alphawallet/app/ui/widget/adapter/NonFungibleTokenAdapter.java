@@ -1,7 +1,5 @@
 package com.alphawallet.app.ui.widget.adapter;
 
-import static com.alphawallet.app.service.AssetDefinitionService.ASSET_SUMMARY_VIEW_NAME;
-
 import android.app.Activity;
 import android.content.Context;
 import android.util.Pair;
@@ -48,6 +46,8 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static com.alphawallet.app.service.AssetDefinitionService.ASSET_SUMMARY_VIEW_NAME;
 
 /**
  * Created by James on 9/02/2018.

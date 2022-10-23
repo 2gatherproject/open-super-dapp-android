@@ -7,9 +7,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.alphawallet.app.repository.EthereumNetworkBase;
-
 import im.vector.app.R;
+import com.alphawallet.app.repository.EthereumNetworkBase;
 
 public class NetworkDisplayWidget extends LinearLayout
 {

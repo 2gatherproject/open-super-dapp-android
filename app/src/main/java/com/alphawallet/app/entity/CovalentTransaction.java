@@ -65,14 +65,10 @@ public class CovalentTransaction
                 Param param = new Param();
                 param.type = lp.type;
                 String rawValue = TextUtils.isEmpty(lp.value) || lp.value.equals("null") ? rawLogValue : lp.value;
+                param.value = rawValue;
                 if (lp.type.startsWith("uint") || lp.type.startsWith("int"))
                 {
-                    param.valueBI = rawValue.startsWith("0x") ? Numeric.toBigInt(rawValue) : new BigInteger(rawValue);
-                    param.value = "";
-                }
-                else
-                {
-                    param.value = rawValue;
+                    param.valueBI = Utils.stringToBigInteger(rawValue);// rawValue.startsWith("0x") ? Numeric.toBigInt(rawValue) : new BigInteger(rawValue);
                 }
 
                 params.put(lp.name, param);
@@ -153,21 +149,10 @@ public class CovalentTransaction
 
         Map<String, Param> logParams = logEvent.getParams();
 
-        ev.from = logParams.get("from").value;
-        ev.to = logParams.get("to").value;
-
-        logParams.remove("from");
-        logParams.remove("to");
-
-        if (logEvent.sender_contract_decimals == 0)
-        {
-            //get TokenId
-            ev.tokenID = logParams.values().iterator().next().valueBI.toString();
-        }
-        else
-        {
-            ev.value = logParams.values().iterator().next().valueBI.toString();
-        }
+        ev.from = logParams.containsKey("from") ? logParams.get("from").value : "";
+        ev.to = logParams.containsKey("to") ? logParams.get("to").value : "";
+        ev.tokenID = logParams.containsKey("tokenId") ? logParams.get("tokenId").valueBI.toString() : "";
+        ev.value = logParams.containsKey("value") ? logParams.get("value").valueBI.toString() : "";
 
         ev.gasUsed = gas_spent;
         ev.gasPrice = gas_price;

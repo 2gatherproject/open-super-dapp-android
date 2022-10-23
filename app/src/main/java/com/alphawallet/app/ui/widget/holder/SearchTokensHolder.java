@@ -8,9 +8,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.alphawallet.app.ui.widget.entity.ManageTokensData;
-
 import im.vector.app.R;
+import com.alphawallet.app.ui.widget.entity.ManageTokensData;
 
 public class SearchTokensHolder extends BinderViewHolder<ManageTokensData> {
     public static final int VIEW_TYPE = 2021;

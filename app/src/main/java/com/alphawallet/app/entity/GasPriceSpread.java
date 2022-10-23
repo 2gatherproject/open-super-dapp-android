@@ -252,7 +252,7 @@ public class GasPriceSpread implements Parcelable
             GasSpeed2 gs = fees.get(txs);
             if (txs == TXSpeed.STANDARD || gs == null) continue;
             if (gs.gasPrice.maxPriorityFeePerGas.equals(fees.get(TXSpeed.STANDARD).gasPrice.maxPriorityFeePerGas)
-                    && gs.gasPrice.maxFeePerGas.equals(fees.get(TXSpeed.STANDARD).gasPrice.maxFeePerGas))
+                && gs.gasPrice.maxFeePerGas.equals(fees.get(TXSpeed.STANDARD).gasPrice.maxFeePerGas))
             {
                 fees.remove(txs);
             }

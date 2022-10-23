@@ -82,7 +82,7 @@ import static com.alphawallet.app.widget.AWalletAlertDialog.WARNING;
  */
 @AndroidEntryPoint
 public class AssetDisplayActivity extends BaseActivity implements StandardFunctionInterface, PageReadyCallback,
-        Runnable, ActionSheetCallback
+                                                                    Runnable, ActionSheetCallback
 {
     private static final int TOKEN_SIZING_DELAY = 3000; //3 seconds until timeout waiting for tokenview size calculation
 

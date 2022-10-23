@@ -54,8 +54,7 @@ A few steps are necessary to facilitate the connection between the upstream repo
 8. Lint the code base.
 9. Confirm tests pass.
 10. Manually confirm functionality of OSD. (Tests specific to OSD have not yet been written.)
-11. Create a PR from your `WIP` branch to the `develop` branch.
-12. When a new release to OSD is made, these changes are PRed from `develop` to `main`, a release tag is made and the code is pushed up to the `open-super-dapp-android` repo on github! 
+11. Create a PR from your `WIP` branch to the `main` branch. A release tag is made and the code is pushed up to the `open-super-dapp-android` repo on github! 
 
 ### Notes on themes and colors
 

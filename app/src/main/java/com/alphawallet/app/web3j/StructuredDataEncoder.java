@@ -99,7 +99,7 @@ public class StructuredDataEncoder {
                 String baseDeclarationTypeName =
                         arrayTypePattern.matcher(declarationFieldTypeName).find()
                                 ? declarationFieldTypeName.substring(
-                                0, declarationFieldTypeName.indexOf('['))
+                                        0, declarationFieldTypeName.indexOf('['))
                                 : declarationFieldTypeName;
                 if (!types.containsKey(baseDeclarationTypeName)) {
                     // Don't expand on non-user defined types

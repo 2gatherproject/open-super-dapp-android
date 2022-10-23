@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SortedList;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.ContractLocator;
 import com.alphawallet.app.entity.CustomViewSettings;
 import com.alphawallet.app.entity.TokenFilter;
@@ -44,8 +45,6 @@ import com.alphawallet.app.ui.widget.holder.WarningHolder;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import im.vector.app.R;
 
 public class TokensAdapter extends RecyclerView.Adapter<BinderViewHolder> {
     private static final String TAG = "TKNADAPTER";
@@ -128,9 +127,9 @@ public class TokensAdapter extends RecyclerView.Adapter<BinderViewHolder> {
         if (obj instanceof TokenSortedItem) {
             TokenCardMeta tcm = ((TokenSortedItem) obj).value;
 
-            // This is an attempt to obtain a 'unique' id
-            // to fully utilise the RecyclerView's setHasStableIds feature.
-            // This will drastically reduce 'blinking' when the list changes
+             // This is an attempt to obtain a 'unique' id
+             // to fully utilise the RecyclerView's setHasStableIds feature.
+             // This will drastically reduce 'blinking' when the list changes
             return tcm.getUID();
         } else {
             return position;
@@ -187,7 +186,7 @@ public class TokensAdapter extends RecyclerView.Adapter<BinderViewHolder> {
                 holder = new ChainNameHeaderHolder(R.layout.item_chainname_header, parent);
                 break;
 
-            // NB to save ppl a lot of effort this view doesn't show - item_total_balance has height coded to 1dp.
+                // NB to save ppl a lot of effort this view doesn't show - item_total_balance has height coded to 1dp.
             case TotalBalanceHolder.VIEW_TYPE:
             default:
                 holder = new TotalBalanceHolder(R.layout.item_total_balance, parent);
@@ -249,7 +248,7 @@ public class TokensAdapter extends RecyclerView.Adapter<BinderViewHolder> {
 
     private void addManageTokensLayout() {
         if (walletAddress != null && !walletAddress.isEmpty() && tokensService.isMainNetActive()
-                && (filterType == TokenFilter.ALL || filterType == TokenFilter.ASSETS)) { //only show buy button if filtering all or assets
+            && (filterType == TokenFilter.ALL || filterType == TokenFilter.ASSETS)) { //only show buy button if filtering all or assets
             items.add(new ManageTokensSortedItem(new ManageTokensData(walletAddress, managementLauncher)));
         }
     }

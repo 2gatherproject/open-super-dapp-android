@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import im.vector.app.R;
 import com.alphawallet.app.ui.widget.OnSuggestionClickListener;

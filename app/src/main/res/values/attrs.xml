@@ -151,7 +151,7 @@
         <attr name="bold" format="boolean" />
         <attr name="removePadding" format="boolean" />
         <attr name="marginRight" format="dimension" />
-        <attr name="textColour" format="color"/>
+        <attr name="textColour" format="color" />
         <attr name="android:gravity" />
     </declare-styleable>
     <declare-styleable name="BarcodeScannerView">

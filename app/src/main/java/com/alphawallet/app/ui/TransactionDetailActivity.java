@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.entity.Transaction;
@@ -47,7 +48,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import im.vector.app.R;
 import timber.log.Timber;
 
 import static com.alphawallet.app.C.Key.WALLET;

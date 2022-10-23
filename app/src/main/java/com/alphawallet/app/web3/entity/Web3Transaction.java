@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
+import im.vector.app.R;
 import com.alphawallet.app.util.BalanceUtils;
 import com.alphawallet.app.util.Hex;
 import com.alphawallet.app.util.StyledStringBuilder;
@@ -18,8 +19,6 @@ import org.web3j.protocol.core.methods.request.Transaction;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import im.vector.app.R;
 
 
 public class Web3Transaction implements Parcelable {

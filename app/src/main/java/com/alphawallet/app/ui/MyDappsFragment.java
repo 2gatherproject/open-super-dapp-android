@@ -1,7 +1,5 @@
 package com.alphawallet.app.ui;
 
-import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_CLICK;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,6 +23,7 @@ import com.alphawallet.app.widget.AWalletAlertDialog;
 import java.util.List;
 
 import im.vector.app.R;
+import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_CLICK;
 
 import timber.log.Timber;
 

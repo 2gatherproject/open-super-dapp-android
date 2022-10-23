@@ -4,11 +4,11 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
+import im.vector.app.R;
 import com.alphawallet.app.repository.EthereumNetworkBase;
 import com.alphawallet.app.ui.widget.entity.WalletConnectWidgetCallback;
 import com.alphawallet.app.walletconnect.entity.WCPeerMeta;
 
-import im.vector.app.R;
 import timber.log.Timber;
 
 public class WalletConnectRequestWidget extends LinearLayout {

@@ -2,7 +2,9 @@
 
 # AlphaWallet - Advanced, Open Source Ethereum Mobile Wallet & dApp Browser for Android
 
-[![Build Status](https://api.travis-ci.com/AlphaWallet/alpha-wallet-android.svg?branch=master)](https://api.travis-ci.com/AlphaWallet/alpha-wallet-android.svg?branch=master)
+[![Lint](https://github.com/AlphaWallet/alpha-wallet-android/actions/workflows/lint.yml/badge.svg?branch=master)](https://github.com/AlphaWallet/alpha-wallet-android/actions/workflows/lint.yml)
+[![Unit test](https://github.com/AlphaWallet/alpha-wallet-android/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/AlphaWallet/alpha-wallet-android/actions/workflows/ci.yml)
+[![E2E Test](https://github.com/AlphaWallet/alpha-wallet-android/actions/workflows/e2e.yml/badge.svg?branch=master)](https://github.com/AlphaWallet/alpha-wallet-android/actions/workflows/e2e.yml)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg )](https://github.com/AlphaWallet/alpha-wallet-android/graphs/commit-activity)
 ![GitHub contributors](https://img.shields.io/github/contributors/AlphaWallet/alpha-wallet-android.svg)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/AlphaWallet/alpha-wallet-android/blob/master/LICENSE)
@@ -62,7 +64,13 @@ We want to give businesses the whitelabel tools they need to develop their ether
 1. [Download](https://developer.android.com/studio/) Android Studio.
 2. Clone this repository
 3. Obtain a free Infura API key and replace the one in build.gradle
-4. Build the project in AndroidStudio or Run `./gradlew build` to install tools and dependencies. See [BUILD.md](BUILD.md) for more details.
+4. Generate a GitHub [Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) with `read:packages, read:user` permission
+5. Edit `~/.gradle/gradle.properties` add blow properties:
+```properties
+gpr.user=Your GitHub Email
+gpr.key=The GitHub Personal Access Token you created in previous step
+```
+6. Build the project in AndroidStudio or Run `./gradlew build` to install tools and dependencies. See [BUILD.md](BUILD.md) for more details.
 
 You can also build it from the commandline just like other Android apps. Note that JDK 8 and 11 are the versions supported by Android.
 

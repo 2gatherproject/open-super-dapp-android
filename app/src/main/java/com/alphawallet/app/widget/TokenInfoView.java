@@ -12,9 +12,8 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.alphawallet.app.service.TickerService;
-
 import im.vector.app.R;
+import com.alphawallet.app.service.TickerService;
 
 public class TokenInfoView extends LinearLayout
 {

@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.EventResult;
 import com.alphawallet.app.service.TokensService;
@@ -25,8 +26,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Map;
-
-import im.vector.app.R;
 
 /**
  *
@@ -166,7 +165,7 @@ public class Transaction implements Parcelable
 		else
 		{
 			to = cTx.to_address;
-			input = "";
+			input = "0x";
 		}
 
 		this.hash = cTx.tx_hash;

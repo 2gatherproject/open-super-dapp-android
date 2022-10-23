@@ -87,7 +87,7 @@ public class AddEditDappActivity extends BaseActivity {
             }
             case MODE_EDIT: {
                 setTitle(getString(R.string.edit_dapp));
-                button.setText(R.string.action_save);
+                button.setText(R.string.action_save_alpha);
                 url.setText(dapp.getUrl());
                 url.getEditText().setSelection(0);
                 name.setText(dapp.getName());

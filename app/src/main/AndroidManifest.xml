@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="im.vector.app">
+    package="im.vector.app"
+    android:targetSandboxVersion="1">
 
     <!-- Needed for VOIP call to detect and switch to headset-->
     <uses-permission
@@ -46,6 +47,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!-- Alpha wallet -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
     <!-- Jitsi SDK is now API23+ -->
     <uses-sdk tools:overrideLibrary="org.jitsi.meet.sdk,com.oney.WebRTCModule,com.learnium.RNDeviceInfo,com.reactnativecommunity.asyncstorage,com.ocetnik.timer,com.calendarevents,com.reactnativecommunity.netinfo,com.kevinresol.react_native_default_preference,com.rnimmersive,com.corbt.keepawake,com.BV.LinearGradient,com.horcrux.svg,com.oblador.performance,com.reactnativecommunity.slider,com.brentvatne.react,com.reactnativecommunity.clipboard,com.swmansion.gesturehandler.react,org.linusu,org.reactnative.maskedview,com.reactnativepagerview,com.swmansion.reanimated,com.th3rdwave.safeareacontext,com.swmansion.rnscreens,org.devio.rn.splashscreen,com.reactnativecommunity.webview" />
 
@@ -56,6 +63,11 @@
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <!-- Alpha wallet -->
+    <uses-feature
+        android:name="android.hardware.fingerprint"
         android:required="false" />
 
     <!-- Since Android 11, see https://developer.android.com/training/package-visibility -->
@@ -86,7 +98,8 @@
         android:supportsRtl="true"
         android:taskAffinity="${applicationId}.${appTaskAffinitySuffix}"
         android:theme="@style/Theme.Vector.Light"
-        tools:replace="android:allowBackup,android:name">
+        tools:ignore="UnusedAttribute"
+        tools:replace="android:allowBackup,android:name, android:theme">
 
         <!-- No limit for screen ratio: avoid black strips -->
         <meta-data
@@ -186,7 +199,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".features.home.HomeActivity" />
         </activity>
-        <activity android:name=".features.debug.DebugMenuActivity" />
         <activity android:name=".features.createdirect.CreateDirectRoomActivity" />
         <activity android:name=".features.invite.InviteUsersToRoomActivity" />
         <activity android:name=".features.webview.VectorWebViewActivity" />
@@ -346,7 +358,9 @@
         <activity android:name=".features.spaces.leave.SpaceLeaveAdvancedActivity" />
         <activity android:name=".features.poll.create.CreatePollActivity" />
         <activity android:name=".features.location.LocationSharingActivity" />
-        <activity android:name=".features.location.live.map.LocationLiveMapViewActivity" />
+        <activity android:name=".features.location.live.map.LiveLocationMapViewActivity" />
+        <activity android:name=".features.settings.font.FontScaleSettingActivity"/>
+        <activity android:name=".features.call.dialpad.PstnDialActivity" />
 
         <!-- Alpha Wallet-->
         <activity
@@ -575,7 +589,7 @@
 
         <!-- Services -->
         <service
-            android:name=".core.services.CallService"
+            android:name=".core.services.CallAndroidService"
             android:exported="false">
             <!-- in order to get headset button events -->
             <intent-filter>
@@ -599,7 +613,7 @@
         </service>
 
         <service
-            android:name=".features.location.LocationSharingAndroidService"
+            android:name=".features.location.live.tracking.LocationSharingAndroidService"
             android:exported="false"
             android:foregroundServiceType="location" />
 

@@ -8,10 +8,10 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.viewmodel.SelectThemeViewModel;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class SelectThemeActivity extends BaseActivity

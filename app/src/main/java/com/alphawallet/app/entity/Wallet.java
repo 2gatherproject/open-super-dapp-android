@@ -3,13 +3,12 @@ package com.alphawallet.app.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.service.KeyService;
 import com.alphawallet.app.util.BalanceUtils;
 
 import java.math.BigDecimal;
-
-import im.vector.app.BuildConfig;
 
 public class Wallet implements Parcelable {
     public final String address;
@@ -24,18 +23,18 @@ public class Wallet implements Parcelable {
     public String ENSAvatar;
     public boolean isSynced;
 
-    public Wallet(String address) {
-        this.address = address;
-        this.balance = "-";
-        this.ENSname = "";
-        this.name = "";
-        this.type = WalletType.NOT_DEFINED;
-        this.lastBackupTime = 0;
-        this.authLevel = KeyService.AuthenticationLevel.NOT_SET;
-        this.walletCreationTime = 0;
-        this.balanceSymbol = "";
-        this.ENSAvatar = "";
-    }
+	public Wallet(String address) {
+		this.address = address;
+		this.balance = "-";
+		this.ENSname = "";
+		this.name = "";
+		this.type = WalletType.NOT_DEFINED;
+		this.lastBackupTime = 0;
+		this.authLevel = KeyService.AuthenticationLevel.NOT_SET;
+		this.walletCreationTime = 0;
+		this.balanceSymbol = "";
+		this.ENSAvatar = "";
+	}
 
     private Wallet(Parcel in)
     {
@@ -120,6 +119,6 @@ public class Wallet implements Parcelable {
 
     public boolean canSign()
     {
-        return BuildConfig.DEBUG || type != WalletType.WATCH;
+		return BuildConfig.DEBUG || type != WalletType.WATCH;
     }
 }

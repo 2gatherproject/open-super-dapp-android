@@ -7,6 +7,7 @@ import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.PreferenceRepositoryType;
 import com.alphawallet.app.service.TickerService;
 import com.alphawallet.app.service.TokensService;
+import com.alphawallet.app.ui.SetPriceAlertActivity;
 import com.alphawallet.app.ui.widget.entity.PriceAlert;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -70,18 +71,18 @@ public class TokenAlertsViewModel extends BaseViewModel {
     {
         tickerService.convertPair(TickerService.getCurrencySymbolTxt(), priceAlert.getCurrency())
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((rate) -> {
-                    // check if current price is higher than in alert, mark as 'drops to' or 'rises above' otherwise
-                    double currentTokenPrice = Double.parseDouble(tokensService.getTokenTicker(token).price) * rate;
-                    double alertPrice = Double.parseDouble(priceAlert.getValue());
-                    priceAlert.setAbove(alertPrice > currentTokenPrice);
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe((rate) -> {
+                // check if current price is higher than in alert, mark as 'drops to' or 'rises above' otherwise
+                double currentTokenPrice = Double.parseDouble(tokensService.getTokenTicker(token).price) * rate;
+                double alertPrice = Double.parseDouble(priceAlert.getValue());
+                priceAlert.setAbove(alertPrice > currentTokenPrice);
 
                     List<PriceAlert> list = getPriceAlerts();
                     list.add(priceAlert);
 
-                    updateStoredAlerts(list);
-                }, Throwable::printStackTrace).isDisposed();
+                updateStoredAlerts(list);
+            }, Throwable::printStackTrace).isDisposed();
     }
 
     private List<PriceAlert> getPriceAlerts()

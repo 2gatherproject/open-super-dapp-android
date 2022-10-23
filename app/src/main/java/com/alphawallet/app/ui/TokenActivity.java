@@ -94,7 +94,7 @@ import timber.log.Timber;
  */
 @AndroidEntryPoint
 public class TokenActivity extends BaseActivity implements PageReadyCallback, StandardFunctionInterface, ActionSheetCallback,
-        TokenScriptRenderCallback, WebCompletionCallback, OnSetValuesListener
+                                                            TokenScriptRenderCallback, WebCompletionCallback, OnSetValuesListener
 {
     private TokenFunctionViewModel viewModel;
 
@@ -649,7 +649,7 @@ public class TokenActivity extends BaseActivity implements PageReadyCallback, St
     private void onAttr(TokenScriptResult.Attribute attribute)
     {
         //is the attr incomplete?
-        Timber.d("ATTR/FA: " + attribute.id + " (" + attribute.name + ")" + " : " + attribute.text);
+       Timber.d("ATTR/FA: " + attribute.id + " (" + attribute.name + ")" + " : " + attribute.text);
         TokenScriptResult.addPair(attrs, attribute.id, attribute.text);
     }
 

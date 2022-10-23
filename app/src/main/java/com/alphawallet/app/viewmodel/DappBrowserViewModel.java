@@ -139,7 +139,7 @@ public class DappBrowserViewModel extends BaseViewModel  {
 
     public void signMessage(Signable message, DAppFunction dAppFunction) {
         disposable = createTransactionInteract.sign(defaultWallet.getValue(), message,
-                        getActiveNetwork().chainId)
+                getActiveNetwork().chainId)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sig -> dAppFunction.DAppReturn(sig.signature, message),

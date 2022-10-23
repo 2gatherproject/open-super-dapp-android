@@ -150,6 +150,10 @@
 
         <!-- Location sharing -->
         <item name="vctr_live_location">@color/vctr_live_location_light</item>
+
+        <!-- Material 3 -->
+        <item name="collapsingToolbarLayoutMediumSize">@dimen/collapsing_toolbar_layout_medium_size</item>
+
         <item name="colorSurfaceAlpha">@color/colorSurface_light</item>
         <item name="colorSurfaceQuaternary">@color/colorSurfaceQuaternary_light</item>
         <item name="colorSurfaceTertiary">@color/colorSurfaceTertiary_light</item>
@@ -160,3 +164,4 @@
     <style name="Theme.Vector.Light" parent="Base.Theme.Vector.Light" />
 
 </resources>
+

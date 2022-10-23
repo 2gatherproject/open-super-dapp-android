@@ -93,6 +93,7 @@ class RoomListSectionBuilder(
             RoomListDisplayMode.NOTIFICATIONS -> {
                 buildNotificationsSection(sections, activeSpaceAwareQueries)
             }
+            else -> {}
         }
 
         spaceStateHandler.getSelectedSpaceFlow()

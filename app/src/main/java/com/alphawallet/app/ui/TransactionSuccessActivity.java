@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.viewmodel.TransactionSuccessViewModel;
 import com.alphawallet.app.widget.CopyTextView;
@@ -15,8 +16,10 @@ import com.alphawallet.app.widget.FunctionButtonBar;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
+
 
 /**
  * Created by JB on 4/12/2020.

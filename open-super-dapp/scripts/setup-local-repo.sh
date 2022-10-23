@@ -89,27 +89,55 @@ fi
 if git branch | grep -q element-main
 then
   echo element-main reference branch exists. Removing...
-  git checkout develop
+  git checkout main
   git branch -D element-main
 fi  
 
 echo Checking out element-android $1 as element-main...
 git checkout tags/$1 -b element-main
 
+echo Aligning element-main branch...
+/bin/rm -rf .github .travis.yml fastlane Gemfile* towncrier.toml
+git mv vector/* app/
+rm -rf vector
+git mv docs element
+mkdir docs
+git mv element docs/
+git mv CONTRIBUTING.md AUTHORS.md CHANGES.md changelog.d LICENSE README.md docs/element/
+mkdir -p scripts/element
+git mv *.sh scripts/element/
+git commit -am "Temporary commit to align element-main files and folders facilitate merging"
+echo Done aligning element-android files and folders are now aligned and ready to be merged in.
+
+# ---------------- 
+
 if git branch | grep -q alpha-wallet-main
 then
   echo alpha-wallet-main reference branch exists. Removing...
-  git checkout develop
+  git checkout main
   git branch -D alpha-wallet-main
 fi  
 
 echo Checking out alpha-wallet-android $2 as alpha-wallet-main...
 git checkout tags/$2 -b alpha-wallet-main
 
+echo Aligning alpha-wallet-main branch...
+/bin/rm -rf .editorconfig Gemfile* .gitpod* fastlane .travis.yml .bundle dmz util contracts gradle* build.gradle package* settings.gradle BUILD.md gulpfile.js .github
+git mv lib alpha-token-script
+git mv docs alpha-wallet
+mkdir docs
+git mv alpha-wallet docs/
+git mv scripts alpha-wallet
+mkdir scripts
+git mv alpha-wallet scripts/
+git mv *.sh scripts/alpha-wallet/
+git mv .all-contributorsrc LICENSE README.md docs/alpha-wallet/
+git commit -am "Temporary commit to align alpha-wallet-main files and folders facilitate merging"
+
 echo Leaving git on initial branch $START_BRANCH...
 git checkout $START_BRANCH
 
 echo Done! Your repo is now ready for development.
-echo You can now merge element-main and alpha-wallet-main into your development WIP branch
+echo You can now merge element-main from element version $1 and alpha-wallet-main from version $2 into your development WIP branch
 echo and resolve changes, etc. to upgrade open-super-dapp to new versions of its upstream repos.
 

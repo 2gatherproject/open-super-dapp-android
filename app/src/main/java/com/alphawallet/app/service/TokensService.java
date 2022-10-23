@@ -131,14 +131,15 @@ public class TokensService
         {
             ContractAddress t = unknownTokens.pollFirst();
             Token cachedToken = t != null ? getToken(t.chainId, t.address) : null;
+            ContractType type = cachedToken != null ? cachedToken.getInterfaceSpec() : ContractType.NOT_SET;
 
             if (t != null && t.address.length() > 0 && (cachedToken == null || TextUtils.isEmpty(cachedToken.tokenInfo.name)))
             {
-                queryUnknownTokensDisposable = tokenRepository.update(t.address, t.chainId).toObservable() //fetch tokenInfo
+                queryUnknownTokensDisposable = tokenRepository.update(t.address, t.chainId, type).toObservable() //fetch tokenInfo
                         .filter(tokenInfo -> (!TextUtils.isEmpty(tokenInfo.name) || !TextUtils.isEmpty(tokenInfo.symbol)) && tokenInfo.chainId != 0)
                         .map(tokenInfo -> { tokenInfo.isEnabled = false; return tokenInfo; }) //set default visibility to false
                         .flatMap(tokenInfo -> tokenRepository.determineCommonType(tokenInfo).toObservable()
-                                .map(contractType -> tokenFactory.createToken(tokenInfo, contractType, ethereumNetworkRepository.getNetworkByChain(t.chainId).getShortName())))
+                            .map(contractType -> tokenFactory.createToken(tokenInfo, contractType, ethereumNetworkRepository.getNetworkByChain(t.chainId).getShortName())))
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io())
                         .subscribe(this::finishAddToken, err -> onCheckError(err, t), this::finishTokenCheck);
@@ -215,6 +216,7 @@ public class TokensService
             stopUpdateCycle();
             addLockedTokens();
             if (openseaService != null) openseaService.resetOffsetRead(networkFilter);
+            tokenRepository.updateLocalAddress(newWalletAddr);
         }
     }
 
@@ -238,12 +240,12 @@ public class TokensService
         setupFilters();
 
         eventTimer = Single.fromCallable(() -> {
-                    startupPass();
-                    addUnresolvedContracts(ethereumNetworkRepository.getAllKnownContracts(getNetworkFilters()));
-                    checkIssueTokens();
-                    pendingTokenMap.clear();
-                    return true;
-                }).subscribeOn(Schedulers.io())
+            startupPass();
+            addUnresolvedContracts(ethereumNetworkRepository.getAllKnownContracts(getNetworkFilters()));
+            checkIssueTokens();
+            pendingTokenMap.clear();
+            return true;
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateCycle, this::onError);
     }
@@ -524,8 +526,8 @@ public class TokensService
         tokenRepository.addImageUrl(networkId, address, imageUrl);
     }
 
-    public Single<TokenInfo> update(String address, long chainId) {
-        return tokenRepository.update(address, chainId)
+    public Single<TokenInfo> update(String address, long chainId, ContractType type) {
+        return tokenRepository.update(address, chainId, type)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -643,8 +645,8 @@ public class TokensService
     private void checkOpenSea(long chainId)
     {
         if ((openSeaQueryDisposable != null && !openSeaQueryDisposable.isDisposed())
-                || openseaService == null || !EthereumNetworkBase.hasOpenseaAPI(chainId)
-                || !openseaService.canCheckChain(chainId)) return;
+            || openseaService == null || !EthereumNetworkBase.hasOpenseaAPI(chainId)
+            || !openseaService.canCheckChain(chainId)) return;
 
         NetworkInfo info = ethereumNetworkRepository.getNetworkByChain(chainId);
 
@@ -980,7 +982,7 @@ public class TokensService
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io())
                         .subscribe())
-                .isDisposed();
+                        .isDisposed();
     }
 
     private Completable enableToken(String walletAddr, Token token)
@@ -1210,11 +1212,11 @@ public class TokensService
         {
             done = true;
             Single.fromCallable(() -> {
-                        tickerService.deleteTickers();
-                        return true;
-                    }).subscribeOn(Schedulers.io())
+                tickerService.deleteTickers();
+                return true;
+            }).subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io()).subscribe(b -> {
-                    }).isDisposed();
+            }).isDisposed();
         }
     }
 

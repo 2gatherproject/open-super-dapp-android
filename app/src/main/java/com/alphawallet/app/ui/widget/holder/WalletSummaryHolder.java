@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.repository.entity.RealmWalletData;
 import com.alphawallet.app.service.TickerService;
@@ -30,7 +31,6 @@ import com.alphawallet.app.widget.UserAvatar;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import im.vector.app.R;
 import io.realm.Realm;
 import io.realm.RealmResults;
 

@@ -40,7 +40,6 @@ import io.reactivex.schedulers.Schedulers;
 public class AddTokenViewModel extends BaseViewModel {
 
     private final MutableLiveData<Wallet> wallet = new MutableLiveData<>();
-    private final MutableLiveData<TokenInfo> tokenInfo = new MutableLiveData<>();
     private final MutableLiveData<Long> switchNetwork = new MutableLiveData<>();
     private final MutableLiveData<Token> finalisedToken = new MutableLiveData<>();
     private final MutableLiveData<Token> tokentype = new MutableLiveData<>();
@@ -52,11 +51,9 @@ public class AddTokenViewModel extends BaseViewModel {
 
     private final EthereumNetworkRepositoryType ethereumNetworkRepository;
     private final GenericWalletInteract genericWalletInteract;
-    private final FetchTokensInteract fetchTokensInteract;
     private final FetchTransactionsInteract fetchTransactionsInteract;
     private final AssetDefinitionService assetDefinitionService;
     private final TokensService tokensService;
-    private final PreferenceRepositoryType sharedPreference;
 
     private boolean foundNetwork;
     private int networkCount;
@@ -80,19 +77,15 @@ public class AddTokenViewModel extends BaseViewModel {
     @Inject
     AddTokenViewModel(
             GenericWalletInteract genericWalletInteract,
-            FetchTokensInteract fetchTokensInteract,
             EthereumNetworkRepositoryType ethereumNetworkRepository,
             FetchTransactionsInteract fetchTransactionsInteract,
             AssetDefinitionService assetDefinitionService,
-            TokensService tokensService,
-            PreferenceRepositoryType sharedPreference) {
+            TokensService tokensService) {
         this.genericWalletInteract = genericWalletInteract;
-        this.fetchTokensInteract = fetchTokensInteract;
         this.ethereumNetworkRepository = ethereumNetworkRepository;
         this.fetchTransactionsInteract = fetchTransactionsInteract;
         this.assetDefinitionService = assetDefinitionService;
         this.tokensService = tokensService;
-        this.sharedPreference = sharedPreference;
     }
 
     public void saveTokens(List<Token> toSave)
@@ -131,7 +124,7 @@ public class AddTokenViewModel extends BaseViewModel {
 
     public void fetchToken(long chainId, String addr)
     {
-        tokensService.update(addr, chainId)
+        tokensService.update(addr, chainId, ContractType.NOT_SET)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::gotTokenUpdate, this::onError).isDisposed();
@@ -222,6 +215,7 @@ public class AddTokenViewModel extends BaseViewModel {
         {
             if (!networkIds.contains(networkInfo.chainId)) networkIds.add(networkInfo.chainId);
         }
+
         return networkIds;
     }
 
@@ -253,7 +247,7 @@ public class AddTokenViewModel extends BaseViewModel {
         {
             foundNetwork = true;
             disposable = tokensService
-                    .update(info.address, info.chainId)
+                    .update(info.address, info.chainId, type)
                     .subscribe(this::onTokensSetup, error -> checkType(error, info.chainId, info.address, type));
         }
         else

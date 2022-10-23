@@ -1,10 +1,9 @@
 package com.alphawallet.app.viewmodel;
 
-import android.content.Context;
-import android.text.TextUtils;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import android.content.Context;
+import android.text.TextUtils;
 
 import com.alphawallet.app.C;
 

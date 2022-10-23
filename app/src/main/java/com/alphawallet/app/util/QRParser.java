@@ -7,6 +7,8 @@ import com.alphawallet.app.ui.widget.entity.ENSHandler;
 import com.alphawallet.token.entity.ChainSpec;
 import com.alphawallet.token.entity.MagicLinkInfo;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;

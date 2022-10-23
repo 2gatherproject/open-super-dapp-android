@@ -2,10 +2,11 @@ package com.alphawallet.app.viewmodel;
 
 import android.view.View;
 
-import im.vector.app.R;
 import com.alphawallet.app.entity.WalletPage;
 import com.alphawallet.app.ui.BaseActivity;
 import com.alphawallet.app.widget.AWalletBottomNavigationView;
+
+import im.vector.app.R;
 
 public class BaseNavigationActivity extends BaseActivity implements AWalletBottomNavigationView.OnBottomNavigationItemSelectedListener {
     private AWalletBottomNavigationView nav;

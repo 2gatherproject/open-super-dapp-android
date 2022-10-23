@@ -216,6 +216,7 @@ class RoomListFragment @Inject constructor(
             RoomListDisplayMode.PEOPLE -> views.createChatRoomButton.isVisible = true
             RoomListDisplayMode.ROOMS -> views.createGroupRoomButton.isVisible = true
             RoomListDisplayMode.FILTERED -> Unit // No button in this mode
+            else -> {}
         }
 
         views.createChatRoomButton.debouncedClicks {
@@ -242,8 +243,10 @@ class RoomListFragment @Inject constructor(
                                     RoomListDisplayMode.PEOPLE -> views.createChatRoomButton.hide()
                                     RoomListDisplayMode.ROOMS -> views.createGroupRoomButton.hide()
                                     RoomListDisplayMode.FILTERED -> Unit
+                                    else -> {}
                                 }
                             }
+                            else -> {}
                         }
                     }
                 })
@@ -407,6 +410,7 @@ class RoomListFragment @Inject constructor(
                 RoomListDisplayMode.PEOPLE -> views.createChatRoomButton.show()
                 RoomListDisplayMode.ROOMS -> views.createGroupRoomButton.show()
                 RoomListDisplayMode.FILTERED -> Unit
+                else -> {}
             }
         }
     }

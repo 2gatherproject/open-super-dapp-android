@@ -389,7 +389,7 @@ public class SellDetailActivity extends BaseActivity implements TokensAdapterCal
 
         //set for now
         String time = String.format(Locale.getDefault(), "%02d:%02d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-                Calendar.getInstance().get(Calendar.MINUTE));
+                                    Calendar.getInstance().get(Calendar.MINUTE));
         expiryTimeEditText.setText(time);
     }
 

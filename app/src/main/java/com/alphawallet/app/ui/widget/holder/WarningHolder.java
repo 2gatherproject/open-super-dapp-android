@@ -10,10 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import im.vector.app.R;
 import com.alphawallet.app.ui.widget.entity.WarningData;
 import com.google.android.material.card.MaterialCardView;
-
-import im.vector.app.R;
 
 /**
  * Created by James on 18/07/2019.
