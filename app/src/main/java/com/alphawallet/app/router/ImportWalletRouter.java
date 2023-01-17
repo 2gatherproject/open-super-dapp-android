@@ -6,13 +6,7 @@ import android.content.Intent;
 import com.alphawallet.app.C;
 import com.alphawallet.app.ui.ImportWalletActivity;
 
-import javax.inject.Inject;
-
 public class ImportWalletRouter {
-
-	@Inject
-	public ImportWalletRouter() {
-	}
 
 	public void openForResult(Activity activity, int requestCode) {
 		Intent intent = new Intent(activity, ImportWalletActivity.class);

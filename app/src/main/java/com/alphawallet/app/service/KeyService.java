@@ -28,6 +28,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import im.vector.app.BuildConfig;
+import im.vector.app.R;
 import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.AuthenticationCallback;
 import com.alphawallet.app.entity.AuthenticationFailType;
@@ -76,8 +78,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.IvParameterSpec;
 
-import im.vector.app.BuildConfig;
-import im.vector.app.R;
 import timber.log.Timber;
 import wallet.core.jni.CoinType;
 import wallet.core.jni.Curve;

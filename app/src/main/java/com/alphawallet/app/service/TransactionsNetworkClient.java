@@ -15,6 +15,7 @@ import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.CovalentTransaction;
 import com.alphawallet.app.entity.EtherscanEvent;
@@ -48,7 +49,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import im.vector.app.BuildConfig;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;

@@ -2,6 +2,8 @@ package com.alphawallet.app.ui;
 
 
 import static android.app.Activity.RESULT_OK;
+import static com.alphawallet.app.C.SIGNAL_NFT_SYNC;
+import static com.alphawallet.app.C.SYNC_STATUS;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.nftassets.NFTAsset;
 import com.alphawallet.app.entity.tokens.Token;
@@ -44,7 +47,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class NFTAssetsFragment extends BaseFragment implements OnAssetClickListener, TokensAdapterCallback {
@@ -98,7 +100,7 @@ public class NFTAssetsFragment extends BaseFragment implements OnAssetClickListe
 
             searchLayout = view.findViewById(R.id.layout_search_tokens);
 
-            gridItemDecoration = new ItemOffsetDecoration(recyclerView.getContext(), R.dimen.grid_divider_offset);
+            gridItemDecoration = new ItemOffsetDecoration(requireContext(), R.dimen.grid_divider_offset);
 
             if (hasTokenScriptOverride(token))
             {
@@ -116,18 +118,18 @@ public class NFTAssetsFragment extends BaseFragment implements OnAssetClickListe
     {
         if (item.second.isCollection())
         {
-            handleTransactionSuccess.launch(viewModel.showAssetListDetails(getContext(), wallet, token, item.second));
+            handleTransactionSuccess.launch(viewModel.showAssetListDetails(requireContext(), wallet, token, item.second));
         }
         else
         {
-            handleTransactionSuccess.launch(viewModel.showAssetDetails(getContext(), wallet, token, item.first));
+            handleTransactionSuccess.launch(viewModel.showAssetDetails(requireContext(), wallet, token, item.first));
         }
     }
 
     @Override
     public void onTokenClick(View view, Token token, List<BigInteger> tokenIds, boolean selected)
     {
-        handleTransactionSuccess.launch(viewModel.showAssetDetails(getContext(), wallet, token, tokenIds.get(0)));
+        handleTransactionSuccess.launch(viewModel.showAssetDetails(requireContext(), wallet, token, tokenIds.get(0)));
     }
 
     @Override
@@ -143,15 +145,15 @@ public class NFTAssetsFragment extends BaseFragment implements OnAssetClickListe
 
     public void showGridView()
     {
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         recyclerView.addItemDecoration(gridItemDecoration);
-        recyclerView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.surface));
+        recyclerView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.surface));
         initAndAttachAdapter(true);
     }
 
     public void showListView()
     {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.removeItemDecoration(gridItemDecoration);
         recyclerView.setPadding(0, 0, 0, 0);
         initAndAttachAdapter(false);
@@ -172,6 +174,15 @@ public class NFTAssetsFragment extends BaseFragment implements OnAssetClickListe
         }
 
         recyclerView.setAdapter(adapter);
+        checkSyncStatus();
+    }
+
+    private void checkSyncStatus()
+    {
+        if (token == null || token.getTokenAssets() == null) return;
+        Bundle result = new Bundle();
+        result.putBoolean(SYNC_STATUS, token.getTokenCount() != token.getTokenAssets().size());
+        getParentFragmentManager().setFragmentResult(SIGNAL_NFT_SYNC, result);
     }
 
     private boolean hasTokenScriptOverride(Token t)

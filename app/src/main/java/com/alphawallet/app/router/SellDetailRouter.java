@@ -8,17 +8,11 @@ import com.alphawallet.app.ui.SellDetailActivity;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.Wallet;
 
-import javax.inject.Inject;
-
 /**
  * Created by James on 22/02/2018.
  */
 
 public class SellDetailRouter {
-
-    @Inject
-    public SellDetailRouter() {
-    }
 
     public void openMarketPlace(Context context, Token token, String ticketIDs, Wallet wallet) {
         Intent intent = new Intent(context, SellDetailActivity.class);

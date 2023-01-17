@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.ui.widget.entity.NetworkItem;
 import com.alphawallet.app.widget.TokenIcon;
 import com.google.android.material.checkbox.MaterialCheckBox;
@@ -16,8 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import im.vector.app.R;
 
 public class MultiSelectNetworkAdapter extends RecyclerView.Adapter<MultiSelectNetworkAdapter.ViewHolder> {
     private final List<NetworkItem> networkList;

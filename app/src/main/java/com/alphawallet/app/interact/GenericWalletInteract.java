@@ -3,14 +3,15 @@ package com.alphawallet.app.interact;
 import static com.alphawallet.app.C.ETHER_DECIMALS;
 import static com.alphawallet.app.entity.tokens.Token.TOKEN_BALANCE_PRECISION;
 
+import android.util.Log;
+
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.repository.WalletItem;
 import com.alphawallet.app.repository.WalletRepositoryType;
 import com.alphawallet.app.util.BalanceUtils;
 
 import java.math.BigDecimal;
-
-import javax.inject.Inject;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -22,7 +23,6 @@ public class GenericWalletInteract
 {
 	private final WalletRepositoryType walletRepository;
 
-    @Inject
 	public GenericWalletInteract(WalletRepositoryType walletRepository) {
 		this.walletRepository = walletRepository;
 	}

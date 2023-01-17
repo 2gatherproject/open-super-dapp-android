@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.recyclerview.widget.SortedList;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.TicketRangeElement;
 import com.alphawallet.app.entity.nftassets.NFTAsset;
 import com.alphawallet.app.entity.tokendata.TokenGroup;
@@ -41,7 +42,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.vector.app.R;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;

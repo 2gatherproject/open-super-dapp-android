@@ -18,16 +18,16 @@ import okhttp3.OkHttpClient;
 @InstallIn(SingletonComponent.class)
 public class ToolsModule {
 
-    @Singleton
-    @Provides
-    Gson provideGson() {
-        return new Gson();
-    }
+	@Singleton
+	@Provides
+	Gson provideGson() {
+		return new Gson();
+	}
 
-    @Singleton
-    @Provides
-    OkHttpClient okHttpClient() {
-        return new OkHttpClient.Builder()
+	@Singleton
+	@Provides
+	OkHttpClient okHttpClient() {
+		return new OkHttpClient.Builder()
                 //.addInterceptor(new LogInterceptor())
                 .connectTimeout(C.CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(C.READ_TIMEOUT, TimeUnit.SECONDS)

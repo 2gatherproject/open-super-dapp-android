@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.alphawallet.app.C;
-import im.vector.app.R;
 import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.ErrorEnvelope;
 import com.alphawallet.app.entity.NetworkInfo;
@@ -44,6 +43,7 @@ import java.math.RoundingMode;
 import java.util.concurrent.TimeUnit;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import im.vector.app.R;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -66,7 +66,6 @@ public class TransactionDetailViewModel extends BaseViewModel {
     private final KeyService keyService;
     private final TokensService tokenService;
     private final GasService gasService;
-    private final AnalyticsServiceType analyticsService;
 
     private final MutableLiveData<BigInteger> latestBlock = new MutableLiveData<>();
     private final MutableLiveData<Transaction> latestTx = new MutableLiveData<>();
@@ -107,7 +106,7 @@ public class TransactionDetailViewModel extends BaseViewModel {
         this.keyService = keyService;
         this.gasService = gasService;
         this.createTransactionInteract = createTransactionInteract;
-        this.analyticsService = analyticsService;
+        setAnalyticsService(analyticsService);
     }
 
     public MutableLiveData<TransactionData> transactionFinalised()
@@ -138,7 +137,7 @@ public class TransactionDetailViewModel extends BaseViewModel {
     public void startPendingTimeDisplay(final String txHash)
     {
         pendingUpdateDisposable = Observable.interval(0, 1, TimeUnit.SECONDS)
-            .doOnNext(l -> displayCurrentPendingTime(txHash)).subscribe();
+                .doOnNext(l -> displayCurrentPendingTime(txHash)).subscribe();
     }
 
     //TODO: move to display new transaction
@@ -302,13 +301,5 @@ public class TransactionDetailViewModel extends BaseViewModel {
                 .createWithSig(wallet, finalTx, chainId)
                 .subscribe(transactionFinalised::postValue,
                         transactionError::postValue);
-    }
-
-    public void actionSheetConfirm(String mode)
-    {
-        AnalyticsProperties analyticsProperties = new AnalyticsProperties();
-        analyticsProperties.setData(mode);
-
-        analyticsService.track(C.AN_CALL_ACTIONSHEET, analyticsProperties);
     }
 }

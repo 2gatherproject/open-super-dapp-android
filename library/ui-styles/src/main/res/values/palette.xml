@@ -44,18 +44,7 @@
     <color name="palette_black_800">#15191E</color>
     <color name="palette_black_950">#21262C</color>
 
-    <!--
-
-These colors represent the branding palette of AlphaWallet.
-
-** ATTENTION **
-If you want to customize or rebrand the app, define your new colors here.
-
-AVOID referencing these colors directly onto the view, as these do not provide
-flexibility for light/dark modes. Prioritize using the color references defined
-in `themes.xml` (ex. ?colorPrimary, ?colorSurface, etc).
-
--->
+    <!-- Alpha Wallet -->
     <color name="pinkish_grey">#bdbdbd</color>
     <color name="pale_salmon">#fcbbb7</color>
     <color name="very_light_pink">#ffebea</color>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.Transaction;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.EventResult;
@@ -16,8 +17,6 @@ import com.alphawallet.app.service.AssetDefinitionService;
 import com.alphawallet.app.ui.widget.entity.TokenTransferData;
 
 import java.util.Map;
-
-import im.vector.app.R;
 
 /**
  * Created by JB on 8/12/2020.

@@ -3,6 +3,7 @@ package com.alphawallet.app.web3.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.util.Utils;
 import com.alphawallet.token.tools.Numeric;
 

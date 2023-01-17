@@ -5,9 +5,8 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-
 import im.vector.app.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class TestNetDialog extends BottomSheetDialog
 {

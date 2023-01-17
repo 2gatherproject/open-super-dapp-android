@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.ui.widget.adapter.PriceAlertAdapter;
 import com.alphawallet.app.ui.widget.entity.PriceAlert;
@@ -37,7 +38,6 @@ import com.alphawallet.ethereum.EthereumNetworkBase;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class TokenAlertsFragment extends BaseFragment implements View.OnClickListener, PriceAlertCallback {

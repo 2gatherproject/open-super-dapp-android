@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.R;
 import com.alphawallet.app.repository.EthereumNetworkRepository;
 import com.alphawallet.app.viewmodel.AdvancedSettingsViewModel;
 import com.alphawallet.app.widget.AWalletAlertDialog;
@@ -24,7 +25,6 @@ import com.alphawallet.app.widget.SettingsItemView;
 import com.bumptech.glide.Glide;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

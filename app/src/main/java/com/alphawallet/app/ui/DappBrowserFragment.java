@@ -66,6 +66,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
+import com.alphawallet.app.analytics.Analytics;
+import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.CryptoFunctions;
 import com.alphawallet.app.entity.CustomViewSettings;
 import com.alphawallet.app.entity.DApp;
@@ -78,15 +80,15 @@ import com.alphawallet.app.entity.SignAuthenticationCallback;
 import com.alphawallet.app.entity.URLLoadInterface;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.WalletConnectActions;
-import com.alphawallet.app.entity.WalletPage;
 import com.alphawallet.app.entity.WalletType;
+import com.alphawallet.app.entity.analytics.ActionSheetSource;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.EthereumNetworkRepository;
 import com.alphawallet.app.repository.TokenRepository;
 import com.alphawallet.app.repository.TokensRealmSource;
 import com.alphawallet.app.repository.entity.RealmToken;
 import com.alphawallet.app.service.WalletConnectService;
-import com.alphawallet.app.ui.QRScanning.QRScanner;
+import com.alphawallet.app.ui.QRScanning.QRScannerActivity;
 import com.alphawallet.app.ui.widget.OnDappHomeNavClickListener;
 import com.alphawallet.app.ui.widget.adapter.DappBrowserSuggestionsAdapter;
 import com.alphawallet.app.ui.widget.entity.ActionSheetCallback;
@@ -315,12 +317,14 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         homePressed = false;
         if (currentFragment == null) currentFragment = DAPP_BROWSER;
         attachFragment(currentFragment);
-        if ((web3 == null || viewModel == null) && getActivity() != null) //trigger reload
+        if ((web3 == null || viewModel == null)) //trigger reload
         {
-            ((HomeActivity) getActivity()).resetFragment(WalletPage.DAPP_BROWSER);
+            //reboot
+            requireActivity().recreate();
         }
         else
         {
+            viewModel.track(Analytics.Navigation.BROWSER);
             web3.setWebLoadCallback(this);
         }
 
@@ -631,6 +635,8 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         // Both these are required, the onFocus listener is required to respond to the first click.
         urlTv.setOnFocusChangeListener((v, hasFocus) -> {
             //see if we have focus flag
+            loadOnInit = null;
+            loadUrlAfterReload = null;
             if (hasFocus && focusFlag && getActivity() != null) openURLInputView();
         });
 
@@ -707,8 +713,8 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         expandCollapseView(layoutNavigation, false);
 
         disposable = Observable.zip(
-                Observable.interval(600, TimeUnit.MILLISECONDS).take(1),
-                Observable.fromArray(clear), (interval, item) -> item)
+                        Observable.interval(600, TimeUnit.MILLISECONDS).take(1),
+                        Observable.fromArray(clear), (interval, item) -> item)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::postBeginSearchSession);
@@ -898,6 +904,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         }
     }
 
+    @Override
     public void switchNetworkAndLoadUrl(long chainId, String url)
     {
         forceChainChange = chainId; //avoid prompt to change chain for 1inch
@@ -1177,14 +1184,6 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         return true;
     }
 
-    public void setCurrentGasIndex(int gasSelectionIndex, BigDecimal customGasPrice, BigDecimal customGasLimit, long expectedTxTime, long customNonce)
-    {
-        /*if (confirmationDialog != null && confirmationDialog.isShowing())
-        {
-            confirmationDialog.setCurrentGasIndex(gasSelectionIndex, customGasPrice, customGasLimit, expectedTxTime, customNonce);
-        }*/
-    }
-
     @Override
     public void onSignMessage(final EthereumMessage message)
     {
@@ -1214,13 +1213,13 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
     public void onEthCall(Web3Call call)
     {
         Single.fromCallable(() -> {
-            //let's make the call
-            Web3j web3j = TokenRepository.getWeb3jService(activeNetwork.chainId);
-            //construct call
-            org.web3j.protocol.core.methods.request.Transaction transaction
-                    = createFunctionCallTransaction(wallet.address, null, null, call.gasLimit, call.to.toString(), call.value, call.payload);
-            return web3j.ethCall(transaction, call.blockParam).send();
-        }).map(EthCall::getValue)
+                    //let's make the call
+                    Web3j web3j = TokenRepository.getWeb3jService(activeNetwork.chainId);
+                    //construct call
+                    org.web3j.protocol.core.methods.request.Transaction transaction
+                            = createFunctionCallTransaction(wallet.address, null, null, call.gasLimit, call.to.toString(), call.value, call.payload);
+                    return web3j.ethCall(transaction, call.blockParam).send();
+                }).map(EthCall::getValue)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> web3.onCallFunctionSuccessful(call.leafPosition, result),
@@ -1245,8 +1244,14 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         {
             // show add custom chain dialog
             addCustomChainDialog = new AddEthereumChainPrompt(getContext(), chainObj, chainObject -> {
-                viewModel.addCustomChain(chainObject);
-                loadNewNetwork(chainObj.getChainId());
+                if (viewModel.addCustomChain(chainObject))
+                {
+                    loadNewNetwork(chainObj.getChainId());
+                }
+                else
+                {
+                    displayError(R.string.error_invalid_url, 0);
+                }
                 addCustomChainDialog.dismiss();
             });
             addCustomChainDialog.show();
@@ -1386,8 +1391,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
                 confirmationDialog.show();
                 confirmationDialog.fullExpand();
 
-                viewModel.calculateGasEstimate(wallet, Numeric.hexStringToByteArray(transaction.payload),
-                        activeNetwork.chainId, transaction.recipient.toString(), new BigDecimal(transaction.value), transaction.gasLimit)
+                viewModel.calculateGasEstimate(wallet, transaction, activeNetwork.chainId)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(estimate -> confirmationDialog.setGasEstimate(estimate),
@@ -1446,6 +1450,23 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
             confirmationDialog.dismiss();
     }
 
+    private void displayError(int title, int text)
+    {
+        if (resultDialog != null && resultDialog.isShowing()) resultDialog.dismiss();
+        resultDialog = new AWalletAlertDialog(requireContext());
+        resultDialog.setIcon(ERROR);
+        resultDialog.setTitle(title);
+        if (text != 0) resultDialog.setMessage(text);
+        resultDialog.setButtonText(R.string.button_ok);
+        resultDialog.setButtonListener(v -> {
+            resultDialog.dismiss();
+        });
+        resultDialog.show();
+
+        if (confirmationDialog != null && confirmationDialog.isShowing())
+            confirmationDialog.dismiss();
+    }
+
     private void showWalletWatch()
     {
         if (resultDialog != null && resultDialog.isShowing()) resultDialog.dismiss();
@@ -1487,6 +1508,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         resultDialog.show();
     }
 
+    @Override
     public void backPressed()
     {
         if (web3 == null || back == null || back.getAlpha() == 0.3f) return;
@@ -1546,7 +1568,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         }
         else
         {
-            nextUrl = urlTv.getText().toString();// web3.getUrl();// getDefaultDappUrl();
+            nextUrl = urlTv.getText().toString();
         }
 
         if (nextUrl.equalsIgnoreCase(getDefaultDappUrl()))
@@ -1690,6 +1712,10 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
 
     private boolean loadUrl(String urlText)
     {
+        AnalyticsProperties props = new AnalyticsProperties();
+        props.put(Analytics.PROPS_URL, urlText);
+        viewModel.track(Analytics.Action.LOAD_URL, props);
+
         detachFragments();
         addToBackStack(DAPP_BROWSER);
         cancelSearchSession();
@@ -1706,8 +1732,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
     {
         if (web3 == null)
         {
-            if (getActivity() != null)
-                ((HomeActivity) getActivity()).resetFragment(WalletPage.DAPP_BROWSER);
+            requireActivity().recreate();
             loadOnInit = urlText;
         }
         else
@@ -1722,6 +1747,10 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
             //ensure focus isn't on the keyboard
             KeyboardUtils.hideKeyboard(urlTv);
             web3.requestFocus();
+
+            AnalyticsProperties props = new AnalyticsProperties();
+            props.put(Analytics.PROPS_URL, urlText);
+            viewModel.track(Analytics.Action.LOAD_URL, props);
         }
     }
 
@@ -1735,6 +1764,8 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
             }
             web3.resetView();
             web3.reload();
+
+            viewModel.track(Analytics.Action.RELOAD_BROWSER);
         }
     }
 
@@ -1775,6 +1806,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         setUrlText(getDefaultDappUrl());
     }
 
+    @Override
     public void handleQRCode(int resultCode, Intent data, FragmentMessenger messenger)
     {
         //result
@@ -1816,10 +1848,10 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
                         }
                     }
                     break;
-                case QRScanner.DENY_PERMISSION:
+                case QRScannerActivity.DENY_PERMISSION:
                     showCameraDenied();
                     break;
-                case QRScanner.WALLET_CONNECT:
+                case QRScannerActivity.WALLET_CONNECT:
                     return;
                 default:
                     break;
@@ -1945,6 +1977,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         }
     }
 
+    @Override
     public void gotCameraAccess(@NotNull String[] permissions, int[] grantResults)
     {
         boolean cameraAccess = false;
@@ -1961,6 +1994,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
             Toast.makeText(getContext(), "Permission not given", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
     public void gotGeoAccess(@NotNull String[] permissions, int[] grantResults)
     {
         boolean geoAccess = false;
@@ -1978,6 +2012,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
             geoCallback.invoke(geoOrigin, geoAccess, false);
     }
 
+    @Override
     public void gotFileAccess(@NotNull String[] permissions, int[] grantResults)
     {
         boolean fileAccess = false;
@@ -2129,6 +2164,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
      *
      * @param gotAuth
      */
+    @Override
     public void pinAuthorisation(boolean gotAuth)
     {
         if (confirmationDialog != null && confirmationDialog.isShowing())
@@ -2204,7 +2240,10 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
     @Override
     public void notifyConfirm(String mode)
     {
-        if (getActivity() != null) ((HomeActivity) getActivity()).useActionSheet(mode);
+        AnalyticsProperties props = new AnalyticsProperties();
+        props.put(Analytics.PROPS_ACTION_SHEET_MODE, mode);
+        props.put(Analytics.PROPS_ACTION_SHEET_SOURCE, ActionSheetSource.BROWSER);
+        viewModel.track(Analytics.Action.ACTION_SHEET_COMPLETED, props);
     }
 
     @Override
@@ -2227,7 +2266,6 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
         }
         else
         {
-            //TODO: Resolve types
             switch (firstType)
             {
                 case "png":
@@ -2235,16 +2273,25 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
                 case "svg":
                 case "jpg":
                 case "jpeg":
-                case "image/*":
-                    mime = "image/*";
+                case "bmp":
+                    mime = "image/" + firstType;
                     break;
 
                 case "mp4":
                 case "x-msvideo":
                 case "x-ms-wmv":
                 case "mpeg4-generic":
+                case "webm":
+                case "avi":
+                case "mpg":
+                case "m2v":
+                    mime = "video/" + firstType;
+                    break;
+
+                case "image/*":
+                case "audio/*":
                 case "video/*":
-                    mime = "video/*";
+                    mime = firstType;
                     break;
 
                 case "mpeg":
@@ -2253,8 +2300,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
                 case "ogg":
                 case "midi":
                 case "x-ms-wma":
-                case "audio/*":
-                    mime = "audio/*";
+                    mime = "audio/" + firstType;
                     break;
 
                 case "pdf":
@@ -2263,7 +2309,7 @@ public class DappBrowserFragment extends BaseFragment implements OnSignTransacti
 
                 case "xml":
                 case "csv":
-                    mime = "text/*";
+                    mime = "text/" + firstType;
                     break;
 
                 default:

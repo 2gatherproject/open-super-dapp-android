@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.BuildConfig;
+import im.vector.app.R;
 import com.alphawallet.app.entity.DApp;
 import com.alphawallet.app.ui.widget.OnDappClickListener;
 import com.alphawallet.app.ui.widget.adapter.DiscoverDappsListAdapter;
@@ -20,7 +22,6 @@ import java.util.List;
 
 import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_CLICK;
 
-import im.vector.app.R;
 import timber.log.Timber;
 
 import dagger.hilt.android.AndroidEntryPoint;

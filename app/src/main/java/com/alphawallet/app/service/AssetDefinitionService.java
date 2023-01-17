@@ -2376,7 +2376,6 @@ public class AssetDefinitionService implements ParseResult, AttributeInterface
         ContractAddress cAddr = new ContractAddress(token.tokenInfo.chainId, token.tokenInfo.address);
         if (definition == null)
             return Observable.fromCallable(() -> new TokenScriptResult.Attribute("RAttrs", "", BigInteger.ZERO, ""));
-        if (definition == null) return Observable.fromCallable(() -> new TokenScriptResult.Attribute("RAttrs", "", BigInteger.ZERO, ""));
 
         definition.context = new TokenscriptContext();
         definition.context.cAddr = cAddr;

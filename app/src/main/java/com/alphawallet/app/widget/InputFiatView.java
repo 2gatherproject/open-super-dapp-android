@@ -10,12 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import im.vector.app.R;
 import com.alphawallet.app.repository.CurrencyRepository;
 import com.alphawallet.app.service.TickerService;
 import com.alphawallet.app.ui.widget.entity.InputFiatCallback;
 import com.alphawallet.app.ui.widget.entity.NumericInput;
 
-import im.vector.app.R;
 
 public class InputFiatView extends LinearLayout {
     private final Context context;

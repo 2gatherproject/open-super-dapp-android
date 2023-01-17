@@ -17,6 +17,7 @@ import android.widget.SeekBar;
 import androidx.appcompat.widget.AppCompatSeekBar;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.EIP1559FeeOracleResult;
 import com.alphawallet.app.ui.widget.entity.GasSettingsCallback;
 import com.alphawallet.app.ui.widget.entity.GasSpeed2;
@@ -25,8 +26,6 @@ import com.alphawallet.app.util.BalanceUtils;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-
-import im.vector.app.R;
 
 public class GasSliderView extends RelativeLayout
 {

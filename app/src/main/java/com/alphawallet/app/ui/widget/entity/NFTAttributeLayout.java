@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.nftassets.NFTAsset;
 import com.alphawallet.app.entity.opensea.OpenSeaAsset;
 import com.alphawallet.app.entity.tokens.Token;
@@ -18,8 +19,6 @@ import com.alphawallet.app.widget.TokenInfoCategoryView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import im.vector.app.R;
 
 /**
  * Created by JB on 2/09/2021.

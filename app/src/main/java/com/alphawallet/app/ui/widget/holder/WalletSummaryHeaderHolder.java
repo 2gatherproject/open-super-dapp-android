@@ -22,6 +22,7 @@ import im.vector.app.R;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.repository.entity.RealmWalletData;
 import com.alphawallet.app.service.TickerService;
+import com.alphawallet.app.ui.WalletActionsActivity;
 import com.alphawallet.app.ui.widget.entity.WalletClickCallback;
 import com.alphawallet.app.util.Blockies;
 import com.alphawallet.app.util.Utils;
@@ -77,25 +78,25 @@ public class WalletSummaryHeaderHolder extends BinderViewHolder<Wallet> implemen
         }
 	}
 
-    private void setWalletChange(double fiatValue, double oldFiatValue)
-    {
-        try {
-            double change24h = fiatValue - oldFiatValue;
-            double percentChange24h = fiatValue != 0 ? (change24h/oldFiatValue)*100.0 : 0.0;
-            summaryChange.setVisibility(View.VISIBLE);
-            int color = ContextCompat.getColor(getContext(), percentChange24h < 0 ? R.color.negative : R.color.positive);
-            BigDecimal percentChangeBI = BigDecimal.valueOf(percentChange24h).setScale(3, RoundingMode.DOWN);
-            String changeTxt = TickerService.getCurrencyString(change24h);
-            String formattedPercents = (percentChange24h < 0 ? "" : "+") + percentChangeBI + "%";
-            //wallet24hChange.setBackgroundResource(percentage < 0 ? R.drawable.background_24h_change_red : R.drawable.background_24h_change_green);
-            summaryChange.setText(getString(R.string.summary_change_24h, changeTxt, formattedPercents));
-            summaryChange.setTextColor(color);
-            //image24h.setImageResource(percentage < 0 ? R.drawable.ic_price_down : R.drawable.ic_price_up);
-        } catch (Exception ex) { /* Quietly */ }
-    }
+	private void setWalletChange(double fiatValue, double oldFiatValue)
+	{
+		try {
+			double change24h = fiatValue - oldFiatValue;
+			double percentChange24h = fiatValue != 0 ? (change24h/oldFiatValue)*100.0 : 0.0;
+			summaryChange.setVisibility(View.VISIBLE);
+			int color = ContextCompat.getColor(getContext(), percentChange24h < 0 ? R.color.negative : R.color.positive);
+			BigDecimal percentChangeBI = BigDecimal.valueOf(percentChange24h).setScale(3, RoundingMode.DOWN);
+			String changeTxt = TickerService.getCurrencyString(change24h);
+			String formattedPercents = (percentChange24h < 0 ? "" : "+") + percentChangeBI + "%";
+			//wallet24hChange.setBackgroundResource(percentage < 0 ? R.drawable.background_24h_change_red : R.drawable.background_24h_change_green);
+			summaryChange.setText(getString(R.string.summary_change_24h, changeTxt, formattedPercents));
+			summaryChange.setTextColor(color);
+			//image24h.setImageResource(percentage < 0 ? R.drawable.ic_price_down : R.drawable.ic_price_up);
+		} catch (Exception ex) { /* Quietly */ }
+	}
 
-    @Override
-    public void onClick(View view) {
+	@Override
+	public void onClick(View view) {
 
 	}
 }

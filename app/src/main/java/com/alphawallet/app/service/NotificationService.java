@@ -17,9 +17,8 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.alphawallet.app.C;
-import com.alphawallet.app.ui.HomeActivity;
-
 import im.vector.app.R;
+import com.alphawallet.app.ui.HomeActivity;
 
 /**
  * Created by James on 25/04/2019.

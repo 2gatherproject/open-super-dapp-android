@@ -8,6 +8,7 @@ import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.CryptoFunctions;
 import com.alphawallet.app.util.Hex;
 import com.alphawallet.app.util.Utils;

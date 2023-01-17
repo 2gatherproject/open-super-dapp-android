@@ -55,7 +55,7 @@ import com.alphawallet.app.web3.entity.PageReadyCallback;
 import com.alphawallet.app.web3.entity.Web3Transaction;
 import com.alphawallet.app.widget.AWalletAlertDialog;
 import com.alphawallet.app.widget.ActionSheetDialog;
-import com.alphawallet.app.widget.ActionSheetMode;
+import com.alphawallet.app.entity.analytics.ActionSheetMode;
 import com.alphawallet.app.widget.AmountDisplayWidget;
 import com.alphawallet.app.widget.ChainName;
 import com.alphawallet.app.widget.EventDetailWidget;
@@ -94,7 +94,7 @@ import timber.log.Timber;
  */
 @AndroidEntryPoint
 public class TokenActivity extends BaseActivity implements PageReadyCallback, StandardFunctionInterface, ActionSheetCallback,
-                                                            TokenScriptRenderCallback, WebCompletionCallback, OnSetValuesListener
+        TokenScriptRenderCallback, WebCompletionCallback, OnSetValuesListener
 {
     private TokenFunctionViewModel viewModel;
 
@@ -649,7 +649,7 @@ public class TokenActivity extends BaseActivity implements PageReadyCallback, St
     private void onAttr(TokenScriptResult.Attribute attribute)
     {
         //is the attr incomplete?
-       Timber.d("ATTR/FA: " + attribute.id + " (" + attribute.name + ")" + " : " + attribute.text);
+        Timber.d("ATTR/FA: " + attribute.id + " (" + attribute.name + ")" + " : " + attribute.text);
         TokenScriptResult.addPair(attrs, attribute.id, attribute.text);
     }
 

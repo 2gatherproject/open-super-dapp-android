@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import im.vector.app.R;
 import com.alphawallet.app.ui.widget.entity.GasSpeed2;
 
 import org.json.JSONException;
@@ -15,8 +16,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
-
-import im.vector.app.R;
 
 /**
  * Created by JB on 20/01/2022.

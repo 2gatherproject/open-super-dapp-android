@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.web3.entity.WalletAddEthereumChainObject;
 import com.alphawallet.app.widget.FunctionButtonBar;
@@ -14,8 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
-import im.vector.app.R;
 
 public class AddEthereumChainPrompt extends BottomSheetDialog implements StandardFunctionInterface {
 

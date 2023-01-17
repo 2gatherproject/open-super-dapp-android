@@ -4,8 +4,6 @@ import com.alphawallet.app.repository.TokenRepositoryType;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.Wallet;
 
-import javax.inject.Inject;
-
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -13,7 +11,6 @@ import io.reactivex.schedulers.Schedulers;
 public class ChangeTokenEnableInteract {
     private final TokenRepositoryType tokenRepository;
 
-    @Inject
     public ChangeTokenEnableInteract(TokenRepositoryType tokenRepository) {
         this.tokenRepository = tokenRepository;
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.CurrencyItem;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.tokendata.TokenTicker;
@@ -28,7 +29,6 @@ import javax.inject.Inject;
 import androidx.annotation.Nullable;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

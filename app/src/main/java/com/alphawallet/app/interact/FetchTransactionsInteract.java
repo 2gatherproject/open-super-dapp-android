@@ -17,14 +17,11 @@ import com.alphawallet.app.repository.entity.RealmAuxData;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class FetchTransactionsInteract {
 
     private final TransactionRepositoryType transactionRepository;
     private final TokenRepositoryType tokenRepository;
 
-    @Inject
     public FetchTransactionsInteract(TransactionRepositoryType transactionRepository,
                                      TokenRepositoryType tokenRepositoryType) {
         this.transactionRepository = transactionRepository;

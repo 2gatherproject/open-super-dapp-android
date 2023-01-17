@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Pair;
 
-import im.vector.app.R;
 import com.alphawallet.app.entity.ContractInteract;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.EventSync;
@@ -49,9 +48,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import im.vector.app.R;
 import io.reactivex.Single;
 import io.realm.Realm;
 
@@ -199,6 +200,18 @@ public class Token
             return sanitiseString(name + symbol);
         } else {
             return sanitiseString(getFullName());
+        }
+    }
+
+    public String getTokenSymbol(Token token){
+
+        if (!TextUtils.isEmpty(token.tokenInfo.symbol) && token.tokenInfo.symbol.length() > 1)
+        {
+           return Utils.getIconisedText(token.tokenInfo.symbol);
+        }
+        else
+        {
+            return Utils.getIconisedText(token.getName());
         }
     }
 
@@ -375,7 +388,7 @@ public class Token
 
     public void setTokenWallet(String address)
     {
-        this.tokenWallet = address;
+        this.tokenWallet = address.toLowerCase(Locale.ROOT);
     }
 
     public void setupRealmToken(RealmToken realmToken)
@@ -835,6 +848,7 @@ public class Token
             case OTHER:
             case NOT_SET:
             case ERC721:
+            case ERC721_ENUMERABLE:
             case ERC721_LEGACY:
             case ERC721_UNDETERMINED:
             case CREATION:

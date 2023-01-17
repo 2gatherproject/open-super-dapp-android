@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.repository.EthereumNetworkBase;
 import com.alphawallet.app.repository.TokenRepository;
 import com.alphawallet.app.widget.TokenIcon;
@@ -22,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import im.vector.app.R;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

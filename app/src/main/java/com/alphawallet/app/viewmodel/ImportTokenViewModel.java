@@ -45,8 +45,6 @@ import com.alphawallet.token.entity.TicketRange;
 import com.alphawallet.token.entity.XMLDsigDescriptor;
 import com.alphawallet.token.tools.ParseMagicLink;
 
-import org.web3j.protocol.core.methods.response.EthEstimateGas;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;

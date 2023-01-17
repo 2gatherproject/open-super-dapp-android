@@ -17,11 +17,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.WalletPage;
 
 import java.util.ArrayList;
-
-import im.vector.app.R;
 
 public class AWalletBottomNavigationView extends LinearLayout
 {

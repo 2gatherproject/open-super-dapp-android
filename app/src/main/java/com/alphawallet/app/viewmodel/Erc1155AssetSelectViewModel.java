@@ -3,6 +3,8 @@ package com.alphawallet.app.viewmodel;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -13,6 +15,7 @@ import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.interact.FetchTransactionsInteract;
 import com.alphawallet.app.service.AssetDefinitionService;
 import com.alphawallet.app.service.TokensService;
+import com.alphawallet.app.ui.SelectNetworkActivity;
 import com.alphawallet.app.ui.TransferNFTActivity;
 import com.alphawallet.app.util.Utils;
 

@@ -1,6 +1,8 @@
 package com.alphawallet.app.ui;
 
 import static com.alphawallet.app.C.Key.WALLET;
+import static com.alphawallet.app.C.SIGNAL_NFT_SYNC;
+import static com.alphawallet.app.C.SYNC_STATUS;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.WalletType;
@@ -40,8 +44,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.BuildConfig;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class NFTActivity extends BaseActivity implements StandardFunctionInterface
@@ -86,7 +88,25 @@ public class NFTActivity extends BaseActivity implements StandardFunctionInterfa
         setupViewPager();
 
         //check NFT events, expedite balance update
+        syncListener();
         viewModel.checkEventsForToken(token);
+    }
+
+    private void syncListener()
+    {
+        getSupportFragmentManager()
+                .setFragmentResultListener(SIGNAL_NFT_SYNC, this, (requestKey, b) ->
+                {
+                    CertifiedToolbarView certificateToolbar = findViewById(R.id.certified_toolbar);
+                    if (!b.getBoolean(SYNC_STATUS, false))
+                    {
+                        certificateToolbar.nftSyncComplete();
+                    }
+                    else
+                    {
+                        certificateToolbar.showNFTSync();
+                    }
+                });
     }
 
     private boolean hasTokenScriptOverride(Token t)
@@ -199,6 +219,13 @@ public class NFTActivity extends BaseActivity implements StandardFunctionInterfa
         setupTabs(viewPager, pages);
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (assetsFragment == null) recreate();
+    }
+
     private void setupTabs(ViewPager2 viewPager, List<Pair<String, Fragment>> pages)
     {
         TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -207,8 +234,6 @@ public class NFTActivity extends BaseActivity implements StandardFunctionInterfa
         ).attach();
 
         TabUtils.decorateTabLayout(this, tabLayout);
-
-//        viewPager.setCurrentItem(1, true);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
         {

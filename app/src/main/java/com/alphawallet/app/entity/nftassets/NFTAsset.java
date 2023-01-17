@@ -81,7 +81,8 @@ public class NFTAsset implements Parcelable
 
     public NFTAsset(RealmNFTAsset realmAsset)
     {
-        loadFromMetaData(realmAsset.getMetaData());
+        String metaData = realmAsset.getMetaData() != null ? realmAsset.getMetaData() : new NFTAsset(new BigInteger(realmAsset.getTokenId())).jsonMetaData();
+        loadFromMetaData(metaData);
         balance = realmAsset.getBalance();
     }
 
@@ -169,10 +170,9 @@ public class NFTAsset implements Parcelable
         return assetMap.get(NAME);
     }
 
-    public boolean isAnimation()
+    public String getAnimation()
     {
-        String anim = assetMap.get(IMAGE_ANIMATION);
-        return anim != null;
+        return assetMap.get(IMAGE_ANIMATION);
     }
 
     public String getImage()

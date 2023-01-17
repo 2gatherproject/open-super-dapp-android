@@ -17,7 +17,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
-import im.vector.app.R;
+import com.alphawallet.app.analytics.Analytics;
+import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.entity.Transaction;
@@ -32,7 +33,7 @@ import com.alphawallet.app.viewmodel.TransactionDetailViewModel;
 import com.alphawallet.app.web3.entity.Web3Transaction;
 import com.alphawallet.app.widget.AWalletAlertDialog;
 import com.alphawallet.app.widget.ActionSheetDialog;
-import com.alphawallet.app.widget.ActionSheetMode;
+import com.alphawallet.app.entity.analytics.ActionSheetMode;
 import com.alphawallet.app.widget.ChainName;
 import com.alphawallet.app.widget.CopyTextView;
 import com.alphawallet.app.widget.FunctionButtonBar;
@@ -46,8 +47,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.inject.Inject;
-
+import im.vector.app.R;
 import timber.log.Timber;
 
 import static com.alphawallet.app.C.Key.WALLET;
@@ -446,7 +446,12 @@ public class TransactionDetailActivity extends BaseActivity implements StandardF
     }
 
     @Override
-    public void notifyConfirm(String mode) { viewModel.actionSheetConfirm(mode); }
+    public void notifyConfirm(String mode)
+    {
+        AnalyticsProperties props = new AnalyticsProperties();
+        props.put(Analytics.PROPS_ACTION_SHEET_MODE, mode);
+        viewModel.track(Analytics.Action.ACTION_SHEET_COMPLETED, props);
+    }
 
     private void txWritten(TransactionData transactionData)
     {

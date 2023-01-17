@@ -10,9 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
-
 import im.vector.app.R;
+import com.bumptech.glide.Glide;
 
 public class BottomSheetToolbarView extends RelativeLayout
 {

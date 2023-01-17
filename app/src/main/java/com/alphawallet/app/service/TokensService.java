@@ -10,6 +10,7 @@ import android.util.Pair;
 import androidx.annotation.Nullable;
 
 import com.alphawallet.app.C;
+import com.alphawallet.app.analytics.Analytics;
 import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.ContractLocator;
 import com.alphawallet.app.entity.ContractType;
@@ -20,6 +21,7 @@ import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.nftassets.NFTAsset;
 import com.alphawallet.app.entity.tokendata.TokenGroup;
 import com.alphawallet.app.entity.tokendata.TokenTicker;
+import com.alphawallet.app.entity.tokendata.TokenUpdateType;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.tokens.TokenCardMeta;
 import com.alphawallet.app.entity.tokens.TokenFactory;
@@ -139,7 +141,7 @@ public class TokensService
                         .filter(tokenInfo -> (!TextUtils.isEmpty(tokenInfo.name) || !TextUtils.isEmpty(tokenInfo.symbol)) && tokenInfo.chainId != 0)
                         .map(tokenInfo -> { tokenInfo.isEnabled = false; return tokenInfo; }) //set default visibility to false
                         .flatMap(tokenInfo -> tokenRepository.determineCommonType(tokenInfo).toObservable()
-                            .map(contractType -> tokenFactory.createToken(tokenInfo, contractType, ethereumNetworkRepository.getNetworkByChain(t.chainId).getShortName())))
+                                .map(contractType -> tokenFactory.createToken(tokenInfo, contractType, ethereumNetworkRepository.getNetworkByChain(t.chainId).getShortName())))
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io())
                         .subscribe(this::finishAddToken, err -> onCheckError(err, t), this::finishTokenCheck);
@@ -240,12 +242,12 @@ public class TokensService
         setupFilters();
 
         eventTimer = Single.fromCallable(() -> {
-            startupPass();
-            addUnresolvedContracts(ethereumNetworkRepository.getAllKnownContracts(getNetworkFilters()));
-            checkIssueTokens();
-            pendingTokenMap.clear();
-            return true;
-        }).subscribeOn(Schedulers.io())
+                    startupPass();
+                    addUnresolvedContracts(ethereumNetworkRepository.getAllKnownContracts(getNetworkFilters()));
+                    checkIssueTokens();
+                    pendingTokenMap.clear();
+                    return true;
+                }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::updateCycle, this::onError);
     }
@@ -585,6 +587,33 @@ public class TokensService
         return tokenRepository.fetchChainBalance(walletAddress, chainId);
     }
 
+    // Note that this routine works across different wallets, so there's no usage of currentAddress
+    public Single<Token[]> syncChainBalances(String walletAddress, TokenUpdateType updateType)
+    {
+        //update all chain balances
+        return Single.fromCallable(() -> {
+            List<Token> baseTokens = new ArrayList<>();
+            for (long chainId : networkFilter)
+            {
+                Token baseToken = tokenRepository.fetchToken(chainId, walletAddress, walletAddress);
+                if (baseToken == null)
+                {
+                    baseToken = ethereumNetworkRepository.getBlankOverrideToken(ethereumNetworkRepository.getNetworkByChain(chainId));
+                }
+                baseToken.setTokenWallet(walletAddress);
+                BigDecimal balance = baseToken.balance;
+                if (updateType == TokenUpdateType.ACTIVE_SYNC) balance = tokenRepository.updateTokenBalance(walletAddress, baseToken).blockingGet();
+                if (balance.compareTo(BigDecimal.ZERO) > 0)
+                {
+                    baseToken.balance = balance;
+                    baseTokens.add(baseToken);
+                }
+            }
+
+            return baseTokens.toArray(new Token[0]);
+        });
+    }
+
     private void onBalanceChange(BigDecimal newBalance, Token t)
     {
         boolean balanceChange = !newBalance.equals(t.balance);
@@ -645,8 +674,8 @@ public class TokensService
     private void checkOpenSea(long chainId)
     {
         if ((openSeaQueryDisposable != null && !openSeaQueryDisposable.isDisposed())
-            || openseaService == null || !EthereumNetworkBase.hasOpenseaAPI(chainId)
-            || !openseaService.canCheckChain(chainId)) return;
+                || openseaService == null || !EthereumNetworkBase.hasOpenseaAPI(chainId)
+                || !openseaService.canCheckChain(chainId)) return;
 
         NetworkInfo info = ethereumNetworkRepository.getNetworkByChain(chainId);
 
@@ -982,7 +1011,7 @@ public class TokensService
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io())
                         .subscribe())
-                        .isDisposed();
+                .isDisposed();
     }
 
     private Completable enableToken(String walletAddr, Token token)
@@ -1070,12 +1099,12 @@ public class TokensService
         if (analyticsService != null)
         {
             AnalyticsProperties analyticsProperties = new AnalyticsProperties();
-            analyticsProperties.setData(gasSpeed);
-
-            analyticsService.track(C.AN_USE_GAS, analyticsProperties);
+            analyticsProperties.put(Analytics.PROPS_GAS_SPEED, gasSpeed);
+            analyticsService.track(Analytics.Action.USE_GAS_WIDGET.getValue(), analyticsProperties);
         }
     }
 
+    @NotNull
     public Token getTokenOrBase(long chainId, String address)
     {
         Token token = getToken(chainId, address);
@@ -1212,11 +1241,11 @@ public class TokensService
         {
             done = true;
             Single.fromCallable(() -> {
-                tickerService.deleteTickers();
-                return true;
-            }).subscribeOn(Schedulers.io())
+                        tickerService.deleteTickers();
+                        return true;
+                    }).subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io()).subscribe(b -> {
-            }).isDisposed();
+                    }).isDisposed();
         }
     }
 

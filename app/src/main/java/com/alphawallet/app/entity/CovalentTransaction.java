@@ -1,24 +1,16 @@
 package com.alphawallet.app.entity;
 
-import com.alphawallet.app.entity.tokenscript.EventUtils;
-import com.alphawallet.app.util.Utils;
-import com.alphawallet.token.tools.Numeric;
+import android.text.TextUtils;
 
-import org.web3j.protocol.Web3j;
+import com.alphawallet.app.util.Utils;
 
 import java.math.BigInteger;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import static com.alphawallet.app.repository.TokenRepository.getWeb3jService;
-
-import android.text.TextUtils;
 
 /**
  * Created by JB on 17/05/2021.

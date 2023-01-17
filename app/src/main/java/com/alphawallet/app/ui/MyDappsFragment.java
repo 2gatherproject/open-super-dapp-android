@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.BuildConfig;
+import im.vector.app.R;
 import com.alphawallet.app.entity.DApp;
 import com.alphawallet.app.ui.widget.OnDappClickListener;
 import com.alphawallet.app.ui.widget.adapter.MyDappsListAdapter;
@@ -22,7 +24,6 @@ import com.alphawallet.app.widget.AWalletAlertDialog;
 
 import java.util.List;
 
-import im.vector.app.R;
 import static com.alphawallet.app.ui.DappBrowserFragment.DAPP_CLICK;
 
 import timber.log.Timber;

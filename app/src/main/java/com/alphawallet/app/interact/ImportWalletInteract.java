@@ -10,13 +10,10 @@ import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.WalletType;
 import com.alphawallet.app.service.KeyService;
 
-import javax.inject.Inject;
-
 public class ImportWalletInteract {
 
     private final WalletRepositoryType walletRepository;
 
-    @Inject
     public ImportWalletInteract(WalletRepositoryType walletRepository) {
         this.walletRepository = walletRepository;
     }

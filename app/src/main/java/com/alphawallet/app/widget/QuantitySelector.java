@@ -13,11 +13,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import im.vector.app.R;
 import com.alphawallet.app.ui.widget.entity.OnQuantityChangedListener;
 
 import java.math.BigInteger;
-
-import im.vector.app.R;
 
 public class QuantitySelector extends RelativeLayout implements TextWatcher, TextView.OnEditorActionListener
 {

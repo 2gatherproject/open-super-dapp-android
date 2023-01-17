@@ -2,6 +2,7 @@ package com.alphawallet.app.entity.tokens;
 
 import android.app.Activity;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.TicketRangeElement;
 import com.alphawallet.app.entity.Transaction;
@@ -25,8 +26,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import im.vector.app.R;
 
 public class ERC721Ticket extends Token
 {

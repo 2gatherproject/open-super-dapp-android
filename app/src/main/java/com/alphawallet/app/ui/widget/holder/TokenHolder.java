@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.tokendata.TokenTicker;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.tokens.TokenCardMeta;
@@ -36,8 +37,6 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Locale;
-
-import im.vector.app.R;
 
 public class TokenHolder extends BinderViewHolder<TokenCardMeta> implements View.OnClickListener, View.OnLongClickListener {
 
@@ -61,7 +60,7 @@ public class TokenHolder extends BinderViewHolder<TokenCardMeta> implements View
     private final RelativeLayout tokenLayout;
     private final MaterialCheckBox selectToken;
     private final ProgressBar tickerProgress;
-
+    
     public Token token;
     private TokensAdapterCallback tokensAdapterCallback;
 
@@ -282,7 +281,7 @@ public class TokenHolder extends BinderViewHolder<TokenCardMeta> implements View
         BigDecimal currencyChange = new BigDecimal(fiatBalance.doubleValue()).multiply((
                 new BigDecimal(ticker.percentChange24h)).divide(new BigDecimal(100)));
         String formattedValue =  TickerService.getCurrencyString(currencyChange.doubleValue());
-
+        
         this.textAppreciation.setTextColor(color);
         this.textAppreciation.setText(formattedValue);
     }

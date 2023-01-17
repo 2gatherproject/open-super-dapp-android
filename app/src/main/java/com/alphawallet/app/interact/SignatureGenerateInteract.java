@@ -10,8 +10,6 @@ import com.alphawallet.app.entity.SignaturePair;
 import java.math.BigInteger;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.Single;
 import timber.log.Timber;
 
@@ -24,7 +22,6 @@ class SignatureGenerateInteract {
 
     private final WalletRepositoryType walletRepository;
 
-    @Inject
     public SignatureGenerateInteract(WalletRepositoryType walletRepository) {
         this.walletRepository = walletRepository;
     }

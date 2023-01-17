@@ -10,13 +10,13 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import im.vector.app.R;
 import com.alphawallet.app.ui.widget.OnSetWatchWalletListener;
 import com.alphawallet.app.ui.widget.entity.AddressReadyCallback;
 import com.alphawallet.app.util.KeyboardUtils;
 import com.alphawallet.app.widget.InputAddress;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 /**
  * Created by James on 26/07/2019.

@@ -9,6 +9,7 @@ import android.webkit.URLUtil;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.NetworkInfo;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.viewmodel.CustomNetworkViewModel;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 import static java.util.Collections.singletonList;
 

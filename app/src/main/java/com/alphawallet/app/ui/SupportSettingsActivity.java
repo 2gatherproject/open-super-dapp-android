@@ -8,13 +8,15 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.MediaLinks;
 import com.alphawallet.app.widget.SettingsItemView;
 
-import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import timber.log.Timber;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class SupportSettingsActivity extends BaseActivity {

@@ -3,9 +3,8 @@ package com.alphawallet.app.router;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.alphawallet.app.ui.CoinbasePayActivity;
-
 import im.vector.app.R;
+import com.alphawallet.app.ui.CoinbasePayActivity;
 
 public class CoinbasePayRouter
 {

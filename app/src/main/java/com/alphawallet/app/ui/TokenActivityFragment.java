@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.ui.widget.adapter.ActivityAdapter;
@@ -19,7 +20,6 @@ import com.alphawallet.app.widget.ActivityHistoryList;
 import com.alphawallet.ethereum.EthereumNetworkBase;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class TokenActivityFragment extends BaseFragment {

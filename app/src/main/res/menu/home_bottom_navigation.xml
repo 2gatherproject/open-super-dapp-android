@@ -14,12 +14,6 @@
         android:title="@string/bottom_action_rooms" />
 
     <item
-        android:id="@+id/bottom_action_alpha_wallet"
-        android:enabled="true"
-        android:icon="@drawable/ic_alpha_launcher_foreground"
-        android:title="@string/wallet_label" />
-
-    <item
         android:id="@+id/bottom_action_notification"
         android:enabled="true"
         android:icon="@drawable/ic_settings_root_notification"

@@ -48,15 +48,15 @@ class AudioMessageHelper @Inject constructor(
 ) {
     private var mediaPlayer: MediaPlayer? = null
     private var currentPlayingId: String? = null
-    private var voiceRecorder: VoiceRecorder = voiceRecorderProvider.provideVoiceRecorder()
+    private val voiceRecorder: VoiceRecorder by lazy { voiceRecorderProvider.provideVoiceRecorder() }
 
     private val amplitudeList = mutableListOf<Int>()
 
     private var amplitudeTicker: CountUpTimer? = null
     private var playbackTicker: CountUpTimer? = null
 
-    fun initializeRecorder(attachmentData: ContentAttachmentData) {
-        voiceRecorder.initializeRecord(attachmentData)
+    fun initializeRecorder(roomId: String, attachmentData: ContentAttachmentData) {
+        voiceRecorder.initializeRecord(roomId, attachmentData)
         amplitudeList.clear()
         attachmentData.waveform?.let {
             amplitudeList.addAll(it)
@@ -79,18 +79,19 @@ class AudioMessageHelper @Inject constructor(
     }
 
     fun stopRecording(): MultiPickerAudioType? {
-        tryOrNull("Cannot stop media recording amplitude") {
-            stopRecordingAmplitudes()
-        }
         val voiceMessageFile = tryOrNull("Cannot stop media recorder!") {
             voiceRecorder.stopRecord()
             voiceRecorder.getVoiceMessageFile()
         }
 
-        try {
+        tryOrNull("Cannot stop media recording amplitude") {
+            stopRecordingAmplitudes()
+        }
+
+        return try {
             voiceMessageFile?.let {
                 val outputFileUri = FileProvider.getUriForFile(context, buildMeta.applicationId + ".fileProvider", it, "Voice message.${it.extension}")
-                return outputFileUri
+                outputFileUri
                         .toMultiPickerAudioType(context)
                         ?.apply {
                             waveform = if (amplitudeList.size < 50) {
@@ -99,10 +100,13 @@ class AudioMessageHelper @Inject constructor(
                                 amplitudeList.chunked(amplitudeList.size / 50) { items -> items.maxOrNull() ?: 0 }
                             }
                         }
-            } ?: return null
+            }
         } catch (e: FileNotFoundException) {
             Timber.e(e, "Cannot stop voice recording")
-            return null
+            null
+        } catch (e: RuntimeException) {
+            Timber.e(e, "Error while retrieving metadata")
+            null
         }
     }
 
@@ -110,6 +114,7 @@ class AudioMessageHelper @Inject constructor(
      * When entering in playback mode actually.
      */
     fun pauseRecording() {
+        // TODO should we pause instead of stop?
         voiceRecorder.stopRecord()
         stopRecordingAmplitudes()
     }
@@ -215,6 +220,10 @@ class AudioMessageHelper @Inject constructor(
             Timber.e(e, "Cannot get max amplitude (native error). Amplitude recording timer will be stopped.")
             stopRecordingAmplitudes()
         }
+    }
+
+    private fun resumeRecordingAmplitudes() {
+        amplitudeTicker?.resume()
     }
 
     private fun stopRecordingAmplitudes() {

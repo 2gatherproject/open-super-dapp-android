@@ -9,12 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.opensea.OpenSeaAsset;
 
 import java.text.DecimalFormat;
 import java.util.List;
-
-import im.vector.app.R;
 
 public class TraitsAdapter extends RecyclerView.Adapter<TraitsAdapter.ViewHolder> {
     private final List<OpenSeaAsset.Trait> traitList;

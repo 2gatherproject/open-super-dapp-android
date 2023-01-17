@@ -21,7 +21,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.entity.TransactionData;
@@ -55,8 +57,6 @@ import java.util.List;
 import java.util.Map;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.BuildConfig;
-import im.vector.app.R;
 import io.reactivex.functions.Consumer;
 
 
@@ -484,6 +484,7 @@ public class NFTAssetDetailActivity extends BaseActivity implements StandardFunc
     {
         //does the function have a view? If it's transaction only then handle here
         Map<String, TSAction> functions = viewModel.getAssetDefinitionService().getTokenFunctionMap(token.tokenInfo.chainId, token.getAddress());
+        if (functions == null) return;
         TSAction action = functions.get(function);
         token.clearResultMap();
 

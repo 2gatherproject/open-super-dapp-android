@@ -12,62 +12,57 @@ buildscript {
         maven {
             url 'https://maven.google.com'
         }
-        jcenter()
-//        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         // Do not use `mavenCentral()`, it prevents Dependabot from working properly
         maven {
             url 'https://repo1.maven.org/maven2'
         }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
 
-        maven { url "https://jitpack.io" }
-        maven { url "https://kotlin.bintray.com/kotlinx" }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-        gradlePluginPortal()
-
-//        maven { url 'https://maven.fabric.io/public' }
+        google()  // Google's Maven repository
+        mavenCentral()  // Maven Central repository
     }
+
     dependencies {
-        classpath libs.gradle.hiltPlugin
+        // Release notes of Android Gradle Plugin (AGP):
+        // https://developer.android.com/studio/releases/gradle-plugin
         classpath libs.gradle.gradlePlugin
-        classpath 'com.google.gms:google-services:4.3.13'
         classpath libs.gradle.kotlinPlugin
+        classpath libs.gradle.hiltPlugin
         classpath 'com.google.firebase:firebase-appdistribution-gradle:3.0.3'
+        classpath 'com.google.gms:google-services:4.3.14'
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.4.0.2513'
         classpath 'com.google.android.gms:oss-licenses-plugin:0.10.5'
-        classpath "com.likethesalad.android:stem-plugin:2.1.1"
-
-//        classpath 'de.mobilej.unmock:UnMockPlugin:0.7.8'
-        classpath 'com.github.bjoernq:unmockplugin:0.7.8'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.38.0'
-        classpath 'com.trevjonez.composer:plugin:1.0.0-rc08'
-        classpath "com.jaredsburrows:gradle-license-plugin:0.8.90"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-
-//        classpath 'io.fabric.tools:gradle:1.31.2'
-        classpath "io.realm:realm-gradle-plugin:10.8.0"
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.6.1'
-
-        classpath 'org.owasp:dependency-check-gradle:7.1.1'
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.7.10"
+        classpath "com.likethesalad.android:stem-plugin:2.2.3"
+        classpath 'org.owasp:dependency-check-gradle:7.2.1'
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:1.7.20"
         classpath "org.jetbrains.kotlinx:kotlinx-knit:0.4.0"
+        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'
+        classpath 'app.cash.paparazzi:paparazzi-gradle-plugin:1.1.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+
+        // Add the dependency for the Crashlytics Gradle plugin
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+
+        //Alpha Wallet
+        classpath "io.realm:realm-gradle-plugin:10.11.1"
     }
 }
 
 plugins {
     // ktlint Plugin
-    id "org.jlleitschuh.gradle.ktlint" version "10.3.0"
+    id "org.jlleitschuh.gradle.ktlint" version "11.0.0"
     // Detekt
     id "io.gitlab.arturbosch.detekt" version "1.21.0"
+    // Ksp
+    id "com.google.devtools.ksp" version "1.7.20-1.0.6"
 
     // Dependency Analysis
-    id 'com.autonomousapps.dependency-analysis' version "1.12.0"
+    id 'com.autonomousapps.dependency-analysis' version "1.13.1"
+    // Gradle doctor
+    id "com.osacky.doctor" version "0.8.1"
 }
 
 // https://github.com/jeremylong/DependencyCheck
@@ -80,39 +75,37 @@ dependencyCheck {
     ]
 }
 
+// Gradle doctor configuration
+apply from: './tools/gradle/doctor.gradle'
+
 allprojects {
     apply plugin: "org.jlleitschuh.gradle.ktlint"
     apply plugin: "io.gitlab.arturbosch.detekt"
 
     repositories {
-
+        // Do not use `mavenCentral()`, it prevents Dependabot from working properly
+        maven {
+            url 'https://repo1.maven.org/maven2'
+            content {
+                groups.mavenCentral.regex.each { includeGroupByRegex it }
+                groups.mavenCentral.group.each { includeGroup it }
+            }
+        }
+        // snapshots repository
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots"
+            content {
+                groups.snapshot.regex.each { includeGroupByRegex it }
+                groups.snapshot.group.each { includeGroup it }
+            }
+        }
         maven {
             url 'https://jitpack.io'
             content {
-                // Use this repo only for olm library
-                includeGroupByRegex "org\\.matrix\\.gitlab\\.matrix-org"
-                // And also for FilePicker
-                includeGroupByRegex "com\\.github\\.jaiselrahman"
-                // And monarchy
-                includeGroupByRegex "com\\.github\\.Zhuinden"
-                // And ucrop
-                includeGroupByRegex "com\\.github\\.yalantis"
-                // JsonViewer
-                includeGroupByRegex 'com\\.github\\.BillCarsonFr'
-                // PhotoView
-                includeGroupByRegex 'com\\.github\\.chrisbanes'
-                // PFLockScreen-Android
-                includeGroupByRegex 'com\\.github\\.vector-im'
-
-                // Chat effects
-                includeGroupByRegex 'com\\.github\\.jetradarmobile'
-                includeGroupByRegex 'nl\\.dionsegijn'
-
                 groups.jitpack.regex.each { includeGroupByRegex it }
                 groups.jitpack.group.each { includeGroup it }
             }
         }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
         // Jitsi repo
         maven {
             url "https://github.com/vector-im/jitsi_libre_maven/raw/main/android-sdk-5.0.2"
@@ -123,18 +116,14 @@ allprojects {
                 groups.jitsi.group.each { includeGroup it }
             }
         }
-        google()
-        mavenCentral()
-        // Do not use `mavenCentral()`, it prevents Dependabot from working properly
+        // Do not use `google()`, it prevents Dependabot from working properly
         maven {
-            url 'https://repo1.maven.org/maven2'
+            url 'https://maven.google.com'
             content {
-                groups.mavenCentral.regex.each { includeGroupByRegex it }
-                groups.mavenCentral.group.each { includeGroup it }
+                groups.google.regex.each { includeGroupByRegex it }
+                groups.google.group.each { includeGroup it }
             }
         }
-
-        jcenter()
         //noinspection JcenterRepositoryObsolete
         // Do not use `jcenter`, it prevents Dependabot from working properly
         maven {
@@ -144,29 +133,24 @@ allprojects {
                 groups.jcenter.group.each { includeGroup it }
             }
         }
-        maven {
-            url 'https://jitpack.io'
-            content {
-                groups.jitpack.regex.each { includeGroupByRegex it }
-                groups.jitpack.group.each { includeGroup it }
-            }
-        }
-        // Do not use `google()`, it prevents Dependabot from working properly
-        maven {
-            url 'https://maven.google.com'
-            content {
-                groups.google.regex.each { includeGroupByRegex it }
-                groups.google.group.each { includeGroup it }
-            }
-        }
 
+        //Alpha wallet
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/trustwallet/wallet-core")
+            credentials {
+                username = getGitHubUsername()
+                password = getPAT()
+            }
+        }
+        google()
+        jcenter()
         maven { url 'https://jitpack.io' }
     }
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         // Warnings are potential errors, so stop ignoring them
         // You can override by passing `-PallWarningsAsErrors=false` in the command line
-        kotlinOptions.allWarningsAsErrors = project.getProperties().getOrDefault("allWarningsAsErrors", "false").toBoolean()
         kotlinOptions.allWarningsAsErrors = project.getProperties().getOrDefault("allWarningsAsErrors", "true").toBoolean()
     }
 
@@ -188,6 +172,9 @@ allprojects {
             reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
             // To have XML report for Danger
             reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        }
+        filter {
+            exclude { element -> element.file.path.contains("$buildDir/generated/") }
         }
         disabledRules = [
                 // TODO Re-enable these 4 rules after reformatting project
@@ -249,7 +236,7 @@ sonarqube {
         property "sonar.projectName", "element-android"
         property "sonar.projectKey", "vector-im_element-android"
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.projectVersion", project(":vector").android.defaultConfig.versionName
+        property "sonar.projectVersion", project(":app").android.defaultConfig.versionName
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.links.homepage", "https://github.com/vector-im/element-android/"
         property "sonar.links.ci", "https://github.com/vector-im/element-android/actions"
@@ -273,7 +260,7 @@ project(":app") {
     }
 }
 
-project(":library:diff-match-patch") {
+project(":library:external:diff-match-patch") {
     sonarqube {
         skipProject = true
     }
@@ -329,7 +316,7 @@ dependencyAnalysis {
                 exclude("androidx.paging:paging-runtime-ktx") // False positive
             }
         }
-        project(":vector") {
+        project(":app") {
             onUnusedDependencies {
                 // False positives
                 exclude(
@@ -344,4 +331,79 @@ dependencyAnalysis {
         }
     }
 }
-apply from: 'https://raw.githubusercontent.com/ligi/gradle-common/master/versions_plugin_stable_only.gradle'
+
+tasks.register("recordScreenshots", GradleBuild) {
+    startParameter.projectProperties.screenshot = ""
+    tasks = [':vector:recordPaparazziDebug']
+}
+
+tasks.register("verifyScreenshots", GradleBuild) {
+    startParameter.projectProperties.screenshot = ""
+    tasks = [':vector:verifyPaparazziDebug']
+}
+
+ext.initScreenshotTests = { project ->
+    def hasScreenshots = project.hasProperty("screenshot")
+    if (hasScreenshots) {
+        project.apply plugin: 'app.cash.paparazzi'
+    }
+    project.dependencies { testCompileOnly "app.cash.paparazzi:paparazzi:1.0.0" }
+    project.android.testOptions.unitTests.all {
+        def screenshotTestCapture = "**/*ScreenshotTest*"
+        if (hasScreenshots) {
+            include screenshotTestCapture
+        } else {
+            exclude screenshotTestCapture
+        }
+    }
+}
+
+// Workaround to have KSP generated Kotlin code available in the IDE (for code completion)
+// Ref: https://github.com/airbnb/epoxy/releases/tag/5.0.0beta02
+subprojects { project ->
+    afterEvaluate {
+        if (project.hasProperty("android")) {
+            android {
+                if (it instanceof com.android.build.gradle.LibraryExtension) {
+                    libraryVariants.all { variant ->
+                        def outputFolder = new File("build/generated/ksp/${variant.name}/kotlin")
+                        if (outputFolder.exists()) {
+                            variant.addJavaSourceFoldersToModel(outputFolder)
+                            android.sourceSets.getAt(variant.name).java {
+                                srcDir(outputFolder)
+                            }
+                        }
+                    }
+                } else if (it instanceof com.android.build.gradle.AppExtension) {
+                    applicationVariants.all { variant ->
+                        def outputFolder = new File("build/generated/ksp/${variant.name}/kotlin")
+                        if (outputFolder.exists()) {
+                            variant.addJavaSourceFoldersToModel(outputFolder)
+                            android.sourceSets.getAt(variant.name).java {
+                                srcDir(outputFolder)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+gradle.projectsEvaluated({
+    def username = getGitHubUsername()
+    def password = getPAT()
+    def isOnCI = System.getenv("GITHUB_TOKEN")
+    if (!isOnCI && (!username || !password)) {
+        throw new GradleException('Please provide GitHub username and Personal Access Token. Find more here https://github.com/alphaWallet/alpha-wallet-android#getting-started')
+    }
+})
+
+// GitHub Personal Access Token
+private String getPAT() {
+    project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+}
+
+private String getGitHubUsername() {
+    project.findProperty("gpr.user")
+}

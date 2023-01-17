@@ -1,5 +1,6 @@
 package com.alphawallet.app.util;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.EIP681Type;
 import com.alphawallet.app.entity.EthereumProtocolParser;
 import com.alphawallet.app.entity.QRResult;

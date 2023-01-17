@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.repository.SignRecord;
 import com.alphawallet.app.util.Utils;
 import com.alphawallet.app.widget.StandardHeader;
@@ -18,7 +19,6 @@ import com.alphawallet.app.widget.StandardHeader;
 import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 /**
  * Created by JB on 9/09/2020.

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.nftassets.NFTAsset;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.TokensRealmSource;
@@ -26,7 +27,6 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
-import im.vector.app.R;
 import io.realm.Realm;
 
 /**

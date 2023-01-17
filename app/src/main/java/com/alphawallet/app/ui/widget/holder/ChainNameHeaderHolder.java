@@ -8,11 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.NetworkInfo;
 import com.alphawallet.app.repository.EthereumNetworkBase;
 import com.alphawallet.app.widget.StandardHeader;
-
-import im.vector.app.R;
 
 /**
  * Created by JB on 10/01/2022.

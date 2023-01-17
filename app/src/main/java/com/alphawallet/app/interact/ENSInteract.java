@@ -6,8 +6,6 @@ import com.alphawallet.token.tools.Numeric;
 
 import java.math.BigInteger;
 
-import javax.inject.Inject;
-
 import io.reactivex.Single;
 
 /**
@@ -18,7 +16,6 @@ public class ENSInteract
 {
     private final TokenRepositoryType tokenRepository;
 
-    @Inject
     public ENSInteract(TokenRepositoryType tokenRepository) {
         this.tokenRepository = tokenRepository;
     }

@@ -5,9 +5,8 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alphawallet.app.entity.NetworkInfo;
-
 import im.vector.app.R;
+import com.alphawallet.app.entity.NetworkInfo;
 
 public class SwitchChainWidget extends LinearLayout
 {

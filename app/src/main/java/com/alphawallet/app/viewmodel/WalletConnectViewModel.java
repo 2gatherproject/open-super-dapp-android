@@ -50,7 +50,6 @@ import com.alphawallet.token.entity.SignMessageType;
 import com.alphawallet.token.entity.Signable;
 import com.alphawallet.token.tools.Numeric;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,7 +81,6 @@ public class WalletConnectViewModel extends BaseViewModel
     private final RealmManager realmManager;
     private final GasService gasService;
     private final TokensService tokensService;
-    private final AnalyticsServiceType analyticsService;
     private final EthereumNetworkRepositoryType ethereumNetworkRepository;
 
     private final HashMap<String, WCClient> clientBuffer = new HashMap<>();
@@ -112,8 +110,8 @@ public class WalletConnectViewModel extends BaseViewModel
         this.realmManager = realmManager;
         this.gasService = gasService;
         this.tokensService = tokensService;
-        this.analyticsService = analyticsService;
         this.ethereumNetworkRepository = ethereumNetworkRepository;
+        setAnalyticsService(analyticsService);
         prepareDisposable = null;
         disposable = genericWalletInteract
                 .find()
@@ -249,9 +247,17 @@ public class WalletConnectViewModel extends BaseViewModel
         }
     }
 
-    public Single<BigInteger> calculateGasEstimate(Wallet wallet, byte[] transactionBytes, long chainId, String sendAddress, BigDecimal sendAmount, BigInteger defaultLimit)
+    public Single<BigInteger> calculateGasEstimate(Wallet wallet, Web3Transaction transaction, long chainId)
     {
-        return gasService.calculateGasEstimate(transactionBytes, chainId, sendAddress, sendAmount.toBigInteger(), wallet, defaultLimit);
+        if (transaction.isBaseTransfer())
+        {
+            return Single.fromCallable(() -> BigInteger.valueOf(C.GAS_LIMIT_MIN));
+        }
+        else
+        {
+            return gasService.calculateGasEstimate(org.web3j.utils.Numeric.hexStringToByteArray(transaction.payload), chainId,
+                    transaction.recipient.toString(), transaction.value, wallet, transaction.gasLimit);
+        }
     }
 
     public void resetSignDialog()
@@ -602,14 +608,6 @@ public class WalletConnectViewModel extends BaseViewModel
             info = findDefaultNetworkInteract.getNetworkInfo(MAINNET_ID);
         }
         return info.symbol;
-    }
-
-    public void actionSheetConfirm(String mode)
-    {
-        AnalyticsProperties analyticsProperties = new AnalyticsProperties();
-        analyticsProperties.setData("(WC)" + mode); //disambiguate signs/sends etc through WC
-
-        analyticsService.track(C.AN_CALL_ACTIONSHEET, analyticsProperties);
     }
 
     public void prepareIfRequired()

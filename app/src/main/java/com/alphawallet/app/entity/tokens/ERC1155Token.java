@@ -8,6 +8,7 @@ import static org.web3j.tx.Contract.staticExtractEventParameters;
 import android.app.Activity;
 import android.util.Pair;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.LogOverflowException;
 import com.alphawallet.app.entity.SyncDef;
@@ -56,7 +57,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import im.vector.app.R;
 import io.realm.Realm;
 import timber.log.Timber;
 

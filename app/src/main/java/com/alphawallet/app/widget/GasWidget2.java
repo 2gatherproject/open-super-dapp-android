@@ -16,6 +16,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import com.alphawallet.app.C;
 import com.alphawallet.app.entity.GasPriceSpread;
 import com.alphawallet.app.entity.TXSpeed;
+import com.alphawallet.app.entity.analytics.ActionSheetMode;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.TokensRealmSource;
 import com.alphawallet.app.repository.entity.Realm1559Gas;
@@ -220,7 +221,7 @@ public class GasWidget2 extends LinearLayout implements Runnable, GasWidgetInter
         try(Realm realm = tokensService.getTickerRealmInstance())
         {
             RealmGasSpread rgs = realm.where(RealmGasSpread.class)
-                .equalTo("chainId", token.tokenInfo.chainId).findFirst();
+                    .equalTo("chainId", token.tokenInfo.chainId).findFirst();
 
             if (rgs != null)
             {

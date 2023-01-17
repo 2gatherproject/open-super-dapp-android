@@ -5,7 +5,6 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.CryptoFunctions;
 import com.alphawallet.app.entity.ErrorEnvelope;
 import com.alphawallet.app.entity.NetworkInfo;
@@ -42,9 +42,6 @@ import com.alphawallet.token.tools.ParseMagicLink;
 
 import java.math.BigDecimal;
 
-import javax.inject.Inject;
-
-import im.vector.app.R;
 import timber.log.Timber;
 
 import static com.alphawallet.app.C.IMPORT_STRING;
@@ -363,7 +360,7 @@ public class ImportTokenActivity extends BaseActivity implements View.OnClickLis
         {
             case spawnable:
                 importTickets.setText(R.string.action_import);
-                if (token != null)
+                if (token != null) 
                     tokenView.displayTicketHolder(token, ticketRange, viewModel.getAssetDefinitionService());
                 break;
             case currencyLink:
@@ -533,32 +530,24 @@ public class ImportTokenActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        final int import_ticket = R.id.import_ticket;
-        final int cancel_button = R.id.cancel_button;
-        switch (v.getId()) {
-            case import_ticket:
-                if (ticketRange != null) {
-                    if (viewModel.getSalesOrder().price > 0.0)
-                    {
-                        confirmPurchaseDialog();
-                    }
-                    else
-                    {
-                        onProgress(true);
-                        completeImport();
-                    }
-                }
-                else if (viewModel.getSalesOrder().contractType == currencyLink)
-                {
+//        final int import_ticket = R.id.import_ticket;
+//        final int cancel_button = R.id.cancel_button;
+        int id = v.getId();
+        if (id == R.id.import_ticket) {
+            if (ticketRange != null) {
+                if (viewModel.getSalesOrder().price > 0.0) {
+                    confirmPurchaseDialog();
+                } else {
                     onProgress(true);
-                    completeCurrencyImport();
+                    completeImport();
                 }
-                break;
-            case cancel_button:
-                //go to main screen
-                new HomeRouter().open(this, true);
-                finish();
-                break;
+            } else if (viewModel.getSalesOrder().contractType == currencyLink) {
+                onProgress(true);
+                completeCurrencyImport();
+            }
+        } else if (id == R.id.cancel_button) {//go to main screen
+            new HomeRouter().open(this, true);
+            finish();
         }
     }
 

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.FinishReceiver;
 import com.alphawallet.app.entity.PinAuthenticationCallbackInterface;
 import com.alphawallet.app.entity.SignAuthenticationCallback;
@@ -51,7 +52,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingFormatArgumentException;
 
-import im.vector.app.R;
 import timber.log.Timber;
 
 import static com.alphawallet.app.C.EXTRA_PRICE;

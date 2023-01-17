@@ -1,5 +1,8 @@
 package com.alphawallet.app.service;
 
+import android.util.Log;
+
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.CryptoFunctions;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.entity.tokens.Ticket;

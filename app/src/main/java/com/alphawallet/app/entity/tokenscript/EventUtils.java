@@ -1,5 +1,6 @@
 package com.alphawallet.app.entity.tokenscript;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.token.entity.Attribute;
 import com.alphawallet.token.entity.AttributeInterface;

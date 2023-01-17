@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.nftassets.NFTAsset;
 import com.alphawallet.app.entity.tokens.ERC1155Token;
 import com.alphawallet.app.ui.widget.NonFungibleAdapterInterface;
@@ -27,8 +28,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import im.vector.app.R;
 
 public class Erc1155AssetSelectAdapter extends RecyclerView.Adapter<Erc1155AssetSelectAdapter.ViewHolder> implements NonFungibleAdapterInterface
 {

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
 import im.vector.app.R;
 import com.alphawallet.app.entity.tokens.Token;
@@ -42,8 +43,9 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -198,7 +200,7 @@ public class TokenInfoFragment extends BaseFragment {
         tabLayout.addTab(tabLayout.newTab().setText("1M"));
         tabLayout.addTab(tabLayout.newTab().setText("3M"));
         tabLayout.addTab(tabLayout.newTab().setText("1Y"));
-
+        
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab)

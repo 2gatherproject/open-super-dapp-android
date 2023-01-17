@@ -12,6 +12,7 @@ import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.CreateWalletCallbackInterface;
 import com.alphawallet.app.entity.CustomViewSettings;
 import com.alphawallet.app.entity.Operation;
@@ -24,8 +25,9 @@ import com.alphawallet.app.viewmodel.SplashViewModel;
 import com.alphawallet.app.widget.AWalletAlertDialog;
 import com.alphawallet.app.widget.SignTransactionDialog;
 
+import javax.inject.Inject;
+
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 @AndroidEntryPoint
 public class SplashActivity extends BaseActivity implements CreateWalletCallbackInterface, Runnable

@@ -1,8 +1,8 @@
 package com.alphawallet.app.viewmodel;
 
-import com.alphawallet.app.entity.NetworkInfo;
 import com.alphawallet.app.repository.EthereumNetworkRepository;
 import com.alphawallet.app.repository.EthereumNetworkRepositoryType;
+import com.alphawallet.app.entity.NetworkInfo;
 
 import javax.inject.Inject;
 

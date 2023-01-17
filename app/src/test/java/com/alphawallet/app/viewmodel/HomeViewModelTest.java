@@ -6,7 +6,6 @@ import static org.hamcrest.core.Is.is;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.alphawallet.app.repository.SharedPreferenceRepository;
-import com.alphawallet.app.ui.QRScanning.TestApplication;
 import com.alphawallet.shadows.ShadowRealm;
 
 import org.junit.Before;
@@ -16,7 +15,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 @RunWith(AndroidJUnit4.class)
-@Config(shadows = {ShadowRealm.class}, application = TestApplication.class)
+@Config(shadows = {ShadowRealm.class})
 public class HomeViewModelTest
 {
     private HomeViewModel homeViewModel;

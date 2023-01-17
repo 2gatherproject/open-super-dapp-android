@@ -1,86 +1,10 @@
-import com.android.build.OutputFile
-
-buildscript {
-    repositories {
-        google()
-        maven { url 'https://maven.fabric.io/public' }
-        jcenter()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-
-    dependencies {
-        classpath 'io.fabric.tools:gradle:1.31.2'
-        classpath "gradle.plugin.com.worker8.android_lint_reporter:android_lint_reporter:2.1.0"
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.20.0-RC1"
-        classpath "com.dicedmelon.gradle:jacoco-android:0.1.5"
-    }
-}
-
-apply plugin: 'com.android.application'
-apply plugin: 'com.google.firebase.appdistribution'
-apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.likethesalad.stem'
+apply plugin: 'com.google.devtools.ksp'
 apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: 'kotlinx-knit'
 apply plugin: 'realm-android'
-apply plugin: 'com.worker8.android_lint_reporter'
-apply plugin: 'io.gitlab.arturbosch.detekt'
-apply plugin: 'com.dicedmelon.gradle.jacoco-android'
-
-jacoco {
-    toolVersion = "0.8.8"
-}
-
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
-    jacoco.excludes = ['jdk.internal.*']
-}
-
-jacocoAndroidUnitTestReport {
-    csv.enabled false
-    html.enabled true
-    xml.enabled true
-}
-
-jacocoAndroidUnitTestReport {
-    excludes += [
-            '**/*Realm*.*',
-            '**/Generated*.*',
-            '**/*_*.*'
-    ]
-}
-
-detekt {
-    toolVersion = "1.20.0-RC1"
-    buildUponDefaultConfig = true // preconfigure defaults
-    allRules = false // activate all available (even unstable) rules.
-    baseline = file("$projectDir/check/detekt-baseline.xml")
-}
-
-android_lint_reporter {
-    lintFilePath = "./build/reports/lint-results-analyticsDebug.xml"
-    detektFilePath = "./build/reports/detekt/detekt.xml"
-    githubOwner = "AlphaWallet"
-    githubRepositoryName = "alpha-wallet-android"
-    showLog = true // optional - default to false, show extra information, will slow things down
-}
-
-repositories {
-    maven {
-        url = uri("https://maven.pkg.github.com/trustwallet/wallet-core")
-        credentials {
-            username = getGitHubUsername()
-            password = getPAT()
-        }
-    }
-}
 
 if (project.hasProperty("coverage")) {
     apply plugin: 'jacoco'
@@ -90,96 +14,9 @@ kapt {
     correctErrorTypes = true
 }
 
-knit {
-    files = fileTree(project.rootDir) {
-        include '**/*.md'
-        include '**/*.kt'
-        include '**/*.kts'
-        exclude '**/build/**'
-        exclude '**/.gradle/**'
-        exclude '**/towncrier/template.md'
-        exclude '**/CHANGES.md'
-        exclude '/node_modules'
-    }
-}
-
-// Note: 2 digits max for each value
-ext.versionMajor = 1
-ext.versionMinor = 4
-// Note: even values are reserved for regular release, odd values for hotfix release.
-// When creating a hotfix, you should decrease the value, since the current value
-// is the value for the next regular release.
-ext.versionPatch = 34
-
-static def getGitTimestamp() {
-    def cmd = 'git show -s --format=%ct'
-    return cmd.execute().text.trim() as Long
-}
-
-static def generateVersionCodeFromTimestamp() {
-    // It's unix timestamp, minus timestamp of October 3rd 2018 (first commit date) divided by 100: It's incremented by one every 100 seconds.
-    // plus 20_000_000 for compatibility reason with the previous way the Version Code was computed
-    // Note that the result will be multiplied by 10 when adding the digit for the arch
-    return ((getGitTimestamp() - 1_538_524_800) / 100).toInteger() + 20_000_000
-}
-
-def generateVersionCodeFromVersionName() {
-    // plus 4_000_000 for compatibility reason with the previous way the Version Code was computed
-    // Note that the result will be multiplied by 10 when adding the digit for the arch
-    return (versionMajor * 1_00_00 + versionMinor * 1_00 + versionPatch) + 4_000_000
-}
-
-def getVersionCode() {
-    if (gitBranchName() == "develop") {
-        return generateVersionCodeFromTimestamp()
-    } else {
-        return generateVersionCodeFromVersionName()
-    }
-}
-
 static def gitRevision() {
     def cmd = "git rev-parse --short=8 HEAD"
     return cmd.execute().text.trim()
-}
-
-static def gitRevisionDate() {
-    def cmd = "git show -s --format=%ci HEAD^{commit}"
-    return cmd.execute().text.trim()
-}
-
-static def gitBranchName() {
-    def fromEnv = System.env.BUILDKITE_BRANCH as String ?: ""
-
-    if (!fromEnv.isEmpty()) {
-        return fromEnv
-    } else {
-        // Note: this command return "HEAD" on Buildkite, so use the system env 'BUILDKITE_BRANCH' content first
-        def cmd = "git rev-parse --abbrev-ref HEAD"
-        return cmd.execute().text.trim()
-    }
-}
-
-// For Google Play build, build on any other branch than main will have a "-dev" suffix
-static def getGplayVersionSuffix() {
-    if (gitBranchName() == "main") {
-        return ""
-    } else {
-        return "-dev"
-    }
-}
-
-static def gitTag() {
-    def cmd = "git describe --exact-match --tags"
-    return cmd.execute().text.trim()
-}
-
-// For F-Droid build, build on a not tagged commit will have a "-dev" suffix
-static def getFdroidVersionSuffix() {
-    if (gitTag() == "") {
-        return "-dev"
-    } else {
-        return ""
-    }
 }
 
 project.android.buildTypes.all { buildType ->
@@ -189,14 +26,24 @@ project.android.buildTypes.all { buildType ->
             ]
 }
 
-// map for the version codes last digit
-// x86 must have greater values than arm
-// 64 bits have greater value than 32 bits
-ext.abiVersionCodes = ["armeabi-v7a": 1, "arm64-v8a": 2, "x86": 3, "x86_64": 4].withDefault { 0 }
+initScreenshotTests(project)
 
-def buildNumber = System.env.BUILDKITE_BUILD_NUMBER as Integer ?: 0
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/trustwallet/wallet-core")
+        credentials {
+            username = getGitHubUsername()
+            password = getPAT()
+        }
+    }
+
+    maven { url 'https://jitpack.io' }
+    mavenCentral()
+    google()
+}
 
 android {
+    namespace "im.vector.app"
     // Due to a bug introduced in Android gradle plugin 3.6.0, we have to specify the ndk version to use
     // Ref: https://issuetracker.google.com/issues/144111441
     ndkVersion "21.3.6528147"
@@ -204,107 +51,30 @@ android {
     compileSdk versions.compileSdk
 
     defaultConfig {
-        applicationId "im.vector.app"
         // Set to API 21: see #405
         minSdk versions.minSdk
         targetSdk versions.targetSdk
-        multiDexEnabled true
-
-        renderscriptTargetApi 24
-        renderscriptSupportModeEnabled true
-
-        // `develop` branch will have version code from timestamp, to ensure each build from CI has a incremented versionCode.
-        // Other branches (main, features, etc.) will have version code based on application version.
-        versionCode project.getVersionCode()
-
-        // Required for sonar analysis
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}-sonar"
-
-        // Generate a random app task affinity
-        manifestPlaceholders = [appTaskAffinitySuffix: "H_${gitRevision()}"]
-
-        buildConfigField "String", "GIT_REVISION", "\"${gitRevision()}\""
-        buildConfigField "String", "GIT_REVISION_DATE", "\"${gitRevisionDate()}\""
-        buildConfigField "String", "GIT_BRANCH_NAME", "\"${gitBranchName()}\""
-        buildConfigField "String", "BUILD_NUMBER", "\"${buildNumber}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments clearPackageData: 'true'
-
-        //Alpha Wallet
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
-        def XInfuraAPI = "XInfuraAPI"
-        //Put your Infura key here, NB with over 30 - 40 users this API key will rate limit, it's only here for bootstrapping a free build
-        def DEFAULT_INFURA_API_KEY = "\"da3717f25f824cc1baa32d812386d93f\"";
-        def DEFAULT_OPENSEA_API_KEY = "\"...\""; //Put your OpenSea developer API key in here, otherwise you are reliant on the backup NFT fetch method (which usually works ok)
-        def DEFAULT_POLYGONSCAN_API_KEY = "\"\""; //Put your Polygonscan developer API key in here to get access to Polygon/Mumbai token discovery and transactions
-        def DEFAULT_AURORA_API_KEY = "\"HFDDY5BNKGXBB82DE2G8S64C3C41B76PYI\""; //Put your Aurorascan.dev API key here - this one will rate limit as it is common
-
-        buildConfigField 'int', 'DB_VERSION', '24'
-        buildConfigField "String", XInfuraAPI, DEFAULT_INFURA_API_KEY
-        buildConfigField "String", "VERSION_NAME", "\"3.33\""
-        buildConfigField 'int', 'VERSION_CODE', '158'
-        buildConfigField "String", "APPLICATION_ID", "\"im.vector.app\""
 
         // Keep abiFilter for the universalApk
         ndk {
             abiFilters "armeabi-v7a", "x86", 'arm64-v8a', 'x86_64'
         }
 
-        // Ref: https://developer.android.com/studio/build/configure-apk-splits.html
-        splits {
-            // Configures multiple APKs based on ABI.
-            abi {
-                // Enables building multiple APKs per ABI.
-                enable true
+        // Generate a random app task affinity
+        manifestPlaceholders = [appTaskAffinitySuffix: "H_${gitRevision()}"]
 
-                // By default all ABIs are included, so use reset() and include to specify that we only
-                // want APKs for armeabi-v7a, x86, arm64-v8a and x86_64.
-
-                // Resets the list of ABIs that Gradle should create APKs for to none.
-                reset()
-
-                // Specifies a list of ABIs that Gradle should create APKs for.
-                include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
-
-                // Generate a universal APK that includes all ABIs, so user who install from CI tool can use this one by default.
-                universalApk true
-            }
-        }
-
-        applicationVariants.all { variant ->
-            // assign different version code for each output
-            def baseVariantVersion = variant.versionCode * 10
-            variant.outputs.each { output ->
-                def baseAbiVersionCode = project.ext.abiVersionCodes.get(output.getFilter(OutputFile.ABI))
-                // Known limitation: it does not modify the value in the BuildConfig.java generated file
-                // See https://issuetracker.google.com/issues/171133218
-                output.versionCodeOverride = baseVariantVersion + baseAbiVersionCode
-                print "ABI " + output.getFilter(OutputFile.ABI) + " \t-> VersionCode = " + output.versionCodeOverride + "\n"
-            }
-
-            variant.resValue "string", "package_name", "${variant.properties.applicationId}"
-        }
         // The following argument makes the Android Test Orchestrator run its
         // "pm clear" command after each test invocation. This command ensures
         // that the app's state is completely cleared between tests.
         testInstrumentationRunnerArguments clearPackageData: 'true'
 
-        packagingOptions {
-            pickFirst 'META-INF/LICENSE.md'
-            pickFirst 'META-INF/NOTICE.md'
-            pickFirst 'META-INF/LICENSE-notice.md'
-            pickFirst 'solidity/ens/build/AbstractENS.bin'
-        }
-
-        externalNativeBuild {
-            cmake {
-                cFlags "-DIFKEY=\\\"" + DEFAULT_INFURA_API_KEY + "\\\""
-                cFlags "-DOSKEY=\\\"" + DEFAULT_OPENSEA_API_KEY + "\\\""
-                cFlags "-DPSKEY=\\\"" + DEFAULT_POLYGONSCAN_API_KEY + "\\\""
-                cFlags "-DASKEY=\\\"" + DEFAULT_AURORA_API_KEY + "\\\""
-            }
-        }
+        vectorDrawables.useSupportLibrary = true
+        buildConfigField 'int', 'DB_VERSION', '24'
+        buildConfigField "String", "APPLICATION_ID", "\"im.vector.app\""
+        buildConfigField "String", "VERSION_NAME", "\"3.33\""
+        buildConfigField 'int', 'VERSION_CODE', '158'
     }
 
     testOptions {
@@ -313,159 +83,14 @@ android {
         animationsDisabled = true
 
         // Comment to run on Android 12
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
-        unitTests.returnDefaultValues = true
-        unitTests.includeAndroidResources = true
+//        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
-    signingConfigs {
-        debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('./signature/debug.keystore')
-            storePassword 'android'
-        }
-        nightly {
-            keyAlias System.env.ELEMENT_ANDROID_NIGHTLY_KEYID ?: project.property("signing.element.nightly.keyId")
-            keyPassword System.env.ELEMENT_ANDROID_NIGHTLY_KEYPASSWORD ?: project.property("signing.element.nightly.keyPassword")
-            storeFile file('./signature/nightly.keystore')
-            storePassword System.env.ELEMENT_ANDROID_NIGHTLY_STOREPASSWORD ?: project.property("signing.element.nightly.storePassword")
-        }
-        release {
-            keyAlias project.property("signing.element.keyId")
-            keyPassword project.property("signing.element.keyPassword")
-            storeFile file(project.property("signing.element.storePath"))
-            storePassword project.property("signing.element.storePassword")
-        }
-    }
-
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
-            resValue "string", "app_name", "Element dbg"
-            resValue "color", "launcher_background", "#0DBD8B"
-
-            buildConfigField "boolean", "LOW_PRIVACY_LOG_ENABLE", "false"
-            // Set to true if you want to enable strict mode in debug
-            buildConfigField "boolean", "ENABLE_STRICT_MODE_LOGS", "false"
-
-            signingConfig signingConfigs.debug
             if (project.hasProperty("coverage")) {
                 testCoverageEnabled = coverage.enableTestCoverage
             }
         }
-
-        release {
-            resValue "string", "app_name", "Element"
-            resValue "color", "launcher_background", "#0DBD8B"
-
-            buildConfigField "boolean", "LOW_PRIVACY_LOG_ENABLE", "false"
-            buildConfigField "boolean", "ENABLE_STRICT_MODE_LOGS", "false"
-
-            postprocessing {
-                removeUnusedCode true
-                removeUnusedResources true
-                // We do not activate obfuscation as it makes it hard then to read crash reports, and it's a bit useless on an open source project :)
-                obfuscate false
-                optimizeCode true
-                proguardFiles 'proguard-rules.pro'
-            }
-            // signingConfig signingConfigs.release
-        }
-
-        nightly {
-            initWith release
-            applicationIdSuffix ".nightly"
-            versionNameSuffix "-nightly"
-
-            // Just override the background color of the launcher icon for the nightly build.
-            resValue "color", "launcher_background", "#07007E"
-
-            // We need to copy paste this block, this is not done automatically by `initWith release`
-            postprocessing {
-                removeUnusedCode true
-                removeUnusedResources true
-                // We do not activate obfuscation as it makes it hard then to read crash reports, and it's a bit useless on an open source project :)
-                obfuscate false
-                optimizeCode true
-                proguardFiles 'proguard-rules.pro'
-            }
-            matchingFallbacks = ['release']
-            signingConfig signingConfigs.nightly
-            firebaseAppDistribution {
-                artifactType = "APK"
-                // We upload the universal APK to fix this error:
-                // "App Distribution found more than 1 output file for this variant.
-                // Please contact firebase-support@google.com for help using APK splits with App Distribution."
-                artifactPath = "$rootDir/vector/build/outputs/apk/gplay/nightly/vector-gplay-universal-nightly.apk"
-                // This file will be generated by the GitHub action
-                releaseNotesFile = "CHANGES_NIGHTLY.md"
-                groups = "external-testers"
-                // This should not be required, but if I do not add the appId, I get this error:
-                // "App Distribution halted because it had a problem uploading the APK: [404] Requested entity was not found."
-                appId = "1:912726360885:android:efd8545af52a9f9300427c"
-            }
-        }
-    }
-
-    flavorDimensions "store"
-
-    productFlavors {
-        gplay {
-            apply plugin: 'com.google.gms.google-services'
-            afterEvaluate {
-                tasks.matching { it.name.contains("GoogleServices") && !it.name.contains("Gplay") }*.enabled = false
-            }
-
-            dimension "store"
-            isDefault = true
-            versionName "${versionMajor}.${versionMinor}.${versionPatch}${getGplayVersionSuffix()}"
-
-            resValue "bool", "isGplay", "true"
-            buildConfigField "boolean", "ALLOW_FCM_USE", "true"
-            buildConfigField "String", "SHORT_FLAVOR_DESCRIPTION", "\"G\""
-            buildConfigField "String", "FLAVOR_DESCRIPTION", "\"GooglePlay\""
-            buildConfigField "boolean", "ALLOW_EXTERNAL_UNIFIEDPUSH_DISTRIB", "true"
-        }
-
-        fdroid {
-            dimension "store"
-
-            versionName "${versionMajor}.${versionMinor}.${versionPatch}${getFdroidVersionSuffix()}"
-
-            resValue "bool", "isGplay", "false"
-            buildConfigField "boolean", "ALLOW_FCM_USE", "false"
-            buildConfigField "String", "SHORT_FLAVOR_DESCRIPTION", "\"F\""
-            buildConfigField "String", "FLAVOR_DESCRIPTION", "\"FDroid\""
-            buildConfigField "boolean", "ALLOW_EXTERNAL_UNIFIEDPUSH_DISTRIB", "true"
-        }
-//
-//        analytics {
-//            dimension "targetting"
-//        }
-//        noAnalytics {
-//            dimension "targetting"
-//        }
-    }
-
-    packagingOptions {
-        exclude 'META-INF/NOTICE' // will not include NOTICE file
-        exclude 'META-INF/LICENSE' // will not include LICENSE file
-        exclude 'META-INF/LICENSE.md'
-        exclude 'META-INF/NOTICE.md'
-        exclude 'META-INF/LICENSE-notice.md'
-        exclude 'solidity/ens/build/*.bin'
-        exclude 'solidity/ens/*.sol'
-        exclude 'solidity/ens/build/*.abi'
-        exclude 'en-mnemonic-word-list.txt'
-        exclude 'solidity/*'
-    }
-
-    lintOptions {
-        baseline file("./check/lint-baseline.xml")
-        lintConfig file("lint.xml")
-
-        checkDependencies true
-        abortOnError true
     }
 
     compileOptions {
@@ -477,19 +102,6 @@ android {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
         }
-    }
-
-    testOptions {
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
-        unitTests {
-            returnDefaultValues = true
-            includeAndroidResources = true
-        }
-        animationsDisabled = true
-    }
-
-    packagingOptions {
-        exclude 'META-INF/lib_release.kotlin_module'
     }
 
     kotlinOptions {
@@ -513,61 +125,25 @@ android {
         test {
             java.srcDirs += "src/sharedTest/java"
         }
-        // Add sourceSets for `release` version when building `nightly`
-        nightly {
-            java.srcDirs += "src/release/java"
-        }
     }
 
     buildFeatures {
         viewBinding true
-    }
-
-    /*
-    Below code is used to include analytics only when Flavor is "No Analytics"
-    This is due to China release where Google services should not be included
-     */
-    def task = gradle.startParameter.taskNames[0] ?: ""
-
-    afterEvaluate { project ->
-        if (!task.toLowerCase().contains("noanalytics"))
-        {
-            apply plugin: 'com.google.gms.google-services'
-            apply plugin: 'com.google.firebase.crashlytics'
-            dependencies {
-                implementation 'com.google.android.play:core:1.10.3'
-                implementation 'com.google.firebase:firebase-analytics:20.1.2'
-                implementation 'com.mixpanel.android:mixpanel-android:5.8.4'
-                implementation 'com.google.firebase:firebase-crashlytics:18.2.5'
-            }
-        }
-    }
-}
-
-task printVersionName {
-    doLast {
-        println android.defaultConfig.versionName
-    }
-}
-
-task printVersionCode {
-    doLast {
-        println android.defaultConfig.versionCode
     }
 }
 
 gradle.projectsEvaluated({
     def username = getGitHubUsername()
     def password = getPAT()
-    if (!username || !password) {
+    def isOnCI = System.getenv("GITHUB_TOKEN")
+    if (!isOnCI && (!username || !password)) {
         throw new GradleException('Please provide GitHub username and Personal Access Token. Find more here https://github.com/alphaWallet/alpha-wallet-android#getting-started')
     }
 })
 
 // GitHub Personal Access Token
 private String getPAT() {
-    def encodedToken = project.findProperty("gpr.key")
-    new String(encodedToken.decodeBase64())
+    project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
 }
 
 private String getGitHubUsername() {
@@ -575,22 +151,24 @@ private String getGitHubUsername() {
 }
 
 dependencies {
-    implementation project(":vector-config")
-    implementation project(":matrix-sdk-android")
-    implementation project(":matrix-sdk-android-flow")
-    implementation project(":library:jsonviewer")
-    implementation project(':alpha-token-script')
-    implementation 'androidx.multidex:multidex:2.0.1'
 
-//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation files('\\libs\\abi-4.8.8-android.jar')
+    implementation files('\\libs\\core-4.8.8-android.jar')
+    implementation files('\\libs\\crypto-4.8.8-android.jar')
+    implementation files('\\libs\\utils-4.8.8-android.jar')
+
+    implementation project(":vector-config")
+    api project(":matrix-sdk-android")
+    implementation project(":matrix-sdk-android-flow")
+    implementation project(":library:external:jsonviewer")
+    implementation project(":library:external:diff-match-patch")
+    implementation project(":library:ui-strings")
     implementation project(":library:ui-styles")
     implementation project(":library:core-utils")
     implementation project(":library:attachment-viewer")
-    implementation project(":library:diff-match-patch")
     implementation project(":library:multipicker")
-    implementation 'androidx.multidex:multidex:2.0.1'
+    api project(":alpha-token-script")
 
-    implementation libs.jetbrains.kotlinReflect
     implementation libs.jetbrains.coroutinesCore
     implementation libs.jetbrains.coroutinesAndroid
 
@@ -598,75 +176,69 @@ dependencies {
     implementation libs.androidx.appCompat
     implementation libs.androidx.fragmentKtx
     implementation libs.androidx.constraintLayout
-    implementation "androidx.sharetarget:sharetarget:1.1.0"
     implementation libs.androidx.core
     implementation "androidx.media:media:1.6.0"
     implementation "androidx.transition:transition:1.4.1"
     implementation libs.androidx.biometric
 
-    implementation "org.threeten:threetenbp:1.4.0:no-tzdb"
-    implementation "com.gabrielittner.threetenbp:lazythreetenbp:0.11.0"
+    api "org.threeten:threetenbp:1.4.0:no-tzdb"
+    api "com.gabrielittner.threetenbp:lazythreetenbp:0.11.0"
 
     implementation libs.squareup.moshi
-    implementation libs.squareup.moshiKt
     kapt libs.squareup.moshiKotlin
 
     // Lifecycle
     implementation libs.androidx.lifecycleLivedata
-    implementation libs.androidx.lifecycleProcess
+    api libs.androidx.lifecycleProcess
     implementation libs.androidx.lifecycleRuntimeKtx
 
-    implementation libs.androidx.datastorepreferences
+    api libs.androidx.datastorepreferences
 
     // Opus Encoder
     implementation libs.element.opusencoder
 
+    // WYSIWYG Editor
+    implementation libs.element.wysiwyg
+
     // Log
-    implementation libs.jakewharton.timber
+    api libs.jakewharton.timber
 
     // Debug
-    implementation 'com.facebook.stetho:stetho:1.6.0'
+    api 'com.facebook.stetho:stetho:1.6.0'
 
-    // Phone number https://github.com/google/libphonenumber
-    implementation 'com.googlecode.libphonenumber:libphonenumber:8.12.54'
+    api libs.google.phonenumber
 
     // FlowBinding
     implementation libs.github.flowBinding
     implementation libs.github.flowBindingAppcompat
 
-    implementation libs.airbnb.epoxy
+    api libs.airbnb.epoxy
     implementation libs.airbnb.epoxyGlide
-    kapt libs.airbnb.epoxyProcessor
+    ksp libs.airbnb.epoxyProcessor
     implementation libs.airbnb.epoxyPaging
-    implementation libs.airbnb.mavericks
+    api libs.airbnb.mavericks
 
     // Snap Helper https://github.com/rubensousa/GravitySnapHelper
-    implementation 'com.github.rubensousa:gravitysnaphelper:2.2.2'
-
-    // Nightly
-    // API-only library
-    gplayImplementation libs.google.appdistributionApi
-    // Full SDK implementation
-    gplayImplementation libs.google.appdistribution
+    api 'com.github.rubensousa:gravitysnaphelper:2.2.2'
 
     // Work
-    implementation libs.androidx.work
+    api libs.androidx.work
 
     // Paging
     implementation libs.androidx.pagingRuntimeKtx
 
-    // Functional Programming
-    implementation libs.arrow.core
-
     // Pref
-    implementation libs.androidx.preferenceKtx
+    api libs.androidx.preferenceKtx
 
     // UI
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation libs.google.material
-    implementation 'me.gujun.android:span:1.7'
+    api('me.gujun.android:span:1.7') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
     implementation libs.markwon.core
     implementation libs.markwon.extLatex
+    implementation libs.markwon.imageGlide
     implementation libs.markwon.inlineParser
     implementation libs.markwon.html
     implementation 'com.googlecode.htmlcompressor:htmlcompressor:1.5.2'
@@ -674,7 +246,6 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
     implementation libs.androidx.autoFill
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
-    implementation 'com.github.vector-im:PFLockScreen-Android:1.0.0-beta12'
     implementation 'com.github.hyuwah:DraggableView:1.0.0'
 
     // Custom Tab
@@ -682,9 +253,6 @@ dependencies {
 
     // Passphrase strength helper
     implementation 'com.nulab-inc:zxcvbn:1.7.0'
-
-    // To convert voice message on old platforms. Always keep the LTS suffix!
-    implementation 'com.arthenica:ffmpeg-kit-audio:4.5.1.LTS'
 
     // Alerter
     implementation 'com.github.tapadoo:alerter:7.2.4'
@@ -697,7 +265,6 @@ dependencies {
     // Image Loading
     implementation libs.github.bigImageViewer
     implementation libs.github.glideImageLoader
-    implementation libs.github.progressPieIndicator
     implementation libs.github.glideImageViewFactory
 
     // implementation 'com.github.MikeOrtiz:TouchImageView:3.0.2'
@@ -713,30 +280,18 @@ dependencies {
     implementation 'com.github.jetradarmobile:android-snowfall:1.2.1'
     // DI
     implementation libs.dagger.hilt
-    annotationProcessor libs.dagger.hiltAndroidCompiler
     kapt libs.dagger.hiltCompiler
 
     // Analytics
-    implementation 'com.posthog.android:posthog:1.1.2'
-
-    //Alpha wallet
-    implementation "com.google.dagger:dagger-android:2.22"
-    implementation "com.google.dagger:dagger-android-support:2.22"
-    kapt "com.google.dagger:dagger-android-processor:2.22"
+    implementation('com.posthog.android:posthog:1.1.2') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    implementation libs.sentry.sentryAndroid
 
     // UnifiedPush
-    implementation 'com.github.UnifiedPush:android-connector:2.0.1'
-    // UnifiedPush gplay flavor only
-    gplayImplementation('com.github.UnifiedPush:android-embedded_fcm_distributor:2.1.1') {
-        exclude group: 'com.google.firebase', module: 'firebase-core'
-        exclude group: 'com.google.firebase', module: 'firebase-analytics'
-        exclude group: 'com.google.firebase', module: 'firebase-measurement-connector'
-    }
+    implementation 'com.github.UnifiedPush:android-connector:2.1.0'
 
-    // OSS License, gplay flavor only
-    gplayImplementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
-
-    implementation "androidx.emoji2:emoji2:1.1.0"
+    implementation "androidx.emoji2:emoji2:1.2.0"
 
     // WebRTC
     // org.webrtc:google-webrtc is for development purposes only
@@ -744,22 +299,32 @@ dependencies {
     implementation('com.facebook.react:react-native-webrtc:1.94.2-jitsi-10227332@aar')
 
     // Jitsi
-    implementation('org.jitsi.react:jitsi-meet-sdk:5.0.2') {
+    api('org.jitsi.react:jitsi-meet-sdk:5.0.2') {
         exclude group: 'com.google.firebase'
         exclude group: 'com.google.android.gms'
         exclude group: 'com.android.installreferrer'
+
+        // Exclude jitsi's android-scalablevideoview fork's support library
+        // The library exports a jetified artifact but doesn't remove the support library dependency
+        // https://github.com/MatrixFrog/Android-ScalableVideoView/blob/master/gradle.properties#L1
+        exclude group: 'com.android.support', module: 'appcompat-v7'
     }
 
     // QR-code
     // Stick to 3.3.3 because of https://github.com/zxing/zxing/issues/1170
     implementation 'com.google.zxing:core:3.3.3'
-    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+
+    // Excludes the legacy support library annotation usages
+    // https://github.com/dm77/barcodescanner/blob/d036996c8a6f36a68843ffe539c834c28944b2d5/core/src/main/java/me/dm7/barcodescanner/core/CameraWrapper.java#L4
+    implementation ('me.dm7.barcodescanner:zxing:1.9.13') {
+        exclude group: 'com.android.support', module: 'support-v4'
+    }
 
     // Emoji Keyboard
-    implementation libs.vanniktech.emojiMaterial
-    implementation libs.vanniktech.emojiGoogle
+    api libs.vanniktech.emojiMaterial
+    api libs.vanniktech.emojiGoogle
 
-    implementation 'im.dlg:android-dialer:1.2.5'
+    implementation project(":library:external:dialpad")
 
     // JWT
     api libs.jsonwebtoken.jjwtApi
@@ -770,40 +335,43 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.15'
 
     // MapTiler
-    fdroidImplementation(libs.maplibre.androidSdk) {
+    api(libs.maplibre.androidSdk) {
         exclude group: 'com.google.android.gms', module: 'play-services-location'
     }
-    fdroidImplementation(libs.maplibre.pluginAnnotation) {
+    api(libs.maplibre.pluginAnnotation) {
         exclude group: 'com.google.android.gms', module: 'play-services-location'
     }
-    gplayImplementation libs.maplibre.androidSdk
-    gplayImplementation libs.maplibre.pluginAnnotation
+
+    //Alpha wallet
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation libs.rxjava2.rxjava
+    implementation libs.kotson.kotson
+    implementation (libs.trustwallet.walletCore){
+        exclude group: "com.google.protobuf", module: "protobuf-java"
+    }
+    implementation 'com.github.florent37:TutoShowcase:d8b91be8a2'
+    implementation libs.jacksonCore.jacksonDataBind
+    implementation libs.slf4j.slf4jApi
+    implementation libs.androidx.lifecycleExtension
+    implementation libs.keyboardVisibilityEvent.keyboardVisibilityEvent
+    implementation libs.journeyApps.zxingAndroidEmbedded
+    implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-android'
+    implementation libs.mailchimp.mailchimpSdk
+    implementation libs.googlePlay.core
+    implementation libs.google.crashlytics
 
     // TESTS
     testImplementation libs.tests.junit
     testImplementation libs.tests.kluent
     testImplementation libs.mockk.mockk
-    testImplementation libs.androidx.robolectric
-    testImplementation libs.androidx.testCore
+    testImplementation libs.androidx.coreTesting
     // Plant Timber tree for test
     testImplementation libs.tests.timberJunitRule
     testImplementation libs.airbnb.mavericksTesting
+    testImplementation libs.androidx.coreTesting
     testImplementation(libs.jetbrains.coroutinesTest) {
         exclude group: "org.jetbrains.kotlinx", module: "kotlinx-coroutines-debug"
     }
-
-    // Flipper, debug builds only
-    debugImplementation(libs.flipper.flipper) {
-        exclude group: 'com.facebook.fbjni', module: 'fbjni'
-    }
-    debugImplementation(libs.flipper.flipperNetworkPlugin) {
-        exclude group: 'com.facebook.fbjni', module: 'fbjni'
-    }
-    debugImplementation 'com.facebook.soloader:soloader:0.10.4'
-    debugImplementation "com.kgurgul.flipper:flipper-realm-android:2.2.0"
-
-    // Activate when you want to check for leaks, from time to time.
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.9.1'
 
     androidTestImplementation libs.androidx.testCore
     androidTestImplementation libs.androidx.testRunner
@@ -823,117 +391,8 @@ dependencies {
     androidTestImplementation('com.adevinta.android:barista:4.2.0') {
         exclude group: 'org.jetbrains.kotlin'
     }
+    androidTestImplementation libs.mockk.mockkAndroid
     androidTestUtil libs.androidx.orchestrator
     debugImplementation libs.androidx.fragmentTesting
-
-    //Alpha Wallet
-    // Ethereum client
-//    implementation "org.web3j:core:4.6.0-android"
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
-    implementation 'org.slf4j:slf4j-api:2.0.0-alpha7'
-
-    // Http client
-    implementation "com.squareup.retrofit2:retrofit:2.5.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
-    implementation "com.squareup.okhttp3:okhttp:4.9.0"
-    implementation "com.google.code.gson:gson:2.9.0"
-    implementation "com.squareup.picasso:picasso:2.71828"
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    //noinspection GradleCompatible
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
-    implementation 'androidx.biometric:biometric:1.1.0'
-    implementation 'androidx.gridlayout:gridlayout:1.0.0'
-
-    // Bar code scanning
-    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
-    implementation 'com.google.zxing:core:3.4.1'
-
-    // Sugar
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation 'com.github.apl-devs:appintro:v4.2.2'
-    implementation 'com.github.romandanylyk:PageIndicatorView:v1.0.0'
-
-    //coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.0.5'
-
-    // ReactiveX
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
-    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
-
-    // Keyboard visibility
-    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:3.0.0-RC3'
-
-    // Dagger 2
-
-    // Dagger core
-    implementation "com.google.dagger:dagger:2.27"
-    kapt "com.google.dagger:dagger-compiler:2.22"
-
-    // Dagger Android
-    implementation "com.google.dagger:dagger-android-support:2.22"
-    kapt "com.google.dagger:dagger-android-processor:2.22"
-
-    // if you are not using support library, include this instead
-    implementation "com.google.dagger:dagger-android:2.22"
-
-    // WebKit - for WebView Dark Mode
-    implementation 'androidx.webkit:webkit:1.4.0'
-
-    // Image Loader
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-
-    implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-android'
-
-    // Unit tests
-    testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.mockito:mockito-core:3.12.4'
-    testImplementation group: 'org.powermock', name: 'powermock-module-junit4-rule-agent', version: '2.0.9'
-    testImplementation group: 'org.powermock', name: 'powermock-module-junit4', version: '2.0.9'
-    testImplementation group: 'org.powermock', name: 'powermock-api-mockito2', version: '2.0.9'
-    testImplementation group: 'org.json', name: 'json', version: '20220320'
-
-    // Component tests
-    testImplementation 'org.robolectric:robolectric:4.8.2'
-    testImplementation 'androidx.test:core:1.4.0'
-    testImplementation 'androidx.test.ext:junit:1.1.3'
-
-    // E2e tests
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:core:1.4.0'
-    androidTestUtil 'androidx.test:orchestrator:1.4.1'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
-        exclude group: "com.android.support", module: "support-annotations"
-    })
-    androidTestImplementation('tools.fastlane:screengrab:2.1.1', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.4.0'
-    androidTestImplementation libs.mockk.mockkAndroid
-    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:1.7.10"
-
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.9'
-
-    implementation 'com.trustwallet:wallet-core:2.6.4'
-
-    implementation 'com.github.florent37:TutoShowcase:d8b91be8a2'
-    // Do not upgrade unless we have migrated to AndroidX
-//    implementation 'com.github.google:flexbox-layout:2.0.1'
-
-    implementation 'com.github.salomonbrys.kotson:kotson:2.5.0'
-    implementation 'com.github.mailchimp:mailchimp-sdk-android:1.0.0'
-//    implementation 'androidx.preference:preference-ktx:1.2.1'
-
-    def hilt_jetpack_version = '1.0.0-alpha01'
-    annotationProcessor "androidx.hilt:hilt-compiler:$hilt_jetpack_version"
-
+    androidTestImplementation "org.jetbrains.kotlin:kotlin-reflect:1.7.20"
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.text.TextUtils;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;

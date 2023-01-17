@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.Transaction;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.service.TokensService;
@@ -15,8 +16,6 @@ import com.alphawallet.app.util.BalanceUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
-import im.vector.app.R;
 
 /**
  * Created by Jenny Jingjing Li on 4/3/2021

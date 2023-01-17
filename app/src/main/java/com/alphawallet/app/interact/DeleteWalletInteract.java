@@ -1,9 +1,7 @@
 package com.alphawallet.app.interact;
 
-import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.repository.WalletRepositoryType;
-
-import javax.inject.Inject;
+import com.alphawallet.app.entity.Wallet;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,8 +13,7 @@ import io.reactivex.schedulers.Schedulers;
 public class DeleteWalletInteract {
 	private final WalletRepositoryType walletRepository;
 
-    @Inject
-    public DeleteWalletInteract(WalletRepositoryType walletRepository) {
+	public DeleteWalletInteract(WalletRepositoryType walletRepository) {
 		this.walletRepository = walletRepository;
 	}
 

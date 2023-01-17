@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.CurrencyItem;
 import com.alphawallet.app.repository.CurrencyRepository;
 import com.alphawallet.app.ui.widget.entity.PriceAlert;
@@ -22,8 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import static com.alphawallet.app.service.TickerService.getCurrencyWithoutSymbol;
 import static java.lang.String.format;
 import static java.util.Objects.requireNonNull;
-
-import im.vector.app.R;
 
 public class PriceAlertAdapter extends RecyclerView.Adapter<PriceAlertAdapter.PriceAlertViewHolder>
 {

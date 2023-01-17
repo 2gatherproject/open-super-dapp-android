@@ -153,6 +153,9 @@
         <!-- Material 3 -->
         <item name="collapsingToolbarLayoutMediumSize">@dimen/collapsing_toolbar_layout_medium_size</item>
 
+        <!-- WYSIWYG Editor -->
+        <item name="vctr_rich_text_editor_menu_button_background">@color/vctr_rich_text_editor_menu_button_background_dark</item>
+
         <item name="colorSurfaceAlpha">@color/colorSurface_dark</item>
         <item name="colorSurfaceQuaternary">@color/colorSurfaceQuaternary_dark</item>
         <item name="colorSurfaceTertiary">@color/colorSurfaceTertiary_dark</item>

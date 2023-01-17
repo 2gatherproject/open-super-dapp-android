@@ -24,11 +24,10 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import im.vector.app.R;
 import com.alphawallet.app.util.Utils;
 
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-
-import im.vector.app.R;
 
 public class PasswordInputView extends LinearLayout implements TextView.OnEditorActionListener
 {

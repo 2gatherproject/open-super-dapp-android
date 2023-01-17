@@ -36,7 +36,7 @@ import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.tokens.TokenCardMeta;
 import com.alphawallet.app.repository.EthereumNetworkBase;
 import com.alphawallet.app.repository.EthereumNetworkRepository;
-import com.alphawallet.app.ui.QRScanning.QRScanner;
+import com.alphawallet.app.ui.QRScanning.QRScannerActivity;
 import com.alphawallet.app.ui.widget.TokensAdapterCallback;
 import com.alphawallet.app.ui.widget.adapter.TokensAdapter;
 import com.alphawallet.app.ui.widget.entity.AddressReadyCallback;
@@ -55,9 +55,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
 import timber.log.Timber;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class AddTokenActivity extends BaseActivity implements AddressReadyCallback, StandardFunctionInterface, TokensAdapterCallback
@@ -101,7 +102,7 @@ public class AddTokenActivity extends BaseActivity implements AddressReadyCallba
 
 
         FunctionButtonBar functionBar = findViewById(R.id.layoutButtons);
-        functionBar.setupFunctions(this, new ArrayList<>(Collections.singletonList(R.string.action_save_alpha)));
+        functionBar.setupFunctions(this, new ArrayList<>(Collections.singletonList(R.string.action_save)));
         functionBar.revealButtons();
 
         progressLayout = findViewById(R.id.layout_progress);
@@ -121,6 +122,7 @@ public class AddTokenActivity extends BaseActivity implements AddressReadyCallba
         adapter = new TokensAdapter(this, viewModel.getAssetDefinitionService(), viewModel.getTokensService(),
                 null);
         adapter.setHasStableIds(true);
+        adapter.showTestNetTips();
         adapter.setFilterType(TokenFilter.NO_FILTER);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -436,12 +438,12 @@ public class AddTokenActivity extends BaseActivity implements AddressReadyCallba
                         inputAddressView.setAddress(extracted_address);
                     }
                     break;
-                case QRScanner.DENY_PERMISSION:
+                case QRScannerActivity.DENY_PERMISSION:
                     showCameraDenied();
                     break;
                 default:
                     Timber.tag("SEND").e(String.format(getString(R.string.barcode_error_format),
-                                                "Code: " + resultCode
+                            "Code: " + resultCode
                     ));
                     break;
             }

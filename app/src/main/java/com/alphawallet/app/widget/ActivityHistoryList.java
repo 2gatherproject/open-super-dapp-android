@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.ActivityMeta;
 import com.alphawallet.app.entity.TransactionMeta;
 import com.alphawallet.app.entity.Wallet;
@@ -25,7 +26,6 @@ import com.alphawallet.app.ui.widget.entity.TokenTransferData;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.vector.app.R;
 import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmQuery;

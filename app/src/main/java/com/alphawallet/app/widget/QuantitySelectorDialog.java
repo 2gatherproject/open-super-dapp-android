@@ -7,12 +7,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import im.vector.app.R;
 import com.alphawallet.app.ui.widget.entity.OnQuantityChangedListener;
 import com.alphawallet.app.ui.widget.entity.QuantitySelectorDialogInterface;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
-
-import im.vector.app.R;
 
 public class QuantitySelectorDialog extends BottomSheetDialog implements OnQuantityChangedListener
 {

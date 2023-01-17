@@ -10,11 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import im.vector.app.R;
 import com.alphawallet.app.widget.StandardHeader;
 import com.alphawallet.app.widget.TestNetDialog;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-
-import im.vector.app.R;
 
 public abstract class SelectNetworkBaseActivity extends BaseActivity
 {

@@ -1,11 +1,11 @@
 package com.alphawallet.app.entity;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import im.vector.app.R;
 
 import org.junit.Test;
 
-import im.vector.app.R;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CurrencyItemTest {
     @Test

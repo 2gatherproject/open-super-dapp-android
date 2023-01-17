@@ -9,6 +9,7 @@ import androidx.annotation.LayoutRes;
 
 import im.vector.app.R;
 
+
 public class WalletFragmentActionsView extends FrameLayout implements View.OnClickListener {
     private OnClickListener onCopyWalletAddressClickListener;
     private OnClickListener onShowMyWalletAddressClickListener;
@@ -35,30 +36,22 @@ public class WalletFragmentActionsView extends FrameLayout implements View.OnCli
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-
-            case R.id.copy_wallet_address_action: {
-                if (onCopyWalletAddressClickListener != null) {
-                    onCopyWalletAddressClickListener.onClick(view);
-                }
-                break;
+        int id = view.getId();
+        if (id == R.id.copy_wallet_address_action) {
+            if (onCopyWalletAddressClickListener != null) {
+                onCopyWalletAddressClickListener.onClick(view);
             }
-            case R.id.show_my_wallet_address_action: {
-                if (onShowMyWalletAddressClickListener != null) {
-                    onShowMyWalletAddressClickListener.onClick(view);
-                }
-                break;
+        } else if (id == R.id.show_my_wallet_address_action) {
+            if (onShowMyWalletAddressClickListener != null) {
+                onShowMyWalletAddressClickListener.onClick(view);
             }
-            case R.id.add_hide_tokens_action: {
-                if (onAddHideTokensClickListener != null) {
-                    onAddHideTokensClickListener.onClick(view);
-                }
-                break;
+        } else if (id == R.id.add_hide_tokens_action) {
+            if (onAddHideTokensClickListener != null) {
+                onAddHideTokensClickListener.onClick(view);
             }
-            case R.id.rename_this_wallet_action: {
-                if (onRenameThisWalletListener != null) {
-                    onRenameThisWalletListener.onClick(view);
-                }
+        } else if (id == R.id.rename_this_wallet_action) {
+            if (onRenameThisWalletListener != null) {
+                onRenameThisWalletListener.onClick(view);
             }
         }
     }

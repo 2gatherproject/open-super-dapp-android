@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(shadows = {ShadowRealm.class}, application = TestApplication.class)
+@Config(shadows = {ShadowRealm.class})
 public class QRScannerTest
 {
 

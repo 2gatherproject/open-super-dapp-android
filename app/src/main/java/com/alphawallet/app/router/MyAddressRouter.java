@@ -8,13 +8,7 @@ import com.alphawallet.app.ui.MyAddressActivity;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.Wallet;
 
-import javax.inject.Inject;
-
 public class MyAddressRouter {
-
-    @Inject
-    public MyAddressRouter() {
-    }
 
     public void open(Context context, Wallet wallet) {
         Intent intent = new Intent(context, MyAddressActivity.class);

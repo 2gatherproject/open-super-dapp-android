@@ -10,9 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.ColorRes;
 import androidx.core.content.ContextCompat;
 
-import javax.annotation.Nullable;
-
 import im.vector.app.R;
+
+import org.w3c.dom.Text;
+
+import javax.annotation.Nullable;
 
 public class DialogInfoItem extends LinearLayout {
 

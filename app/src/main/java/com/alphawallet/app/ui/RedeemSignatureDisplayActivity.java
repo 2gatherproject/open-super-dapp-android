@@ -19,7 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
+import com.alphawallet.app.viewmodel.RedeemAssetSelectViewModel;
 import com.alphawallet.app.web3.Web3TokenView;
 import com.alphawallet.app.web3.entity.PageReadyCallback;
 import com.alphawallet.ethereum.EthereumNetworkBase;
@@ -34,8 +36,9 @@ import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.ui.widget.entity.TicketRangeParcel;
 
-import im.vector.app.R;
 import timber.log.Timber;
+
+import im.vector.app.R;
 
 import com.alphawallet.app.viewmodel.RedeemSignatureDisplayModel;
 import com.alphawallet.app.widget.AWalletAlertDialog;

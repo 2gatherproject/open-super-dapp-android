@@ -7,9 +7,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.alphawallet.app.entity.tokendata.TokenGroup;
-
 import im.vector.app.R;
+import com.alphawallet.app.entity.tokendata.TokenGroup;
 
 public class HeaderHolder extends BinderViewHolder<TokenGroup> {
     public static final int VIEW_TYPE = 2022;

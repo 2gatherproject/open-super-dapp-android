@@ -20,7 +20,6 @@ import android.webkit.WebView;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.alphawallet.app.ui.QRScanning.TestApplication;
 import com.alphawallet.shadows.ShadowJsInjectorClient;
 import com.alphawallet.shadows.ShadowRealm;
 
@@ -40,7 +39,7 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowToast;
 
 @RunWith(AndroidJUnit4.class)
-@Config(shadows = {ShadowRealm.class, ShadowJsInjectorClient.class}, application = TestApplication.class)
+@Config(shadows = {ShadowRealm.class, ShadowJsInjectorClient.class})
 public class Web3ViewClientTest
 {
     private static final String PACKAGE_NAME_OF_TELEGRAM = "org.telegram.messenger";

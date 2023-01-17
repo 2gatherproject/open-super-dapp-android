@@ -2,6 +2,7 @@ package com.alphawallet.app.web3;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -11,6 +12,7 @@ import com.alphawallet.app.web3.entity.Address;
 
 import org.web3j.crypto.Keys;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Map;
 import java.util.Set;

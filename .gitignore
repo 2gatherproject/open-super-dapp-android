@@ -89,3 +89,4 @@ fastlane/.google-play-key.json
 DCIM/
 vendor/
 .project
+**/out/failures

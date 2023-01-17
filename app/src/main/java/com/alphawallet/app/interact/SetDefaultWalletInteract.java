@@ -3,8 +3,6 @@ package com.alphawallet.app.interact;
 import com.alphawallet.app.repository.WalletRepositoryType;
 import com.alphawallet.app.entity.Wallet;
 
-import javax.inject.Inject;
-
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 

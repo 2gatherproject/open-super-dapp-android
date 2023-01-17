@@ -2,14 +2,10 @@ package com.alphawallet.app.viewmodel;
 
 import android.app.Activity;
 import android.text.TextUtils;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import android.text.TextUtils;
 import android.util.Pair;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.alphawallet.app.C;
 import com.alphawallet.app.entity.CreateWalletCallbackInterface;

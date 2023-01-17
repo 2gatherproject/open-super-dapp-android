@@ -15,8 +15,6 @@ import com.alphawallet.token.tools.Numeric;
 
 import java.math.BigInteger;
 
-import javax.inject.Inject;
-
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -25,7 +23,6 @@ public class CreateTransactionInteract
 {
     private final TransactionRepositoryType transactionRepository;
 
-    @Inject
     public CreateTransactionInteract(TransactionRepositoryType transactionRepository)
     {
         this.transactionRepository = transactionRepository;

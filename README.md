@@ -6,11 +6,8 @@
 #### 🚀 Your Gateway to the New Digital Commons 🚀
 A fully open source, open standard, decentralized ["super app"](https://en.wikipedia.org/wiki/Super-app) including a secure, encrypted [Matrix](https://matrix.org/) compatible messenger based off of the [Element Messenger](https://element.io/), and an Ethereum crypto wallet and [web3](https://en.wikipedia.org/wiki/Web3) browser based off of [Alpha Wallet](https://alphawallet.com/). Of, by, and for all people of the world.
 
-**_This software is pre-alpha, actively seeking contributors, donors and maintainers/leaders. Get in on the ground floor and help build something amazing!_**
+**_This software is pre-alpha, actively seeking contributors, donors and maintainers/leaders. Get in on the ground floor and help build something amazing! Development is currently moving very slowly until new interest is found._**
 
-**_To donate, please use the [Paypal donate button on our website](https://2gather.one/)!_**
-
-_The OSD team plans to set up on [Open Collective](https://opencollective.com/) or similar platform for open budgeting and collaboration as soon as practical._
 
 ### Mission
 Open Super dApp aims to foster, and provide access to, a decentralized and secure digital [commons](https://en.wikipedia.org/wiki/Commons) for all.
@@ -40,6 +37,10 @@ Open Super dApp gratefully builds off the excellent open source mobile apps Elem
 This app can be developed using [Android Studio](https://developer.android.com/studio/), using standard development flows and techniques.
 
 The main repo branch is `main` for code that has been released. WIP branches are squash merged onto main in preparation for new releases.
+
+You need to add a Github Personal Access Token (read access) to build the app due to requirements from Alpha Wallet. See notes here: https://github.com/AlphaWallet/alpha-wallet-android#getting-started
+
+If you see any errors checking out a branch related to Git LFS, you can generally resolve there by prepending the Git environment variable `GIT_LFS_SKIP_SMUDGE=1` to your git command and trying again.
 
 #### Upgrading Element and AlphaWallet
 Open Super dApp is "downstream" of the [element-android](https://github.com/vector-im/element-android) and [alpha-wallet-android](https://github.com/AlphaWallet/alpha-wallet-android) projects. This means that when either project issues a new releases, this new release can be merged into Open Super dApp. Only new code conflicts will need to be resolved. Please read the [Upgrading/Merging](UPGRADING-MERGING.md) document for more specific details regarding this process.

@@ -1,8 +1,15 @@
 package com.alphawallet.app.viewmodel;
 
+import android.app.Activity;
+import android.content.Intent;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.alphawallet.app.C;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.PreferenceRepositoryType;
 import com.alphawallet.app.service.TickerService;
@@ -78,8 +85,8 @@ public class TokenAlertsViewModel extends BaseViewModel {
                 double alertPrice = Double.parseDouble(priceAlert.getValue());
                 priceAlert.setAbove(alertPrice > currentTokenPrice);
 
-                    List<PriceAlert> list = getPriceAlerts();
-                    list.add(priceAlert);
+                List<PriceAlert> list = getPriceAlerts();
+                list.add(priceAlert);
 
                 updateStoredAlerts(list);
             }, Throwable::printStackTrace).isDisposed();

@@ -11,6 +11,7 @@ import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 
 import im.vector.app.R;
+
 import timber.log.Timber;
 
 public class NodeStatusInfo extends LinearLayout

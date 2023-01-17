@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 
 import com.alphawallet.app.C;
-import im.vector.app.R;
 import com.alphawallet.app.entity.ActionSheetInterface;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.NetworkInfo;
@@ -23,6 +22,7 @@ import com.alphawallet.app.entity.SignAuthenticationCallback;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.entity.TXSpeed;
 import com.alphawallet.app.entity.Transaction;
+import com.alphawallet.app.entity.analytics.ActionSheetMode;
 import com.alphawallet.app.entity.nftassets.NFTAsset;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.repository.SharedPreferenceRepository;
@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import im.vector.app.R;
 import io.realm.Realm;
 
 /**
@@ -405,8 +406,8 @@ public class ActionSheetDialog extends BottomSheetDialog implements StandardFunc
     {
         AddressDetailView requester = findViewById(R.id.requester);
         requester.setupRequester(url);
-        detailWidget.setupTransaction(candidateTransaction, token.tokenInfo.chainId, tokensService.getCurrentAddress(),
-                tokensService.getNetworkSymbol(token.tokenInfo.chainId), this);
+        setupTransactionDetails();
+
         if (candidateTransaction.isConstructor())
         {
             addressDetail.setVisibility(View.GONE);
@@ -427,7 +428,15 @@ public class ActionSheetDialog extends BottomSheetDialog implements StandardFunc
     {
         detailWidget.setupTransaction(candidateTransaction, token.tokenInfo.chainId, tokensService.getCurrentAddress(),
                 tokensService.getNetworkSymbol(token.tokenInfo.chainId), this);
-        detailWidget.setVisibility(View.VISIBLE);
+
+        if (candidateTransaction.isBaseTransfer())
+        {
+            detailWidget.setVisibility(View.GONE);
+        }
+        else
+        {
+            detailWidget.setVisibility(View.VISIBLE);
+        }
     }
 
     public void setCurrentGasIndex(ActivityResult result)
@@ -507,8 +516,6 @@ public class ActionSheetDialog extends BottomSheetDialog implements StandardFunc
                 }
                 break;
         }
-
-        actionSheetCallback.notifyConfirm(mode.toString());
     }
 
     private BigDecimal getTransactionAmount()
@@ -555,6 +562,7 @@ public class ActionSheetDialog extends BottomSheetDialog implements StandardFunc
                 {
                     confirmationWidget.startProgressCycle(1);
                     signCallback.gotAuthorisationForSigning(gotAuth, signWidget.getSignable());
+                    actionSheetCallback.notifyConfirm(mode.getValue());
                 }
                 else
                 {
@@ -683,6 +691,7 @@ public class ActionSheetDialog extends BottomSheetDialog implements StandardFunc
                 confirmationWidget.startProgressCycle(4);
                 //send the transaction
                 actionSheetCallback.signTransaction(formTransaction());
+                actionSheetCallback.notifyConfirm(mode.getValue());
             }
 
             @Override
@@ -777,6 +786,7 @@ public class ActionSheetDialog extends BottomSheetDialog implements StandardFunc
                 confirmationWidget.startProgressCycle(4);
                 //send the transaction
                 actionSheetCallback.sendTransaction(formTransaction());
+                actionSheetCallback.notifyConfirm(mode.getValue());
             }
 
             @Override

@@ -2,6 +2,7 @@ package com.alphawallet.app.entity.tokens;
 
 import android.app.Activity;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.ContractType;
 import com.alphawallet.app.entity.TicketRangeElement;
 import com.alphawallet.app.entity.Transaction;
@@ -24,8 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import im.vector.app.R;
 
 /**
  * Created by James on 27/01/2018.  It might seem counter intuitive

@@ -11,9 +11,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.material.button.MaterialButton;
-
 import im.vector.app.R;
+import com.google.android.material.button.MaterialButton;
 
 public class CopyTextView extends LinearLayout {
 

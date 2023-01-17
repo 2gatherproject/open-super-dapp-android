@@ -26,8 +26,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 
-import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
-
 @HiltViewModel
 public class NameThisWalletViewModel extends BaseViewModel
 {

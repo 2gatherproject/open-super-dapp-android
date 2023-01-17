@@ -25,7 +25,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.alphawallet.app.C;
-import im.vector.app.R;
 import com.alphawallet.app.entity.AnalyticsProperties;
 import com.alphawallet.app.entity.CryptoFunctions;
 import com.alphawallet.app.entity.FragmentMessenger;
@@ -86,6 +85,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import im.vector.app.R;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -115,7 +115,6 @@ public class HomeViewModel extends BaseViewModel {
     private final EthereumNetworkRepositoryType ethereumNetworkRepository;
     private final TransactionsService transactionsService;
     private final MyAddressRouter myAddressRouter;
-    private final AnalyticsServiceType analyticsService;
     private final ExternalBrowserRouter externalBrowserRouter;
     private final OkHttpClient httpClient;
     private final RealmManager realmManager;
@@ -123,7 +122,6 @@ public class HomeViewModel extends BaseViewModel {
     private CryptoFunctions cryptoFunctions;
     private ParseMagicLink parser;
 
-    private final MutableLiveData<File> installIntent = new MutableLiveData<>();
     private final MutableLiveData<String> walletName = new MutableLiveData<>();
     private final MutableLiveData<Wallet> defaultWallet = new MutableLiveData<>();
     private final MutableLiveData<Boolean> splashActivity = new MutableLiveData<>();
@@ -155,12 +153,10 @@ public class HomeViewModel extends BaseViewModel {
         this.ethereumNetworkRepository = ethereumNetworkRepository;
         this.myAddressRouter = myAddressRouter;
         this.transactionsService = transactionsService;
-        this.analyticsService = analyticsService;
         this.externalBrowserRouter = externalBrowserRouter;
         this.httpClient = httpClient;
         this.realmManager = realmManager;
-
-
+        setAnalyticsService(analyticsService);
         this.preferenceRepository.incrementLaunchCount();
     }
 
@@ -171,10 +167,6 @@ public class HomeViewModel extends BaseViewModel {
 
     public LiveData<Transaction[]> transactions() {
         return transactions;
-    }
-
-    public LiveData<File> installIntent() {
-        return installIntent;
     }
 
     public LiveData<String> backUpMessage() {
@@ -196,7 +188,7 @@ public class HomeViewModel extends BaseViewModel {
                 .subscribe(w -> {
                     onDefaultWallet(w);
                     initWalletConnectSessions(activity, w);
-                    }, this::onError);
+                }, this::onError);
     }
 
     public void onClean()
@@ -466,16 +458,9 @@ public class HomeViewModel extends BaseViewModel {
             uuid = UUID.randomUUID().toString();
         }
 
-        analyticsService.identify(uuid);
         preferenceRepository.setUniqueId(uuid);
-    }
 
-    public void actionSheetConfirm(String mode)
-    {
-        AnalyticsProperties analyticsProperties = new AnalyticsProperties();
-        analyticsProperties.setData(mode);
-
-        analyticsService.track(C.AN_CALL_ACTIONSHEET, analyticsProperties);
+        identify(uuid);
     }
 
     public void checkTransactionEngine()
@@ -560,15 +545,15 @@ public class HomeViewModel extends BaseViewModel {
                         .build();
 
                 Single.fromCallable(() -> {
-                    try (okhttp3.Response response = httpClient.newCall(request)
-                            .execute()) {
-                        return new Gson().<List<GitHubRelease>>fromJson(response.body().string(), new TypeToken<List<GitHubRelease>>() {
-                        }.getType());
-                    } catch (Exception e) {
-                        Timber.tag(TAG).e(e);
-                    }
-                    return null;
-                }).subscribeOn(Schedulers.io())
+                            try (okhttp3.Response response = httpClient.newCall(request)
+                                    .execute()) {
+                                return new Gson().<List<GitHubRelease>>fromJson(response.body().string(), new TypeToken<List<GitHubRelease>>() {
+                                }.getType());
+                            } catch (Exception e) {
+                                Timber.tag(TAG).e(e);
+                            }
+                            return null;
+                        }).subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread()).subscribe((releases) -> {
 
                             BottomSheetDialog dialog = new BottomSheetDialog(context);
@@ -583,7 +568,7 @@ public class HomeViewModel extends BaseViewModel {
 
                             preferenceRepository.setLastVersionCode(versionCode);
 
-                }).isDisposed();
+                        }).isDisposed();
             }
         } catch (PackageManager.NameNotFoundException e) {
             Timber.e(e);

@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.entity.Wallet;
 import com.alphawallet.app.viewmodel.NameThisWalletViewModel;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import io.reactivex.disposables.Disposable;
 
 @AndroidEntryPoint

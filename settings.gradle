@@ -1,21 +1,18 @@
+include ':vector-app'
 include ':app'
-include ':matrix-sdk-android'
-include ':matrix-sdk-android-rx'
-include ':diff-match-patch'
-include ':attachment-viewer'
-include ':multipicker'
-//include ':walleth'
-//include ':alpha-wallet'
-include ':alpha-token-script'
-//include ':dmz'
-//include ':token-script-utils'
-include ':library:ui-styles'
-include ':matrix-sdk-android-flow'
-
 include ':vector-config'
-include ':library:jsonviewer'
+
 include ':library:core-utils'
+include ':library:ui-strings'
 include ':library:ui-styles'
 include ':library:attachment-viewer'
-include ':library:diff-match-patch'
 include ':library:multipicker'
+
+include ':library:external:jsonviewer'
+include ':library:external:diff-match-patch'
+include ':library:external:dialpad'
+
+include ':alpha-token-script'
+
+include ':matrix-sdk-android'
+include ':matrix-sdk-android-flow'

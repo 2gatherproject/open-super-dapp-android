@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.LayoutRes;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.StandardFunctionInterface;
 import com.alphawallet.app.repository.KeyProviderFactory;
 import com.alphawallet.app.util.KeyboardUtils;
@@ -23,7 +24,6 @@ import com.mailchimp.sdk.main.Mailchimp;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import im.vector.app.R;
 
 
 public class EmailPromptView extends LinearLayout implements StandardFunctionInterface {

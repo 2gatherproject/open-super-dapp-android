@@ -33,11 +33,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.BackupOperationType;
 import com.alphawallet.app.entity.CustomViewSettings;
 import com.alphawallet.app.entity.Wallet;
-import com.alphawallet.app.entity.WalletPage;
 import com.alphawallet.app.entity.WalletType;
 import com.alphawallet.app.interact.GenericWalletInteract;
 import com.alphawallet.app.util.LocaleUtils;
@@ -50,8 +51,6 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.Locale;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.BuildConfig;
-import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -176,7 +175,7 @@ public class NewSettingsFragment extends BaseFragment
     private void initNotificationView(View view)
     {
         notificationView = view.findViewById(R.id.notification);
-        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.M)
+        if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.M && !viewModel.hasShownAPI23Notification())
         {
             notificationView.setTitle(getContext().getString(R.string.title_version_support_warning));
             notificationView.setMessage(getContext().getString(R.string.message_version_support_warning));
@@ -184,7 +183,7 @@ public class NewSettingsFragment extends BaseFragment
             notificationView.setPrimaryButtonListener(() ->
             {
                 notificationView.setVisibility(View.GONE);
-                viewModel.setMarshMallowWarning(true);
+                viewModel.cancelAPI23Notification();
             });
         }
         else
@@ -193,6 +192,7 @@ public class NewSettingsFragment extends BaseFragment
         }
     }
 
+    @Override
     public void signalUpdate(int updateVersion)
     {
         //add wallet update signal to adapter
@@ -476,7 +476,7 @@ public class NewSettingsFragment extends BaseFragment
         super.onResume();
         if (viewModel == null)
         {
-            ((HomeActivity) getActivity()).resetFragment(WalletPage.SETTINGS);
+            requireActivity().recreate();
         }
         else
         {
@@ -484,6 +484,7 @@ public class NewSettingsFragment extends BaseFragment
         }
     }
 
+    @Override
     public void backupSeedSuccess(boolean hasNoLock)
     {
         if (viewModel != null) viewModel.TestWalletBackup();

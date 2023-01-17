@@ -6,14 +6,7 @@ import android.content.Intent;
 import com.alphawallet.app.C;
 import com.alphawallet.app.ui.HomeActivity;
 
-import javax.inject.Inject;
-
 public class HomeRouter {
-
-    @Inject
-    public HomeRouter() {
-    }
-
     public void open(Context context, boolean isClearStack) {
         Intent intent = new Intent(context, HomeActivity.class);
         intent.putExtra(C.FROM_HOME_ROUTER, C.FROM_HOME_ROUTER); //HomeRouter should restart the app at the wallet

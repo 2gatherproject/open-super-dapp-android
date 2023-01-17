@@ -7,18 +7,19 @@ import android.os.Parcelable;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 
-import im.vector.app.R;
 import com.alphawallet.app.util.BalanceUtils;
 import com.alphawallet.app.util.Hex;
 import com.alphawallet.app.util.StyledStringBuilder;
 import com.alphawallet.app.walletconnect.entity.WCEthereumTransaction;
-import com.alphawallet.app.widget.ActionSheetMode;
+import com.alphawallet.app.entity.analytics.ActionSheetMode;
 import com.alphawallet.token.entity.MagicLinkInfo;
 
 import org.web3j.protocol.core.methods.request.Transaction;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
+import im.vector.app.R;
 
 
 public class Web3Transaction implements Parcelable {
@@ -232,6 +233,11 @@ public class Web3Transaction implements Parcelable {
     public boolean isConstructor()
     {
         return (recipient.equals(Address.EMPTY) && payload != null);
+    }
+
+    public boolean isBaseTransfer()
+    {
+        return payload == null || payload.equals("0x");
     }
 
     /**

@@ -9,18 +9,11 @@ import com.alphawallet.app.ui.widget.entity.TicketRangeParcel;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.entity.Wallet;
 
-import javax.inject.Inject;
-
 /**
  * Created by James on 25/01/2018.
  */
 
 public class RedeemSignatureDisplayRouter {
-
-    @Inject
-    public RedeemSignatureDisplayRouter() {
-    }
-
     public void open(Context context, Wallet wallet, Token token, TicketRangeParcel range) {
         Intent intent = new Intent(context, RedeemSignatureDisplayActivity.class);
         intent.putExtra(C.Key.WALLET, wallet);

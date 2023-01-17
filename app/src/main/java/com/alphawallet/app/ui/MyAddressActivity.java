@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.AddressMode;
 import com.alphawallet.app.entity.CustomViewSettings;
 import com.alphawallet.app.entity.EIP681Request;
@@ -39,7 +40,6 @@ import org.web3j.crypto.Keys;
 import java.math.BigDecimal;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;

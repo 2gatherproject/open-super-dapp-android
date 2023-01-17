@@ -8,6 +8,7 @@ import java.security.SignatureException;
 import java.util.Arrays;
 import android.util.Base64;
 
+import im.vector.app.BuildConfig;
 import com.alphawallet.app.util.Utils;
 import com.alphawallet.app.web3j.StructuredDataEncoder;
 import com.alphawallet.token.entity.CryptoFunctionsInterface;

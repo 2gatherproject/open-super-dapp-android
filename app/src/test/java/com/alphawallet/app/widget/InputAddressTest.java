@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import im.vector.app.R;
 import com.alphawallet.app.ui.SendActivity;
 import com.alphawallet.app.ui.widget.entity.AddressReadyCallback;
 import com.alphawallet.shadows.ShadowApp;
@@ -27,8 +28,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.android.controller.ActivityController;
 import org.robolectric.annotation.Config;
-
-import im.vector.app.R;
 
 @RunWith(AndroidJUnit4.class)
 @Config(shadows = {ShadowApp.class, ShadowUserAvatar.class})

@@ -18,14 +18,13 @@ import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import im.vector.app.R;
 import com.alphawallet.app.entity.AuthenticationCallback;
 import com.alphawallet.app.entity.AuthenticationFailType;
 import com.alphawallet.app.entity.Operation;
 
 import java.security.ProviderException;
 import java.util.concurrent.Executor;
-
-import im.vector.app.R;
 
 /**
  * Created by James on 7/06/2019.

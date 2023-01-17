@@ -8,7 +8,7 @@ import android.view.View;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.alphawallet.app.ui.QRScanning.TestApplication;
+import im.vector.app.R;
 import com.alphawallet.shadows.ShadowRealm;
 
 import org.junit.Before;
@@ -16,10 +16,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
-import im.vector.app.R;
-
 @RunWith(AndroidJUnit4.class)
-@Config(shadows = {ShadowRealm.class}, application = TestApplication.class)
+@Config(shadows = {ShadowRealm.class})
 public class BuyEthOptionsViewTest
 {
     private BuyEthOptionsView buyEthOptionsView;

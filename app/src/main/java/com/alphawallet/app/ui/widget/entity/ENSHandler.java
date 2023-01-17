@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.preference.PreferenceManager;
 
 import com.alphawallet.app.C;
-import com.alphawallet.app.entity.EnsNodeNotSyncCallback;
+import im.vector.app.R;
 import com.alphawallet.app.repository.TokenRepository;
 import com.alphawallet.app.ui.widget.adapter.AutoCompleteAddressAdapter;
 import com.alphawallet.app.util.ens.AWEnsResolver;
@@ -28,14 +28,10 @@ import org.web3j.crypto.Keys;
 
 import java.util.HashMap;
 
-import im.vector.app.R;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import timber.log.Timber;
-
-import static com.alphawallet.ethereum.EthereumNetworkBase.MAINNET_ID;
 
 /**
  * Created by James on 4/12/2018.

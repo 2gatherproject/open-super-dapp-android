@@ -14,8 +14,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -25,7 +23,6 @@ public class FetchTokensInteract {
 
     private final TokenRepositoryType tokenRepository;
 
-    @Inject
     public FetchTokensInteract(TokenRepositoryType tokenRepository) {
         this.tokenRepository = tokenRepository;
     }

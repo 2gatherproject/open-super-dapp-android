@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alphawallet.app.C;
+import im.vector.app.R;
 import com.alphawallet.app.entity.FinishReceiver;
 import com.alphawallet.app.entity.tokens.Token;
 import com.alphawallet.app.ui.widget.TokensAdapterCallback;
@@ -33,7 +34,6 @@ import java.util.List;
 import static com.alphawallet.app.C.Key.TICKET_RANGE;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import im.vector.app.R;
 
 /**
  * Created by James on 27/02/2018.
@@ -135,20 +135,15 @@ public class RedeemAssetSelectActivity extends BaseActivity implements TokensAda
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final int action_next = R.id.action_next;
-        final int action_redeem = R.id.action_redeem;
-        switch (item.getItemId()) {
-            case action_next: {
-                onNext();
-            }
-            break;
-            case action_redeem: {
-                onRedeem();
-            }
-            break;
-            case android.R.id.home: {
-                finish();
-            }
+//        final int action_next = R.id.action_next;
+//        final int action_redeem = R.id.action_redeem;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_next) {
+            onNext();
+        } else if (itemId == R.id.action_redeem) {
+            onRedeem();
+        } else if (itemId == android.R.id.home) {
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

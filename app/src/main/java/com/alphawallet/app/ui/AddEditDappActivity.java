@@ -9,19 +9,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
-import com.alphawallet.app.entity.DApp;
-import com.alphawallet.app.util.DappBrowserUtils;
-import com.alphawallet.app.util.Utils;
 import com.alphawallet.app.widget.InputView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.alphawallet.app.util.DappBrowserUtils;
+import com.alphawallet.app.util.Utils;
 
 import java.util.List;
 
-import dagger.hilt.android.AndroidEntryPoint;
 import im.vector.app.R;
+import com.alphawallet.app.entity.DApp;
 import timber.log.Timber;
+import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class AddEditDappActivity extends BaseActivity {
@@ -87,7 +86,7 @@ public class AddEditDappActivity extends BaseActivity {
             }
             case MODE_EDIT: {
                 setTitle(getString(R.string.edit_dapp));
-                button.setText(R.string.action_save_alpha);
+                button.setText(R.string.action_save);
                 url.setText(dapp.getUrl());
                 url.getEditText().setSelection(0);
                 name.setText(dapp.getName());

@@ -2,6 +2,8 @@ package com.alphawallet.app.entity;
 
 import android.text.TextUtils;
 
+import im.vector.app.BuildConfig;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
